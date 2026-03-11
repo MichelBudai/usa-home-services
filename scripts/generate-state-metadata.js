@@ -11,7 +11,7 @@ const stateMap = {};
 for (const [key, data] of Object.entries(cityMetadata)) {
   const stateSlug = key.split("|")[0];
   if (!stateMap[stateSlug]) stateMap[stateSlug] = [];
-  stateMap[stateSlug].push(data);
+  stateMap[stateSlug].push({ key, ...data });
 }
 
 const result = {};
@@ -38,23 +38,6 @@ for (const [stateSlug, cities] of Object.entries(stateMap)) {
         )
       : null;
 
-  const topCities = [...withPop]
-    .sort((a, b) => b.population - a.population)
-    .slice(0, 5)
-    .map((c) => {
-      const cityKey = Object.entries(cityMetadata).find(
-        ([k, v]) => v === c && k.startsWith(stateSlug)
-      )?.[0];
-      const cityName = cityKey
-        ? cityKey
-            .split("|")[1]
-            .split("-")
-            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-            .join(" ")
-        : "";
-      return { name: cityName, population: c.population };
-    });
-
   const avgMedianYear =
     withYear.length > 0
       ? Math.round(
@@ -63,11 +46,34 @@ for (const [stateSlug, cities] of Object.entries(stateMap)) {
         )
       : null;
 
+  const topCities = [...withPop]
+    .sort((a, b) => b.population - a.population)
+    .slice(0, 5)
+    .map((c) => ({ name: c.city, population: c.population }));
+
+  // Tier breakdown
+  const tierCounts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+  for (const c of cities) {
+    if (c.tier >= 1 && c.tier <= 4) tierCounts[c.tier]++;
+  }
+
+  const avgMedianIncome =
+    cities.filter((c) => c.medianHouseholdIncome).length > 0
+      ? Math.round(
+          cities
+            .filter((c) => c.medianHouseholdIncome)
+            .reduce((sum, c) => sum + c.medianHouseholdIncome, 0) /
+            cities.filter((c) => c.medianHouseholdIncome).length
+        )
+      : null;
+
   result[stateSlug] = {
     cityCount: cities.length,
     pctPre1980,
     avgMedianYear,
     avgHomeownership,
+    avgMedianIncome,
+    tierCounts,
     topCities,
   };
 }
@@ -78,3 +84,6 @@ fs.writeFileSync(
 );
 
 console.log(`Generated metadata for ${Object.keys(result).length} states`);
+
+// Vérifie Alabama
+console.log("\nAlabama:", JSON.stringify(result["alabama"], null, 2));

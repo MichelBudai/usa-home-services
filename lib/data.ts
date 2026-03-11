@@ -1,91 +1,82 @@
 import { slugify } from "./slugs";
-import {
-  getCitiesData,
-  getCityNameFromEntry,
-  type CityEntry,
-} from "./loadCitiesJson";
 import { SERVICE_SLUGS, SERVICE_LABELS, type ServiceSlug } from "./constants";
+import cityMetadataJson from "../data/city_metadata.json";
+import { type CityMetadata } from "./cityMetadata";
 
-export type { CityEntry, ServiceSlug };
+export type { ServiceSlug };
 export { SERVICE_SLUGS, SERVICE_LABELS };
+
+const metadataMap = cityMetadataJson as unknown as Record<string, CityMetadata>;
+
+// Build state slug -> list of city entries
+const stateSlugToCities: Map<string, { slug: string; name: string }[]> = new Map();
+const stateSlugToAbbr: Map<string, string> = new Map();
+const stateSlugToName: Map<string, string> = new Map();
+
+for (const [key, entry] of Object.entries(metadataMap)) {
+  const [stateSlug, citySlug] = key.split("|");
+  if (!stateSlugToCities.has(stateSlug)) {
+    stateSlugToCities.set(stateSlug, []);
+    stateSlugToAbbr.set(stateSlug, entry.stateCode);
+    stateSlugToName.set(stateSlug, entry.state);
+  }
+  stateSlugToCities.get(stateSlug)!.push({ slug: citySlug, name: entry.city });
+}
+
+// Sort cities by population desc within each state
+Array.from(stateSlugToCities.entries()).forEach(([stateSlug, cities]) => {
+  cities.sort((a, b) => {
+    const pa = metadataMap[`${stateSlug}|${a.slug}`]?.population ?? 0;
+    const pb = metadataMap[`${stateSlug}|${b.slug}`]?.population ?? 0;
+    return pb - pa;
+  });
+});
+
+export const stateSlugs: string[] = Array.from(stateSlugToCities.keys()).sort();
 
 export interface StateData {
   state: string;
   abbr: string;
   city_count: number;
-  cities: CityEntry[];
+  cities: { slug: string; name: string }[];
 }
-
-import nearbyCitiesJson from "../data/nearby_cities.json";
-
-/** Override "nearby" cities when real metro/proximity data exists. Key: "stateSlug|citySlug", value: city slug[] */
-const nearbyOverrides = nearbyCitiesJson as Record<string, string[]>;
-
-const citiesData = getCitiesData();
-export const rawStates: StateData[] = citiesData.states as StateData[];
-
-// Build state slug -> state data (slug from state name, e.g. "New York" -> "new-york")
-export const stateSlugToState: Map<string, StateData> = new Map();
-for (const s of rawStates) {
-  stateSlugToState.set(slugify(s.state), s);
-}
-
-// State slug -> list of city slugs for that state
-export const stateSlugToCitySlugs: Map<string, string[]> = new Map();
-// State slug -> city slug -> city display name
-export const stateSlugToCitySlugToName: Map<string, Map<string, string>> =
-  new Map();
-
-for (const s of rawStates) {
-  const stateSlug = slugify(s.state);
-  const citySlugs: string[] = [];
-  const slugToName = new Map<string, string>();
-  for (const city of s.cities) {
-    const cityName = getCityNameFromEntry(city);
-    if (!cityName) continue;
-    const citySlug = slugify(cityName);
-    citySlugs.push(citySlug);
-    slugToName.set(citySlug, cityName);
-  }
-  stateSlugToCitySlugs.set(stateSlug, citySlugs);
-  stateSlugToCitySlugToName.set(stateSlug, slugToName);
-}
-
-export const stateSlugs: string[] = rawStates.map((s) => slugify(s.state));
 
 export function getStateBySlug(slug: string): StateData | undefined {
-  return stateSlugToState.get(slug);
+  const cities = stateSlugToCities.get(slug);
+  if (!cities) return undefined;
+  return {
+    state: stateSlugToName.get(slug) ?? slug,
+    abbr: stateSlugToAbbr.get(slug) ?? "",
+    city_count: cities.length,
+    cities,
+  };
 }
 
 export function getCityName(stateSlug: string, citySlug: string): string | undefined {
-  return stateSlugToCitySlugToName.get(stateSlug)?.get(citySlug);
+  return metadataMap[`${stateSlug}|${citySlug}`]?.city;
 }
 
 export function getCitiesForState(stateSlug: string): { slug: string; name: string }[] {
-  const slugs = stateSlugToCitySlugs.get(stateSlug);
-  const slugToName = stateSlugToCitySlugToName.get(stateSlug);
-  if (!slugs || !slugToName) return [];
-  return slugs.map((slug) => ({ slug, name: slugToName.get(slug) ?? slug }));
+  return stateSlugToCities.get(stateSlug) ?? [];
 }
 
 /**
- * Returns up to `count` other cities in the same state (excl. current).
- * Uses curated nearby_cities.json when available (real metro/proximity); otherwise fallback to next cities in state list.
+ * Returns up to `count` nearby cities using nearbyCities from metadata.
+ * Falls back to next cities in state list.
  */
 export function getNearbyCities(
   stateSlug: string,
   currentCitySlug: string,
   count: number = 3
 ): { slug: string; name: string }[] {
-  const key = `${stateSlug}|${currentCitySlug}`;
-  const overrideSlugs = nearbyOverrides[key];
-  const slugToName = stateSlugToCitySlugToName.get(stateSlug);
-  if (overrideSlugs?.length && slugToName) {
-    return overrideSlugs
+  const entry = metadataMap[`${stateSlug}|${currentCitySlug}`];
+  if (entry?.nearbyCities?.length) {
+    return entry.nearbyCities
       .slice(0, count)
-      .map((slug) => ({ slug, name: slugToName.get(slug) ?? slug }))
-      .filter((x) => x.name && x.slug !== currentCitySlug);
+      .filter((n) => n.slug !== currentCitySlug)
+      .map((n) => ({ slug: n.slug, name: n.city }));
   }
+  // Fallback
   const cities = getCitiesForState(stateSlug);
   const idx = cities.findIndex((c) => c.slug === currentCitySlug);
   if (idx < 0) return [];
@@ -102,9 +93,9 @@ export function isValidService(service: string): service is ServiceSlug {
 }
 
 export function isValidStateSlug(slug: string): boolean {
-  return stateSlugToState.has(slug);
+  return stateSlugToCities.has(slug);
 }
 
 export function isValidCitySlug(stateSlug: string, citySlug: string): boolean {
-  return stateSlugToCitySlugToName.get(stateSlug)?.has(citySlug) ?? false;
+  return !!metadataMap[`${stateSlug}|${citySlug}`];
 }
