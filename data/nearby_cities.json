@@ -1,0 +1,13 @@
+{
+  "alabama|birmingham": ["hoover", "vestavia-hills", "homewood"],
+  "alabama|hoover": ["birmingham", "vestavia-hills", "homewood"],
+  "alabama|vestavia-hills": ["birmingham", "hoover", "homewood"],
+  "alabama|homewood": ["birmingham", "hoover", "vestavia-hills"],
+  "alabama|montgomery": ["prattville", "millbrook", "wetumpka"],
+  "alabama|huntsville": ["madison", "decatur", "athens"],
+  "alabama|mobile": ["daphne", "fairhope", "prichard"],
+  "alabama|tuscaloosa": ["northport", "hoover", "birmingham"],
+  "alabama|alabaster": ["hoover", "birmingham", "pelham"],
+  "alabama|madison": ["huntsville", "decatur", "athens"],
+  "alabama|daphne": ["mobile", "fairhope", "prichard"]
+}

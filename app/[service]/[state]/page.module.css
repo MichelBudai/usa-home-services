@@ -1,0 +1,398 @@
+/* State page - clean, aligned with home and service pages */
+
+.wrapper {
+  padding: 0;
+}
+
+/* ----- Breadcrumb ----- */
+.breadcrumbWrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem 0;
+}
+
+@media (min-width: 640px) {
+  .breadcrumbWrap {
+    padding: 1rem 1.5rem 0;
+  }
+}
+
+/* ----- Hero ----- */
+.hero {
+  padding: clamp(2rem, 8vw, 4.5rem) 1rem;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .hero {
+    padding: clamp(3rem, 8vw, 4.5rem) 1.5rem;
+  }
+}
+
+.heroBadge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.heroTitle {
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.heroSub {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 1.25rem;
+}
+
+.trustBar {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  color: #555;
+}
+
+.trustBar li::before {
+  content: "✔ ";
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.75rem 1.25rem;
+  background-color: #1a1a1a;
+  color: #fafafa;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.heroCta:hover {
+  background-color: #333;
+  text-decoration: none;
+  color: #fafafa;
+}
+
+/* ----- Section ----- */
+.section {
+  padding: clamp(1.5rem, 4vw, 3rem) 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: clamp(2rem, 4vw, 3rem) 1.5rem;
+  }
+}
+
+.sectionAlt {
+  background-color: #f5f5f5;
+}
+
+.sectionTitle {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.sectionIntro {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+
+.inlineCta {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.inlineCta:hover {
+  text-decoration: underline;
+}
+
+/* ----- Why blocks (H3 + text) ----- */
+.whyBlocks {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.whyBlock {
+  padding: 0;
+}
+
+.whyH3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.35rem;
+}
+
+.whyText {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+/* ----- Service blocks ----- */
+.serviceBlocks {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.serviceBlock {
+  padding: 1.25rem;
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+}
+
+.serviceBlockH3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.serviceBlockDesc {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.serviceBlockCost {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.serviceBlockLink {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.serviceBlockLink:hover {
+  text-decoration: underline;
+}
+
+/* ----- Why list (legacy) ----- */
+.whyList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.whyList li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+.whyList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #1a1a1a;
+}
+
+/* ----- Cities grid ----- */
+.citiesSection {
+  padding: clamp(1.5rem, 4vw, 3rem) 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .citiesSection {
+    padding: clamp(2rem, 4vw, 3rem) 1.5rem;
+  }
+}
+
+.topCities {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.citiesGridTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.citiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 480px) {
+  .citiesGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+.cityLink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.5rem;
+  color: #1a1a1a;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.cityLink:hover {
+  background-color: #f0f0f0;
+  text-decoration: none;
+  color: #1a1a1a;
+}
+
+/* ----- FAQ ----- */
+.faqList {
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.faqItem {
+  margin-bottom: 1.25rem;
+}
+
+.faqQ {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.35rem;
+}
+
+.faqA {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+/* ----- Internal links ----- */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.internalLinksLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.internalLinksPara {
+  font-size: 0.9375rem;
+  margin-bottom: 1rem;
+}
+
+.internalLinksPara a:hover {
+  text-decoration: underline;
+}
+
+/* ----- Other services ----- */
+.otherServicesWrap {
+  max-width: 960px;
+  margin: 0;
+  padding: 0;
+}
+
+/* ----- Final CTA ----- */
+.finalCta {
+  text-align: center;
+  padding: clamp(2.5rem, 5vw, 3.5rem) 1.5rem;
+  background-color: #1a1a1a;
+  color: #fafafa;
+  border-radius: 12px;
+  max-width: 560px;
+  margin: 0 auto 2rem;
+}
+
+.finalCtaTitle {
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.finalCtaSub {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin-bottom: 1.25rem;
+}
+
+.finalCtaBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.5rem;
+  background-color: #fafafa;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.finalCtaBtn:hover {
+  opacity: 0.92;
+  color: #1a1a1a;
+  text-decoration: none;
+}

@@ -1,0 +1,103 @@
+.estimator {
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  max-width: 560px;
+}
+
+@media (min-width: 480px) {
+  .estimator {
+    padding: 1.5rem;
+  }
+}
+
+.step {
+  margin-bottom: 1.25rem;
+}
+
+.stepTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.select {
+  width: 100%;
+  max-width: 100%;
+  min-height: 48px;
+  padding: 0.625rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #1a1a1a;
+}
+
+.note,
+.hint {
+  font-size: 0.8125rem;
+  color: #555;
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  min-height: 44px;
+  padding: 0.25rem 0;
+}
+
+.checkbox input {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.result {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e8e8e8;
+}
+
+.resultLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.resultRange {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+
+.disclaimer {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.cta {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.cta:hover {
+  text-decoration: underline;
+}
