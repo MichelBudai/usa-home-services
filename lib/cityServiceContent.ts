@@ -102,6 +102,9 @@ export function getRepipingCityPageContent(
   const county = cityMetadata?.county;
   const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
+  const income = cityMetadata?.medianHouseholdIncome;
+  const homeValue = cityMetadata?.medianHomeValue;
+  const homeownershipRate = cityMetadata?.homeownershipRate;
 
   const introParagraphs: string[] = [];
   introParagraphs.push(
@@ -119,10 +122,12 @@ export function getRepipingCityPageContent(
     introParagraphs.push(`A licensed plumber who serves ${cityName} can give you a straight repiping estimate over the phone in under 5 minutes.`);
   }
 
-  const localParagraphs: string[] = [];
-  if (county) localParagraphs.push(`In ${county}, permit timelines for repiping can affect scheduling; a local plumber will factor that into your quote.`);
-  if (medianYear) localParagraphs.push(`With a median build year of ${medianYear}, many ${cityName} repiping quotes involve galvanized or polybutylene systems that are past their service life.`);
-  if (growthSnippet) localParagraphs.push(`As ${growthSnippet}, ${cityName} sees strong demand for repiping as older homes are updated.`);
+  const localParagraphs: string[] = [
+    ...(county ? [`In ${county}, permit timelines for repiping can affect scheduling — a licensed plumber familiar with the area will factor that into your quote.`] : []),
+    ...(medianYear ? [`With a median build year of ${medianYear}, many ${cityName} repiping quotes involve homes with galvanized or polybutylene systems that are past their lifespan.`] : []),
+    ...(homeownershipRate ? [`With a homeownership rate of ${homeownershipRate}% in ${cityName}, most residents have a direct financial stake in keeping their plumbing up to date — repiping is one of the highest-ROI investments before a sale.`] : []),
+    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName} sees strong demand for repiping as older inventory is updated.`] : []),
+  ].filter(Boolean);
   if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you a repiping quote tailored to your home.`);
 
   return {
@@ -237,6 +242,9 @@ export function getWaterHeaterCityPageContent(
   const county = cityMetadata?.county;
   const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
+  const income = cityMetadata?.medianHouseholdIncome;
+  const homeValue = cityMetadata?.medianHomeValue;
+  const homeownershipRate = cityMetadata?.homeownershipRate;
 
   const introParagraphs: string[] = [];
   introParagraphs.push(
@@ -254,10 +262,12 @@ export function getWaterHeaterCityPageContent(
     introParagraphs.push(`${stateName} utility rebates may apply to tankless or high-efficiency units — a licensed ${cityName} plumber will tell you when you call.`);
   }
 
-  const localParagraphs: string[] = [];
-  if (county) localParagraphs.push(`${county} permit requirements for water heater replacement are straightforward; a local plumber can outline the process when you call.`);
-  if (medianYear) localParagraphs.push(`Homes in ${cityName} built around ${medianYear} often have water heaters nearing end-of-life — getting a quote now avoids emergency pricing.`);
-  if (growthSnippet) localParagraphs.push(`${cityName} is ${growthSnippet}, so same-day and next-day installs are in high demand; booking ahead often saves money.`);
+  const localParagraphs: string[] = [
+    ...(county ? [`${county} permit requirements for water heater replacement are straightforward; a local plumber can outline the process when you call.`] : []),
+    ...(medianYear ? [`Homes in ${cityName} built around ${medianYear} often have water heaters nearing end-of-life — getting a quote now avoids emergency pricing.`] : []),
+    ...(income ? [`With a median household income of $${income.toLocaleString()} in ${cityName}, getting a flat-rate quote before work starts ensures no surprises on the final invoice.`] : []),
+    ...(growthSnippet ? [`${cityName} is ${growthSnippet}, so same-day and next-day installs are in high demand; booking ahead often saves money.`] : []),
+  ].filter(Boolean);
   if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you a water heater quote tailored to your home.`);
 
   return {
@@ -372,6 +382,9 @@ export function getSewerLineCityPageContent(
   const county = cityMetadata?.county;
   const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
+  const income = cityMetadata?.medianHouseholdIncome;
+  const homeValue = cityMetadata?.medianHomeValue;
+  const homeownershipRate = cityMetadata?.homeownershipRate;
 
   const introParagraphs: string[] = [];
   introParagraphs.push(
@@ -389,10 +402,12 @@ export function getSewerLineCityPageContent(
     introParagraphs.push(`Trenchless sewer replacement is available in most ${cityName} areas and can avoid full yard excavation. A licensed plumber can tell you if your property qualifies when you call.`);
   }
 
-  const localParagraphs: string[] = [];
-  if (county) localParagraphs.push(`In ${county}, sewer work typically requires permits and inspections; a plumber who regularly works the area can streamline the process.`);
-  if (medianYear) localParagraphs.push(`Older ${cityName} neighborhoods, including many homes built before ${medianYear}, frequently have clay or cast-iron sewer lines that are prime candidates for replacement or trenchless repair.`);
-  if (growthSnippet) localParagraphs.push(`As ${growthSnippet}, ${cityName} has a mix of older and newer infrastructure — a camera inspection will show whether you need full replacement or a targeted repair.`);
+  const localParagraphs: string[] = [
+    ...(county ? [`In ${county}, sewer work typically requires permits and inspections; a plumber who regularly works the area can streamline the process.`] : []),
+    ...(medianYear ? [`Older ${cityName} neighborhoods, including many homes built before ${medianYear}, frequently have clay or cast-iron sewer lines that are prime candidates for replacement or trenchless repair.`] : []),
+    ...(homeValue ? [`With a median home value of $${homeValue.toLocaleString()} in ${cityName}, addressing sewer line issues before they escalate protects one of your largest assets.`] : []),
+    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName} has a mix of older and newer infrastructure — a camera inspection will show whether you need a full replacement or a targeted repair.`] : []),
+  ].filter(Boolean);
   if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you a sewer line quote tailored to your property.`);
 
   return {
@@ -507,6 +522,9 @@ export function getDrainLineCityPageContent(
   const county = cityMetadata?.county;
   const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
+  const income = cityMetadata?.medianHouseholdIncome;
+  const homeValue = cityMetadata?.medianHomeValue;
+  const homeownershipRate = cityMetadata?.homeownershipRate;
 
   const introParagraphs: string[] = [];
   introParagraphs.push(
@@ -524,10 +542,12 @@ export function getDrainLineCityPageContent(
     introParagraphs.push(`A camera inspection is the fastest way to get an accurate quote — most ${cityName} plumbers include it in their quote process.`);
   }
 
-  const localParagraphs: string[] = [];
-  if (county) localParagraphs.push(`Drain line work in ${county} may require a permit depending on scope; a licensed ${cityName} plumber can confirm when you call.`);
-  if (medianYear) localParagraphs.push(`With many ${cityName} homes built around ${medianYear}, drain line replacement quotes often involve older materials and access challenges that affect the final price.`);
-  if (growthSnippet) localParagraphs.push(`In ${cityName}, ${growthSnippet}, demand for drain and sewer services is steady — getting a quote early helps secure a slot without emergency fees.`);
+  const localParagraphs: string[] = [
+    ...(county ? [`Drain line work in ${county} may require a permit depending on scope; a licensed ${cityName} plumber can confirm when you call.`] : []),
+    ...(medianYear ? [`With many ${cityName} homes built around ${medianYear}, drain line replacement quotes often involve older materials and access challenges that affect the final price.`] : []),
+    ...(income ? [`${cityName} homeowners with a median household income of $${income.toLocaleString()} find that getting a drain line quote early — before a failure — is the most cost-effective approach.`] : []),
+    ...(growthSnippet ? [`In ${cityName}, ${growthSnippet}, demand for drain and sewer services is steady — getting a quote early helps secure a slot without emergency fees.`] : []),
+  ].filter(Boolean);
   if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you a drain line quote tailored to your home.`);
 
   return {

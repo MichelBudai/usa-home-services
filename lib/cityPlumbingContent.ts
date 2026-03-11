@@ -48,6 +48,9 @@ export function getPlumbingCityPageContent(
   const county = cityMetadata?.county;
   const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
+  const income = cityMetadata?.medianHouseholdIncome;
+  const homeValue = cityMetadata?.medianHomeValue;
+  const homeownershipRate = cityMetadata?.homeownershipRate;
 
   const introParagraphs: string[] = [];
   if (growthSnippet) {
@@ -121,6 +124,11 @@ export function getPlumbingCityPageContent(
                       `With a median build year of ${medianYear}, many ${cityName} repiping quotes involve homes with galvanized or polybutylene systems that are past their lifespan.`,
                     ]
                   : []),
+                ...(homeownershipRate
+                  ? [
+                      `With a homeownership rate of ${homeownershipRate}% in ${cityName}, most residents have a direct financial stake in keeping their plumbing up to date — repiping is one of the highest-ROI investments before a sale.`,
+                    ]
+                  : []),
                 ...(growthSnippet
                   ? [
                       `As ${growthSnippet}, ${cityName} sees strong demand for repiping as older inventory is updated.`,
@@ -157,6 +165,11 @@ export function getPlumbingCityPageContent(
                 ...(medianYear
                   ? [
                       `Homes in ${cityName} built around ${medianYear} often have water heaters nearing end-of-life — getting a quote now avoids emergency pricing.`,
+                    ]
+                  : []),
+                ...(income
+                  ? [
+                      `With a median household income of $${income.toLocaleString()} in ${cityName}, getting a flat-rate quote before work starts ensures no surprises on the final invoice.`,
                     ]
                   : []),
                 ...(growthSnippet
@@ -197,6 +210,11 @@ export function getPlumbingCityPageContent(
                       `Older ${cityName} neighborhoods, including many homes built before ${medianYear}, frequently have clay or cast-iron sewer lines that are prime candidates for replacement or trenchless repair.`,
                     ]
                   : []),
+                ...(homeValue
+                  ? [
+                      `With a median home value of $${homeValue.toLocaleString()} in ${cityName}, addressing sewer line issues before they escalate protects one of your largest assets.`,
+                    ]
+                  : []),
                 ...(growthSnippet
                   ? [
                       `As ${growthSnippet}, ${cityName} has a mix of older and newer infrastructure — a camera inspection will show whether you need a full replacement or a targeted repair.`,
@@ -233,6 +251,11 @@ export function getPlumbingCityPageContent(
                 ...(medianYear
                   ? [
                       `With many ${cityName} homes built around ${medianYear}, drain line replacement quotes often involve older materials and access challenges that affect the final price.`,
+                    ]
+                  : []),
+                ...(income
+                  ? [
+                      `${cityName} homeowners with a median household income of $${income.toLocaleString()} find that getting a drain line quote early — before a failure — is the most cost-effective approach.`,
                     ]
                   : []),
                 ...(growthSnippet
