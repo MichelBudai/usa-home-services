@@ -6,9 +6,8 @@ import {
   getStateBySlug,
   isValidService,
   getServiceSlugs,
-  type ServiceSlug,
 } from "@/lib/data";
-import { FULL_SERVICE_CONTENT } from "@/lib/fullServiceContentIndex";
+import { getFullServiceContent } from "@/lib/fullServiceContentIndex";
 import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
 import { getSiteConfigValues } from "@/lib/siteConfig";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -27,7 +26,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { service } = params;
   if (!isValidService(service)) return { title: "Not found" };
-  const content = FULL_SERVICE_CONTENT[service as ServiceSlug];
+  const content = getFullServiceContent()[service];
   return {
     title: content.meta.title,
     description: content.meta.description,
@@ -88,8 +87,7 @@ export default function ServicePage({
   const { service } = params;
   if (!isValidService(service)) notFound();
 
-  const slug = service as ServiceSlug;
-  const c = FULL_SERVICE_CONTENT[slug];
+  const c = getFullServiceContent()[service];
 
   return (
     <div className={styles.wrapper}>
