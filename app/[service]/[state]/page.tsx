@@ -222,7 +222,7 @@ export default function StatePage({
       {permitContent && (
         <section className={styles.section} aria-labelledby="permits-title">
           <h2 id="permits-title" className={styles.sectionTitle}>
-            Pest Control Permits & Regulations in {stateName}
+            {getCurrentSiteConfig().namePlural} Permits & Regulations in {stateName}
           </h2>
           <p className={styles.sectionIntro}>{permitContent}</p>
         </section>
@@ -283,7 +283,7 @@ export default function StatePage({
         <p className={styles.sectionIntro}>{content.cityIntro.paragraph}</p>
         {topCities.length > 0 && (
           <p className={styles.topCities}>
-            Cities with highest pest control demand in {stateName}:{" "}
+            Cities with highest demand in {stateName}:{" "}
             {topCities.map((c) => c.name).join(" · ")}
           </p>
         )}

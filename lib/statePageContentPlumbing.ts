@@ -1,5 +1,5 @@
 import type { ServiceSlug } from "./data";
-import { SERVICE_LABELS } from "./data";
+import { getServiceLabels } from "./data";
 import stateMetadataJson from "../data/state_metadata.json";
 
 interface StateMetadata {
@@ -152,7 +152,7 @@ export function getStatePageContent(
       items: (["plumbing-quote", "repiping-quote", "water-heater-replacement-quote", "sewer-line-replacement-quote", "drain-line-replacement-quote", "emergency-plumbing-quote"] as ServiceSlug[]).map(
         (slug) => {
           const { description, costRange } = SERVICE_STATE_DESCRIPTIONS[slug];
-          const title = `${SERVICE_LABELS[slug]} — ${stateName}`;
+          const title = `${getServiceLabels()[slug]} — ${stateName}`;
           return { slug, title, description, costRange };
         }
       ),

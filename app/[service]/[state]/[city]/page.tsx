@@ -278,10 +278,10 @@ export async function generateMetadata({
   const censusSnippet = getCityCensusMetaSnippet(cityName, stateName, cityCensus);
 
   const cityServiceSlugs = getCurrentSiteConfig().services.map(s => s.slug);
-  if (cityServiceSlugs.includes(service)) {
+  if (cityServiceSlugs.includes(service as (typeof cityServiceSlugs)[number])) {
     const nearby = getNearbyCities(stateSlug, citySlug, 3);
     const cityMetadata = getCityMetadata(stateSlug, citySlug);
-    const content = getServiceCityPageContent(service, {
+    const content = getServiceCityPageContent(service as Parameters<typeof getServiceCityPageContent>[0], {
       cityName,
       stateName,
       stateAbbr,
@@ -333,9 +333,9 @@ export default function CityPage({
   const calculatorConfig = getCalculatorConfig(nicheSlug)[service];
 
   const cityServiceSlugs = getCurrentSiteConfig().services.map(s => s.slug);
-  const hasCityContent = cityServiceSlugs.includes(service);
+  const hasCityContent = cityServiceSlugs.includes(service as (typeof cityServiceSlugs)[number]);
   const serviceCityContent = hasCityContent
-    ? getServiceCityPageContent(service, {
+    ? getServiceCityPageContent(service as Parameters<typeof getServiceCityPageContent>[0], {
         cityName,
         stateName,
         stateAbbr,
