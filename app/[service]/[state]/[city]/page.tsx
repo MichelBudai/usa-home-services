@@ -22,6 +22,7 @@ import {
 } from "@/lib/censusData";
 import { getServiceCityPageContent } from "@/lib/cityServiceContent";
 import { getCityMetadata } from "@/lib/cityMetadata";
+import { getCalculatorConfig } from "@/lib/calculatorRanges";
 import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
 import { getSiteConfigValues } from "@/lib/siteConfig";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -331,6 +332,8 @@ export default function CityPage({
   const nearby = getNearbyCities(stateSlug, citySlug, 3);
   const cityMetadata = getCityMetadata(stateSlug, citySlug);
   const { SITE_BASE_URL, PHONE_TEL, CTA_CALL_LABEL } = getSiteConfigValues();
+  const { slug: nicheSlug } = getCurrentSiteConfig();
+  const calculatorConfig = getCalculatorConfig(nicheSlug)[service];
 
   const cityServiceSlugs = [
     "termite-treatment-quote",
@@ -470,6 +473,7 @@ export default function CityPage({
             <PlumbingCostEstimator
               cityName={cityName}
               serviceSlug={service as ServiceSlug}
+              calculatorConfig={calculatorConfig}
               phoneHref={PHONE_TEL}
             />
           </div>
@@ -754,6 +758,7 @@ export default function CityPage({
           <PlumbingCostEstimator
             cityName={cityName}
             serviceSlug={service as ServiceSlug}
+            calculatorConfig={calculatorConfig}
             phoneHref={PHONE_TEL}
           />
         </div>

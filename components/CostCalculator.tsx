@@ -2,9 +2,9 @@
 
 import { useState, useMemo } from "react";
 import {
-  CALCULATOR_CONFIG,
   getRangeForSingle,
   getRangeForMulti,
+  type CalculatorServiceConfig,
   type SingleSelectConfig,
   type MultiSelectConfig,
 } from "@/lib/calculatorRanges";
@@ -23,11 +23,12 @@ type Props = {
   service: string;
   cityName: string;
   stateName?: string;
+  calculatorConfig: CalculatorServiceConfig;
   className?: string;
 };
 
-export function CostCalculator({ service, cityName, stateName, className = "" }: Props) {
-  const config = CALCULATOR_CONFIG[service];
+export function CostCalculator({ service, cityName, stateName, calculatorConfig, className = "" }: Props) {
+  const config = calculatorConfig;
   const [singleValue, setSingleValue] = useState<string>(
     config.kind === "single" ? config.options[0]?.value ?? "" : ""
   );

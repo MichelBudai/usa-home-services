@@ -2,9 +2,9 @@
 
 import { useState, useMemo } from "react";
 import {
-  CALCULATOR_CONFIG,
   getRangeForSingle,
   getRangeForMulti,
+  type CalculatorServiceConfig,
   type SingleSelectConfig,
   type MultiSelectConfig,
 } from "@/lib/calculatorRanges";
@@ -22,6 +22,7 @@ function formatMoney(n: number): string {
 type Props = {
   cityName: string;
   serviceSlug: string;
+  calculatorConfig: CalculatorServiceConfig;
   phoneHref?: string;
   ctaLabel?: string;
   className?: string;
@@ -30,11 +31,12 @@ type Props = {
 export function PlumbingCostEstimator({
   cityName,
   serviceSlug,
+  calculatorConfig,
   phoneHref = "tel:+10000000000",
   ctaLabel = "Call Now",
   className = "",
 }: Props) {
-  const config = CALCULATOR_CONFIG[serviceSlug];
+  const config = calculatorConfig;
 
   const [value1, setValue1] = useState<string>(config.options[0].value);
   const [value2, setValue2] = useState<string>(
