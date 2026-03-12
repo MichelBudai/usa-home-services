@@ -1,5 +1,5 @@
 import type { ServiceSlug } from "./data";
-import { SERVICE_LABELS } from "./data";
+import { getCurrentSiteConfig } from "./getSiteConfig";
 import stateMetadataJson from "../data/state_metadata.json";
 
 interface StateMetadata {
@@ -160,7 +160,7 @@ export function getStatePageContent(
         ] as ServiceSlug[]
       ).map((slug) => {
         const { description, costRange } = SERVICE_STATE_DESCRIPTIONS[slug];
-        const title = `${SERVICE_LABELS[slug]} — ${stateName}`;
+        const title = `${getCurrentSiteConfig().services.find(s => s.slug === slug)?.label ?? slug} — ${stateName}`;
         return { slug, title, description, costRange };
       }),
     },

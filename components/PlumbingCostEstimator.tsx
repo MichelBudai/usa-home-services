@@ -8,8 +8,6 @@ import {
   type SingleSelectConfig,
   type MultiSelectConfig,
 } from "@/lib/calculatorRanges";
-import type { ServiceSlug } from "@/lib/data";
-import { CTA_CALL_LABEL } from "@/lib/siteConfig";
 import styles from "./PlumbingCostEstimator.module.css";
 
 function formatMoney(n: number): string {
@@ -23,8 +21,9 @@ function formatMoney(n: number): string {
 
 type Props = {
   cityName: string;
-  serviceSlug: ServiceSlug;
+  serviceSlug: string;
   phoneHref?: string;
+  ctaLabel?: string;
   className?: string;
 };
 
@@ -32,6 +31,7 @@ export function PlumbingCostEstimator({
   cityName,
   serviceSlug,
   phoneHref = "tel:+10000000000",
+  ctaLabel = "Call Now",
   className = "",
 }: Props) {
   const config = CALCULATOR_CONFIG[serviceSlug];
@@ -103,7 +103,7 @@ export function PlumbingCostEstimator({
           minutes.
         </p>
         <a href={phoneHref} className={styles.cta}>
-          {CTA_CALL_LABEL}
+          {ctaLabel}
         </a>
       </div>
     </div>

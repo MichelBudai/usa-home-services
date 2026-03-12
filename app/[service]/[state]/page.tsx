@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  SERVICE_SLUGS,
-  SERVICE_LABELS,
   stateSlugs,
   getStateBySlug,
   getCitiesForState,
   isValidService,
   isValidStateSlug,
+  getServiceSlugs,
+  getServiceLabels,
   type ServiceSlug,
 } from "@/lib/data";
 import { getStatePageContent } from "@/lib/statePageContent";
@@ -20,7 +20,8 @@ import {
   getPermitContent,
   getTopCitiesForState,
 } from "@/lib/censusData";
-import { SITE_BASE_URL } from "@/lib/siteConfig";
+import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
+import { getSiteConfigValues } from "@/lib/siteConfig";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { OtherServicesLinks } from "@/components/OtherServicesLinks";
 import { CensusStatsGrid } from "@/components/CensusStatsGrid";
@@ -30,7 +31,7 @@ export const revalidate = 2592000;
 
 export function generateStaticParams() {
   const result: { service: string; state: string }[] = [];
-  for (const service of SERVICE_SLUGS) {
+  for (const service of getServiceSlugs()) {
     for (const state of stateSlugs) {
       result.push({ service, state });
     }
@@ -49,7 +50,7 @@ export async function generateMetadata({
   const stateData = getStateBySlug(stateSlug);
   const stateName = stateData?.state ?? stateSlug;
   const stateAbbr = stateData?.abbr ?? "";
-  const label = SERVICE_LABELS[service as ServiceSlug];
+  const label = getServiceLabels()[service];
   const content = getStatePageContent(
     service as ServiceSlug,
     label,
@@ -82,7 +83,7 @@ export default function StatePage({
   const stateName = stateData?.state ?? stateSlug;
   const stateAbbr = stateData?.abbr ?? "";
   const cities = getCitiesForState(stateSlug);
-  const label = SERVICE_LABELS[service as ServiceSlug];
+  const label = getServiceLabels()[service];
   const content = getStatePageContent(
     service as ServiceSlug,
     label,
@@ -99,6 +100,7 @@ export default function StatePage({
   const climateContent = getClimateContent(stateSlug);
   const permitContent = getPermitContent(stateSlug);
   const topCities = getTopCitiesForState(stateSlug, 10);
+  const { SITE_BASE_URL } = getSiteConfigValues();
 
   const breadcrumbList = {
     "@context": "https://schema.org",

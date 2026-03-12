@@ -3,8 +3,7 @@ import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  SERVICE_SLUGS,
-  SERVICE_LABELS,
+  getServiceSlugs,
   stateSlugs,
   getStateBySlug,
   getCityName,
@@ -23,7 +22,8 @@ import {
 } from "@/lib/censusData";
 import { getServiceCityPageContent } from "@/lib/cityServiceContent";
 import { getCityMetadata } from "@/lib/cityMetadata";
-import { PHONE_TEL, CTA_CALL_LABEL, SITE_BASE_URL } from "@/lib/siteConfig";
+import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
+import { getSiteConfigValues } from "@/lib/siteConfig";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { OtherServicesLinks } from "@/components/OtherServicesLinks";
 import styles from "./page.module.css";
@@ -47,7 +47,7 @@ export const revalidate = 2592000;
 
 export function generateStaticParams() {
   const result: { service: string; state: string; city: string }[] = [];
-  for (const service of SERVICE_SLUGS) {
+  for (const service of getServiceSlugs()) {
     for (const stateSlug of stateSlugs) {
       const cities = getCitiesForState(stateSlug);
       for (const { slug: citySlug } of cities) {
@@ -269,7 +269,7 @@ export async function generateMetadata({
   const stateName = stateData?.state ?? stateSlug;
   const stateAbbr = stateData?.abbr ?? "";
   const cityName = getCityName(stateSlug, citySlug) ?? citySlug;
-  const label = SERVICE_LABELS[service as ServiceSlug];
+  const label = getCurrentSiteConfig().services.find(s => s.slug === service)?.label ?? service;
   const cityCensus = getCityCensus(stateSlug, citySlug);
   const censusSnippet = getCityCensusMetaSnippet(cityName, stateName, cityCensus);
 
@@ -327,9 +327,10 @@ export default function CityPage({
   const stateName = stateData?.state ?? stateSlug;
   const stateAbbr = stateData?.abbr ?? "";
   const cityName = getCityName(stateSlug, citySlug) ?? citySlug;
-  const label = SERVICE_LABELS[service as ServiceSlug];
+  const label = getCurrentSiteConfig().services.find(s => s.slug === service)?.label ?? service;
   const nearby = getNearbyCities(stateSlug, citySlug, 3);
   const cityMetadata = getCityMetadata(stateSlug, citySlug);
+  const { SITE_BASE_URL, PHONE_TEL, CTA_CALL_LABEL } = getSiteConfigValues();
 
   const cityServiceSlugs = [
     "termite-treatment-quote",

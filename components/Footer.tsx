@@ -1,18 +1,22 @@
 import Link from "next/link";
-import { SERVICE_SLUGS, SERVICE_LABELS, type ServiceSlug } from "@/lib/constants";
-import { PHONE_TEL, CTA_CALL_LABEL } from "@/lib/siteConfig";
 
-export function Footer() {
+interface Props {
+  phoneTel: string;
+  ctaLabel: string;
+  services: readonly { slug: string; label: string }[];
+}
+
+export function Footer({ phoneTel, ctaLabel, services }: Props) {
   return (
     <footer className="site-footer" role="contentinfo">
       <div className="footer-inner">
         <div className="footer-col footer-col-services">
           <h3 className="footer-heading">Services</h3>
           <ul className="footer-links">
-            {SERVICE_SLUGS.map((slug) => (
+            {services.map(({ slug, label }) => (
               <li key={slug}>
                 <Link href={`/${slug}`} className="footer-link">
-                  {SERVICE_LABELS[slug as ServiceSlug]}
+                  {label}
                 </Link>
               </li>
             ))}
@@ -22,28 +26,16 @@ export function Footer() {
         <div className="footer-col footer-col-legal">
           <h3 className="footer-heading">Legal</h3>
           <ul className="footer-links">
-            <li>
-              <Link href="/privacy-policy" className="footer-link">
-                Privacy Policy
-              </Link>
-            </li>
-            <li>
-              <Link href="/terms-of-use" className="footer-link">
-                Terms of Use
-              </Link>
-            </li>
-            <li>
-              <Link href="/disclaimer" className="footer-link">
-                Disclaimer
-              </Link>
-            </li>
+            <li><Link href="/privacy-policy" className="footer-link">Privacy Policy</Link></li>
+            <li><Link href="/terms-of-use" className="footer-link">Terms of Use</Link></li>
+            <li><Link href="/disclaimer" className="footer-link">Disclaimer</Link></li>
           </ul>
         </div>
 
         <div className="footer-col footer-col-cta">
           <h3 className="footer-heading">Get a quote</h3>
-          <a href={PHONE_TEL} className="footer-cta">
-            {CTA_CALL_LABEL}
+          <a href={phoneTel} className="footer-cta">
+            {ctaLabel}
           </a>
         </div>
       </div>

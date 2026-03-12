@@ -2,21 +2,22 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  SERVICE_SLUGS,
   stateSlugs,
   getStateBySlug,
   isValidService,
+  getServiceSlugs,
   type ServiceSlug,
 } from "@/lib/data";
 import { FULL_SERVICE_CONTENT } from "@/lib/fullServiceContentIndex";
-import { SITE_BASE_URL } from "@/lib/siteConfig";
+import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
+import { getSiteConfigValues } from "@/lib/siteConfig";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import styles from "./page.module.css";
 
 export const revalidate = 2592000;
 
 export function generateStaticParams() {
-  return SERVICE_SLUGS.map((service) => ({ service }));
+  return getServiceSlugs().map((service) => ({ service }));
 }
 
 export async function generateMetadata({
@@ -45,12 +46,13 @@ function ServicePageSchema({
   faqItems: { q: string; a: string }[];
   serviceSlug: string;
 }) {
+  const { SITE_BASE_URL } = getSiteConfigValues();
   const breadcrumbList = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_BASE_URL}/` },
-      { "@type": "ListItem", position: 2, name: serviceName },
+      { "@type": "ListItem", position: 2, name: serviceName, item: `${SITE_BASE_URL}/${serviceSlug}` },
     ],
   };
   const faqSchema = {

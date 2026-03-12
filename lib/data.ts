@@ -1,10 +1,21 @@
 import { slugify } from "./slugs";
-import { SERVICE_SLUGS, SERVICE_LABELS, type ServiceSlug } from "./constants";
+import { getCurrentSiteConfig } from "./getSiteConfig";
 import cityMetadataJson from "../data/city_metadata.json";
 import { type CityMetadata } from "./cityMetadata";
 
-export type { ServiceSlug };
-export { SERVICE_SLUGS, SERVICE_LABELS };
+export type ServiceSlug = string;
+
+export function getServiceSlugs(): string[] {
+  return getCurrentSiteConfig().services.map((s) => s.slug);
+}
+export function getServiceLabels(): Record<string, string> {
+  return Object.fromEntries(
+    getCurrentSiteConfig().services.map((s) => [s.slug, s.label])
+  );
+}
+// Compatibilité — sera supprimé progressivement
+export const SERVICE_SLUGS: string[] = [];
+export const SERVICE_LABELS: Record<string, string> = {};
 
 const metadataMap = cityMetadataJson as unknown as Record<string, CityMetadata>;
 
@@ -89,7 +100,7 @@ export function getNearbyCities(
 }
 
 export function isValidService(service: string): service is ServiceSlug {
-  return (SERVICE_SLUGS as readonly string[]).includes(service);
+  return getServiceSlugs().includes(service);
 }
 
 export function isValidStateSlug(slug: string): boolean {

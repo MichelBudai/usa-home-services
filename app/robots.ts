@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
-import { SITE_BASE_URL } from "@/lib/siteConfig";
+import { getSiteConfigValues } from "@/lib/siteConfig";
 
 export default function robots(): MetadataRoute.Robots {
+  const { SITE_BASE_URL } = getSiteConfigValues();
   return {
     rules: {
       userAgent: "*",

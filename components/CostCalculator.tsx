@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import type { ServiceSlug } from "@/lib/constants";
 import {
   CALCULATOR_CONFIG,
   getRangeForSingle,
@@ -21,7 +20,7 @@ function formatMoney(n: number): string {
 }
 
 type Props = {
-  service: ServiceSlug;
+  service: string;
   cityName: string;
   stateName?: string;
   className?: string;

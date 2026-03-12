@@ -4,17 +4,20 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PhoneCallButton } from "@/components/PhoneCallButton";
-import { SITE_BASE_URL } from "@/lib/siteConfig";
+import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
+import { getSiteConfigValues } from "@/lib/siteConfig";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_BASE_URL),
-  title: "Free Pest Control Quotes | Licensed Local Specialists | USA Pest Control Quote",
-  description:
-    "Get free pest control quotes from licensed local specialists across the US. Compare estimates for termite, rodent, bed bug, mosquito & wildlife. No obligation.",
-  verification: {
-    google: "ckod_5zAhfgl96Eq6KAkO4vakw8GluUJ2n0GnF-YxqQ",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const config = getCurrentSiteConfig();
+  return {
+    metadataBase: new URL(config.siteUrl),
+    title: `Free ${config.name} Quotes | Licensed Local ${config.namePlural} | ${config.siteName}`,
+    description: `Get free ${config.name.toLowerCase()} quotes from licensed local ${config.namePlural.toLowerCase()} across the US. Compare estimates in 4,000+ cities. No obligation.`,
+    verification: {
+      google: "ckod_5zAhfgl96Eq6KAkO4vakw8GluUJ2n0GnF-YxqQ",
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -27,27 +30,43 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const config = getCurrentSiteConfig();
+  const { PHONE_TEL, CTA_CALL_LABEL } = getSiteConfigValues();
+
   return (
     <html lang="en">
       <body>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-ZCV2C6T5TW"
-          strategy="afterInteractive"
+        {config.ga4Id && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${config.ga4Id}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${config.ga4Id}');
+              `}
+            </Script>
+          </>
+        )}
+        <Header
+          phoneTel={config.phoneTel}
+          ctaLabel={`Call Now - ${config.phoneDisplay}`}
+          siteName={config.siteName}
+          services={config.services}
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-ZCV2C6T5TW');
-          `}
-        </Script>
-        <Header />
         <main className="main-content">
           {children}
         </main>
-        <Footer />
-        <PhoneCallButton />
+        <Footer
+          phoneTel={PHONE_TEL}
+          ctaLabel={CTA_CALL_LABEL}
+          services={config.services}
+        />
+        <PhoneCallButton phoneTel={PHONE_TEL} ctaLabel={CTA_CALL_LABEL} />
       </body>
     </html>
   );

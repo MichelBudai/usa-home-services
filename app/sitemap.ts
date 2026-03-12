@@ -1,18 +1,14 @@
 import type { MetadataRoute } from "next";
-import {
-  SITE_BASE_URL,
-} from "@/lib/siteConfig";
-import {
-  SERVICE_SLUGS,
-  stateSlugs,
-  getCitiesForState,
-} from "@/lib/data";
+import { getSiteConfigValues } from "@/lib/siteConfig";
+import { stateSlugs, getCitiesForState } from "@/lib/data";
+import { getServiceConstants } from "@/lib/constants";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const { SITE_BASE_URL } = getSiteConfigValues();
+  const { SERVICE_SLUGS } = getServiceConstants();
   const lastMod = new Date();
   const entries: MetadataRoute.Sitemap = [];
 
-  // Home
   entries.push({
     url: SITE_BASE_URL,
     lastModified: lastMod,
@@ -20,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 1,
   });
 
-  // Service pages
   for (const service of SERVICE_SLUGS) {
     entries.push({
       url: `${SITE_BASE_URL}/${service}`,
@@ -30,7 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  // State pages
   for (const service of SERVICE_SLUGS) {
     for (const stateSlug of stateSlugs) {
       entries.push({
@@ -42,7 +36,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  // City pages
   for (const service of SERVICE_SLUGS) {
     for (const stateSlug of stateSlugs) {
       const cities = getCitiesForState(stateSlug);

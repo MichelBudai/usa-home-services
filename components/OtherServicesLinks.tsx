@@ -1,9 +1,5 @@
 import Link from "next/link";
-import {
-  SERVICE_SLUGS,
-  SERVICE_LABELS,
-  type ServiceSlug,
-} from "@/lib/constants";
+import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
 
 const styles = {
   section: {
@@ -25,7 +21,7 @@ const styles = {
 };
 
 type Props = {
-  currentService: ServiceSlug;
+  currentService: string;
   stateSlug?: string;
   citySlug?: string;
   stateName?: string;
@@ -39,7 +35,8 @@ export function OtherServicesLinks({
   stateName,
   cityName,
 }: Props) {
-  const others = SERVICE_SLUGS.filter((s) => s !== currentService);
+  const config = getCurrentSiteConfig();
+  const others = config.services.filter((s) => s.slug !== currentService);
   if (others.length === 0) return null;
 
   const title = cityName && stateSlug && citySlug
@@ -52,7 +49,7 @@ export function OtherServicesLinks({
     <div style={styles.section}>
       <p style={styles.title}>{title}</p>
       <div style={styles.list}>
-        {others.map((slug) => {
+        {others.map(({ slug, label }) => {
           const href = stateSlug
             ? citySlug
               ? `/${slug}/${stateSlug}/${citySlug}`
@@ -60,7 +57,7 @@ export function OtherServicesLinks({
             : `/${slug}`;
           return (
             <Link key={slug} href={href}>
-              {SERVICE_LABELS[slug]}
+              {label}
             </Link>
           );
         })}
