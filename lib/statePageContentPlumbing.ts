@@ -96,12 +96,13 @@ export function getStatePageContent(
   stateSlug: string
 ): StatePageContent {
   const serviceLower = serviceLabel.toLowerCase();
+  const serviceClean = serviceLower.replace(/\s*quote\s*$/i, "").trim();
   const stateMeta = stateMetadataMap[stateSlug] ?? null;
   const topCityNames = stateMeta?.topCities.slice(0, 3).map((c) => c.name).join(", ") ?? "";
 
   return {
     metaTitle: `${serviceLabel} in ${stateName} | Free Quotes by City`,
-    metaDescription: `Get free ${serviceLower} quotes from licensed plumbers in ${stateName}. Compare estimates by city. No obligation. Licensed & insured.`,
+    metaDescription: `Get free ${serviceClean} quotes from licensed plumbers in ${stateName}. Compare estimates by city. No obligation. Licensed & insured.`,
 
     heroTitle: `Free ${serviceLabel} in ${stateName}`,
     heroSub: `Connect with licensed ${stateName} plumbers in your city — get a free, no-obligation estimate for any plumbing job, big or small.`,

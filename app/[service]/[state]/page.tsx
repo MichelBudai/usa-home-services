@@ -205,7 +205,7 @@ export default function StatePage({
       {climateContent && (
         <section className={`${styles.section} ${styles.sectionAlt}`} aria-labelledby="climate-title">
           <h2 id="climate-title" className={styles.sectionTitle}>
-            How {stateName} Climate Affects Your Pest Activity
+            How {stateName} Climate Affects Your {getCurrentSiteConfig().namePlural}
           </h2>
           <p className={styles.sectionIntro}>{climateContent.pestNote}</p>
           {climateContent.primaryRisks.length > 0 && (

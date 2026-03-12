@@ -1,4 +1,5 @@
 import type { ServiceSlug } from "./data";
+import { getCurrentSiteConfig } from "./getSiteConfig";
 import stateMetadataJson from "../data/state_metadata.json";
 
 interface StateMetadata {
@@ -104,18 +105,19 @@ export function getStatePageContent(
   stateSlug: string
 ): StatePageContent {
   const serviceLower = serviceLabel.toLowerCase();
+  const serviceClean = serviceLower.replace(/\s*quote\s*$/i, "").trim();
   const stateMeta = stateMetadataMap[stateSlug] ?? null;
   const topCityNames = stateMeta?.topCities.slice(0, 3).map((c) => c.name).join(", ") ?? "";
 
   return {
     metaTitle: `${serviceLabel} in ${stateName} | Free Quotes by City`,
-    metaDescription: `Get free ${serviceLower} quotes from licensed pest control specialists in ${stateName}. Compare estimates by city. No obligation. Licensed & insured.`,
+    metaDescription: `Get free ${serviceClean} quotes from licensed ${getCurrentSiteConfig().namePlural.toLowerCase()} in ${stateName}. Compare estimates by city. No obligation. Licensed & insured.`,
 
     heroTitle: `Free ${serviceLabel} in ${stateName}`,
-    heroSub: `Connect with licensed ${stateName} pest control specialists in your city — get a free, no-obligation estimate for any pest, termite, rodent, or wildlife issue.`,
+    heroSub: `Connect with licensed ${stateName} ${getCurrentSiteConfig().namePlural.toLowerCase()} in your city — get a free, no-obligation estimate for any pest, termite, rodent, or wildlife issue.`,
 
     trustBullets: [
-      `Licensed & insured ${stateAbbr} pest control specialists`,
+      `Licensed & insured ${stateAbbr} ${getCurrentSiteConfig().namePlural.toLowerCase()}`,
       "Free quotes, zero commitment",
       `Same-day service in most ${stateName} cities`,
       "Upfront pricing before any work starts",
@@ -175,7 +177,7 @@ export function getStatePageContent(
 
     cityIntro: {
       h2: `Find a ${serviceLabel} in Your ${stateName} City`,
-      paragraph: `${stateName} pest control specialists are available for free quotes in ${stateMeta?.cityCount ?? "hundreds of"} cities statewide${topCityNames ? `, including ${topCityNames}` : ""}. Select your city below to get an estimate specific to your area.`,
+      paragraph: `${stateName} ${getCurrentSiteConfig().namePlural.toLowerCase()} are available for free quotes in ${stateMeta?.cityCount ?? "hundreds of"} cities statewide${topCityNames ? `, including ${topCityNames}` : ""}. Select your city below to get an estimate specific to your area.`,
       ctaText: "Select Your City",
     },
 
@@ -187,11 +189,11 @@ export function getStatePageContent(
           a: `Pest control costs in ${stateName} vary widely by service. A one-time general treatment runs $150–$400; annual prevention programs run $400–$900 per year. Termite treatment ranges from $500 to $8,000+ depending on method; rodent exclusion runs $300–$2,500+. Select your city for a local estimate.`,
         },
         {
-          q: `Do pest control specialists need a license in ${stateName}?`,
+          q: `Do ${getCurrentSiteConfig().namePlural.toLowerCase()} need a license in ${stateName}?`,
           a: `Yes. ${stateName} requires pest control applicators to be licensed by the state. Wildlife removal specialists require separate wildlife control permits for most species. Always verify licensing before hiring — all specialists connected through this page are licensed and insured.`,
         },
         {
-          q: `How do I find a licensed pest control specialist in ${stateName}?`,
+          q: `How do I find a licensed ${getCurrentSiteConfig().name.toLowerCase()} in ${stateName}?`,
           a: `Select your city on this page to connect with licensed, insured specialists who operate in your area and are familiar with local pest species and regulations.`,
         },
         {
