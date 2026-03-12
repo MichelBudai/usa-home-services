@@ -31,11 +31,11 @@ export function CensusCtaBanner({ census, cityName, phone }: CensusCtaBannerProp
 
   let message = "";
   if (isValidNum(year) && year < 1985) {
-    message = `Homes in ${cityName} were built ${yearDisplay ?? year} on average — get a free inspection quote.`;
+    message = `Homes in ${cityName} were built ${yearDisplay ?? year} on average — older homes have more pest entry points. Get a free inspection quote.`;
   } else if (isValidNum(ownership) && ownership > 65) {
-    message = `High homeownership in ${cityName} means many residents invest in plumbing — get a free quote.`;
+    message = `High homeownership in ${cityName} means protecting your home from pest damage matters — get a free quote.`;
   } else if (valueDisplay) {
-    message = `Median home value in ${cityName} is ${valueDisplay} — protect your investment with a free plumbing quote.`;
+    message = `Median home value in ${cityName} is ${valueDisplay} — protect your investment with a free pest control quote.`;
   }
 
   if (!message) return null;

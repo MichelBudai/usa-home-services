@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | USA Plumbing Quote",
-  description: "Privacy policy for USA Plumbing Quote.",
+  title: "Privacy Policy | USA Pest Control Quote",
+  description: "Privacy policy for USA Pest Control Quote.",
 };
 
 const styles = {
@@ -20,12 +20,12 @@ export default function PrivacyPolicyPage() {
 
       <h2 style={styles.h2}>1. Information We Collect</h2>
       <p style={styles.p}>
-        When you use USA Plumbing Quote, we may collect information you provide, such as when you request a quote or contact a service provider. We may also collect usage data, including IP address, browser type, and pages visited, to improve our service.
+        When you use USA Pest Control Quote, we may collect information you provide, such as when you request a quote or contact a service provider. We may also collect usage data, including IP address, browser type, and pages visited, to improve our service.
       </p>
 
       <h2 style={styles.h2}>2. How We Use Your Information</h2>
       <p style={styles.p}>
-        We use the information we collect to connect you with local plumbing service providers, to improve our website and services, and to communicate with you when necessary. We do not sell your personal information to third parties for marketing purposes.
+        We use the information we collect to connect you with local pest control service providers, to improve our website and services, and to communicate with you when necessary. We do not sell your personal information to third parties for marketing purposes.
       </p>
 
       <h2 style={styles.h2}>3. Sharing of Information</h2>

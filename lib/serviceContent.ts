@@ -13,117 +13,117 @@ export interface ServiceContent {
 }
 
 export const SERVICE_CONTENT: Record<ServiceSlug, ServiceContent> = {
-  "plumbing-quote": {
-    heroTitle: "Free plumbing quotes from local plumbers",
+  "pest-control-quote": {
+    heroTitle: "Free pest control quotes from local specialists",
     heroSub:
-      "Compare estimates for repairs, installations, and general plumbing. Get free quotes from licensed plumbers in your area—no obligation.",
-    metaTitle: "Free Plumbing Quotes | Compare Local Plumbers by City",
+      "Compare estimates for inspections, treatments, and prevention programs. Get free quotes from licensed pest control specialists in your area—no obligation.",
+    metaTitle: "Free Pest Control Quotes | Compare Local Specialists by City",
     metaDescription:
-      "Get free plumbing quotes from local licensed plumbers. Compare estimates for repairs, installations, and more. Available in 4,000+ cities across the US.",
+      "Get free pest control quotes from local licensed specialists. Compare estimates for inspections, treatments, and prevention. Available in 4,000+ cities across the US.",
     intro:
-      "Whether you need a leak fixed, a new fixture installed, or a full plumbing inspection, getting multiple quotes helps you find the right price and the right plumber. Select your state below to find local plumbing quotes in your city.",
-    whyTitle: "Why get a plumbing quote here",
+      "Whether you need a one-time treatment, an annual prevention program, or a full inspection, getting multiple quotes helps you find the right price and the right specialist. Select your state below to find local pest control quotes in your city.",
+    whyTitle: "Why get a pest control quote here",
     whyPoints: [
-      "Free, no-obligation estimates from local plumbers.",
-      "Compare pricing and reviews before you commit.",
-      "Licensed professionals who know your area and local codes.",
+      "Free, no-obligation estimates from local licensed specialists.",
+      "Compare pricing and treatment approaches before you commit.",
+      "Licensed professionals who know your area's pest species and regulations.",
     ],
-    ctaTitle: "Find plumbing quotes in your city",
+    ctaTitle: "Find pest control quotes in your city",
     ctaSub: "Select your state, then choose your city to get started.",
   },
 
-  "repiping-quote": {
-    heroTitle: "Repiping quotes from local contractors",
+  "termite-treatment-quote": {
+    heroTitle: "Termite treatment quotes from local specialists",
     heroSub:
-      "Whole-house or partial repiping? Get free estimates from qualified plumbers. Compare repiping costs and timelines in your area.",
-    metaTitle: "Free Repiping Quotes | Compare Repipe Costs by City",
+      "Liquid barrier, bait systems, or fumigation? Get free estimates from licensed termite specialists. Compare treatment costs and methods in your area.",
+    metaTitle: "Free Termite Treatment Quotes | Compare Costs by City",
     metaDescription:
-      "Get free repiping quotes from local plumbers. Compare whole-house and partial repipe costs. Available in 4,000+ cities across the US.",
+      "Get free termite treatment quotes from local specialists. Compare liquid barrier, bait system, and fumigation costs. Available in 4,000+ cities across the US.",
     intro:
-      "Old or failing pipes can lead to leaks, low pressure, and water quality issues. Repiping gives you peace of mind and often improves home value. Get free quotes from local plumbers who specialize in repiping—select your state to find options near you.",
-    whyTitle: "Why compare repiping quotes",
+      "Termite damage is not covered by most homeowner insurance policies — early treatment protects your home and your investment. Get free quotes from local termite specialists who know your area's termite species and treatment options. Select your state to find quotes near you.",
+    whyTitle: "Why compare termite treatment quotes",
     whyPoints: [
-      "Repiping costs vary by home size, materials, and location.",
-      "Multiple quotes help you choose the best value and timeline.",
-      "Local plumbers understand your area’s common issues and codes.",
+      "Treatment method and cost vary significantly by termite species and infestation severity.",
+      "Multiple quotes help you choose the best approach — liquid barrier, bait, or fumigation.",
+      "Local specialists know your area's termite pressure and seasonal activity.",
     ],
-    ctaTitle: "Get repiping quotes in your area",
-    ctaSub: "Choose your state and city to see local repiping contractors.",
+    ctaTitle: "Get termite treatment quotes in your area",
+    ctaSub: "Choose your state and city to see local termite specialists.",
   },
 
-  "water-heater-replacement-quote": {
-    heroTitle: "Water heater replacement quotes near you",
+  "rodent-control-quote": {
+    heroTitle: "Rodent control quotes from local specialists",
     heroSub:
-      "Tank or tankless? Get free estimates from local installers. Compare water heater replacement costs and find the right unit for your home.",
-    metaTitle: "Water Heater Replacement Quotes | Compare Costs by City",
+      "Mice, rats, or other rodents? Get free estimates from licensed specialists. Compare exclusion, trapping, and sanitization costs in your area.",
+    metaTitle: "Free Rodent Control Quotes | Compare Costs by City",
     metaDescription:
-      "Get free water heater replacement quotes from local plumbers. Compare tank and tankless options. Available in 4,000+ cities across the US.",
+      "Get free rodent control quotes from local specialists. Compare exclusion, trapping, and sanitization estimates. Available in 4,000+ cities across the US.",
     intro:
-      "When your water heater is failing or you want to upgrade, getting a few quotes helps you compare brands, sizes, and installation costs. Select your state below to find local water heater replacement quotes and certified installers.",
-    whyTitle: "Why get multiple water heater quotes",
+      "Effective rodent control means more than traps — it requires sealing every entry point to prevent re-entry. Get free quotes from local specialists who provide complete exclusion. Select your state below to find rodent control quotes in your city.",
+    whyTitle: "Why get multiple rodent control quotes",
     whyPoints: [
-      "Installation cost and unit choice depend on your home and usage.",
-      "Comparing quotes helps you balance upfront cost and efficiency.",
-      "Local installers can recommend the best options for your climate.",
+      "Complete exclusion — not just trapping — is the only permanent solution.",
+      "Comparing quotes helps you identify specialists who offer full exclusion.",
+      "Local specialists know common rodent entry points in your area's housing stock.",
     ],
-    ctaTitle: "Find water heater replacement quotes",
-    ctaSub: "Select your state and city to connect with local installers.",
+    ctaTitle: "Find rodent control quotes in your city",
+    ctaSub: "Select your state and city to connect with local specialists.",
   },
 
-  "sewer-line-replacement-quote": {
-    heroTitle: "Sewer line replacement quotes from local pros",
+  "bed-bug-treatment-quote": {
+    heroTitle: "Bed bug treatment quotes from local specialists",
     heroSub:
-      "Sewer line repair or full replacement? Get free estimates from plumbers who handle sewer and main line work in your area.",
-    metaTitle: "Sewer Line Replacement Quotes | Compare by City",
+      "Heat treatment, chemical, or hybrid? Get free estimates from licensed bed bug specialists. Compare treatment costs and methods in your area.",
+    metaTitle: "Free Bed Bug Treatment Quotes | Compare Costs by City",
     metaDescription:
-      "Get free sewer line replacement and repair quotes from local plumbers. Compare costs for main line and sewer work. Available in 4,000+ cities across the US.",
+      "Get free bed bug treatment quotes from local specialists. Compare heat treatment, chemical, and hybrid costs. Available in 4,000+ cities across the US.",
     intro:
-      "Sewer line issues—from backups to tree root damage—often need a specialist. Getting quotes from local plumbers who do sewer work helps you understand repair vs. replacement options and costs. Choose your state to find sewer line quotes near you.",
-    whyTitle: "Why compare sewer line quotes",
+      "Bed bug infestations don't resolve on their own — and DIY approaches almost always fail, scattering the infestation and making professional treatment more expensive. Get free quotes from local bed bug specialists before the problem grows. Select your state to find quotes near you.",
+    whyTitle: "Why compare bed bug treatment quotes",
     whyPoints: [
-      "Sewer repair vs. replacement costs depend on the scope of damage.",
-      "Local plumbers can assess your line and recommend the best approach.",
-      "Multiple quotes help you avoid overpaying for major sewer work.",
+      "Heat vs. chemical treatment can mean a $1,000+ difference for the same home.",
+      "Comparing quotes helps you find the most effective method for your infestation.",
+      "Local specialists know your area's housing types and treatment requirements.",
     ],
-    ctaTitle: "Get sewer line quotes in your city",
-    ctaSub: "Select your state and city to find local sewer line specialists.",
+    ctaTitle: "Get bed bug treatment quotes in your area",
+    ctaSub: "Choose your state and city to see local bed bug specialists.",
   },
 
-  "drain-line-replacement-quote": {
-    heroTitle: "Drain line replacement and repair quotes",
+  "mosquito-control-quote": {
+    heroTitle: "Mosquito control quotes from local specialists",
     heroSub:
-      "Drain line issues or full replacement? Get free estimates from local plumbers. Compare drain line repair and replacement costs in your area.",
-    metaTitle: "Drain Line Replacement Quotes | Compare by City",
+      "Barrier spray, seasonal programs, or misting systems? Get free estimates from licensed mosquito specialists. Compare costs and programs in your area.",
+    metaTitle: "Free Mosquito Control Quotes | Compare Costs by City",
     metaDescription:
-      "Get free drain line replacement and repair quotes from local plumbers. Compare costs for drain repairs and replacement. Available in 4,000+ cities across the US.",
+      "Get free mosquito control quotes from local specialists. Compare barrier spray, seasonal programs, and misting system costs. Available in 4,000+ cities across the US.",
     intro:
-      "Persistent clogs, slow drains, or damaged drain lines may need repair or replacement. Local plumbers can diagnose the issue and provide clear quotes. Select your state below to find drain line quotes from plumbers who serve your city.",
-    whyTitle: "Why get drain line quotes",
+      "Professional mosquito control reduces biting pressure by 70–90% and makes your outdoor space genuinely usable through peak season. Get free quotes from local specialists and compare seasonal program costs. Select your state below to get started.",
+    whyTitle: "Why get mosquito control quotes",
     whyPoints: [
-      "Drain line work can range from clearing blockages to full replacement.",
-      "Comparing quotes ensures you get a fair price for the scope of work.",
-      "Local plumbers know common drain issues in your area.",
+      "Seasonal program pricing and treatment frequency vary by company.",
+      "Starting before peak season is more cost-effective and provides better protection.",
+      "Local specialists know your area's mosquito species and peak season timing.",
     ],
-    ctaTitle: "Find drain line quotes near you",
-    ctaSub: "Choose your state and city to get started.",
-  },
-
-  "emergency-plumbing-quote": {
-    heroTitle: "Emergency plumbing quotes from local plumbers",
-    heroSub:
-      "Leaks, sewer backups, no hot water? Get free estimates from licensed plumbers who offer same-day and after-hours service in your area.",
-    metaTitle: "Free Emergency Plumbing Quotes | 24/7 Plumbers by City",
-    metaDescription:
-      "Get free emergency plumbing quotes from licensed local plumbers. Same-day and after-hours. Available in 4,000+ cities across the US.",
-    intro:
-      "When you need a plumber fast — burst pipe, sewer backup, no hot water — a quick phone quote tells you what to expect. Emergency and after-hours premiums vary by city. Select your state below to find licensed emergency plumbers and get a free quote.",
-    whyTitle: "Why get an emergency plumbing quote first",
-    whyPoints: [
-      "Emergency call-out often adds $150–$400; a quote confirms the total before work starts.",
-      "Licensed plumbers in your area know local after-hours rates and availability.",
-      "Comparing two quick calls can save you money even in an emergency.",
-    ],
-    ctaTitle: "Find emergency plumbing quotes near you",
+    ctaTitle: "Find mosquito control quotes in your city",
     ctaSub: "Select your state and city to get started.",
+  },
+
+  "wildlife-removal-quote": {
+    heroTitle: "Wildlife removal quotes from local specialists",
+    heroSub:
+      "Raccoons, squirrels, bats, or snakes? Get free estimates from licensed wildlife specialists. Humane removal and exclusion in your area.",
+    metaTitle: "Free Wildlife Removal Quotes | Compare Costs by City",
+    metaDescription:
+      "Get free wildlife removal quotes from local licensed specialists. Compare raccoon, squirrel, bat, and snake removal costs. Available in 4,000+ cities across the US.",
+    intro:
+      "Wildlife removal in most states requires a licensed specialist — and removing an animal without sealing entry points guarantees the same problem within weeks. Get free quotes from local wildlife specialists who provide complete removal and exclusion. Select your state to find quotes near you.",
+    whyTitle: "Why get wildlife removal quotes",
+    whyPoints: [
+      "Most wildlife removal is legally regulated — always use a licensed specialist.",
+      "Complete exclusion after removal is essential to prevent re-entry.",
+      "Local specialists know your area's wildlife species and state permit requirements.",
+    ],
+    ctaTitle: "Get wildlife removal quotes in your city",
+    ctaSub: "Select your state and city to connect with local specialists.",
   },
 };

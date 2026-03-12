@@ -4,6 +4,9 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  compiler: {
+    removeConsole: true,
+  },
 };
 
 module.exports = nextConfig;

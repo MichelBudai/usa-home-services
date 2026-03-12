@@ -1,6 +1,7 @@
 /**
- * City page content for single-service pages: repiping, water-heater, sewer, drain.
- * Each service has its own template and copy (no shared "plumbing" wording).
+ * City page content for single-service pages:
+ * termite, rodent, bed-bug, mosquito, wildlife.
+ * Each service has its own template and copy.
  */
 import type { CityMetadata } from "./cityMetadata";
 
@@ -19,7 +20,6 @@ export interface ServiceCityContent {
   };
   whyCall: { h2: string; paragraphs: string[] };
   localSignals: { h2: string; intro: string; bullets: string[] };
-  /** E-E-A-T: short "Why trust this guide" block for service city pages only. */
   eeat: { title: string; bullets: string[] };
   faq: { h2: string; items: { q: string; a: string }[] };
   closing: { h2: string; text: string; cta: string; sub: string };
@@ -54,7 +54,6 @@ function buildTrustBullets(stateAbbr: string, cityName: string, county?: string)
   return bullets;
 }
 
-/** Local signals bullets: base list + county/housing when metadata present (no duplicate with intro/mainService). */
 function buildLocalSignalsBullets(
   stateName: string,
   stateAbbr: string,
@@ -67,16 +66,16 @@ function buildLocalSignalsBullets(
   const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
   if (county) {
-    bullets.unshift(`Serving ${cityName} and ${county} — permits and inspections are handled at the county level.`);
+    bullets.unshift(`Serving ${cityName} and ${county} — licensed under ${stateName} state requirements.`);
   }
   if (medianYear) {
     bullets.push(
-      `Many ${cityName} homes were built in the ${medianYear} era — local plumbers are familiar with this housing stock and typical scope.`
+      `Many ${cityName} homes were built in the ${medianYear} era — local specialists are familiar with this housing stock and common pest entry points.`
     );
   }
   if (growthSnippet) {
     bullets.push(
-      `${cityName} is ${growthSnippet}, so demand for quality work is high; getting a quote early helps secure a slot.`
+      `${cityName} is ${growthSnippet}, so demand for quality pest control is high; getting a quote early helps secure a slot.`
     );
   }
   return bullets;
@@ -84,12 +83,12 @@ function buildLocalSignalsBullets(
 
 const EEAT_BULLETS = [
   "This guide is written for homeowners comparing local quotes — we focus on what actually affects your estimate.",
-  "We don't charge plumbers for placement. The quotes you get are from licensed contractors, not pay-to-play leads.",
-  "Cost ranges are based on typical project scope; your final quote depends on your home and local permit requirements.",
+  "We don't charge pest control specialists for placement. The quotes you get are from licensed contractors, not pay-to-play leads.",
+  "Cost ranges are based on typical project scope; your final quote depends on your home, infestation severity, and local regulations.",
 ];
 
-// ——— Repiping ———
-export function getRepipingCityPageContent(
+// ——— Termite Treatment ———
+export function getTermiteTreatmentCityPageContent(
   cityName: string,
   stateName: string,
   stateAbbr: string,
@@ -102,87 +101,85 @@ export function getRepipingCityPageContent(
   const county = cityMetadata?.county;
   const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
-  const income = cityMetadata?.medianHouseholdIncome;
   const homeValue = cityMetadata?.medianHomeValue;
-  const homeownershipRate = cityMetadata?.homeownershipRate;
 
   const introParagraphs: string[] = [];
   introParagraphs.push(
-    `Get a free repiping quote in ${cityName}, ${stateName}. This page connects you with licensed plumbers who specialize in whole-home repiping — no national call center, no obligation.`
+    `Get a free termite treatment quote in ${cityName}, ${stateName}. This page connects you with licensed termite specialists — liquid barrier, bait systems, and fumigation — no obligation.`
   );
   if (county || growthSnippet) {
     introParagraphs.push(
       county && growthSnippet
-        ? `${cityName} is ${growthSnippet}. Repiping permits and timelines in ${county} are familiar to local plumbers — a quick call gives you a real estimate for your home.`
+        ? `${cityName} is ${growthSnippet}. Termite pressure in ${county} is familiar to local specialists — a quick call gives you a real treatment estimate for your home.`
         : county
-          ? `In ${county}, permit requirements for repiping are handled by plumbers who work the area regularly. A phone quote takes under 5 minutes.`
-          : `${cityName} is ${growthSnippet}. Get a real repiping estimate from a plumber who serves your area.`
+          ? `In ${county}, termite treatment regulations are handled by specialists who work the area regularly. A phone quote takes under 5 minutes.`
+          : `${cityName} is ${growthSnippet}. Get a real termite treatment estimate from a specialist who serves your area.`
     );
   } else {
-    introParagraphs.push(`A licensed plumber who serves ${cityName} can give you a straight repiping estimate over the phone in under 5 minutes.`);
+    introParagraphs.push(`A licensed termite specialist who serves ${cityName} can give you a straight treatment estimate over the phone in under 5 minutes.`);
   }
 
   const localParagraphs: string[] = [
-    ...(county ? [`In ${county}, permit timelines for repiping can affect scheduling — a licensed plumber familiar with the area will factor that into your quote.`] : []),
-    ...(medianYear ? [`With a median build year of ${medianYear}, many ${cityName} repiping quotes involve homes with galvanized or polybutylene systems that are past their lifespan.`] : []),
-    ...(homeownershipRate ? [`With a homeownership rate of ${homeownershipRate}% in ${cityName}, most residents have a direct financial stake in keeping their plumbing up to date — repiping is one of the highest-ROI investments before a sale.`] : []),
-    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName} sees strong demand for repiping as older inventory is updated.`] : []),
+    ...(county ? [`In ${county}, termite treatment regulations and seasonal activity patterns are well known to local specialists.`] : []),
+    ...(medianYear ? [`With a median build year of ${medianYear}, many ${cityName} homes have wood framing and conditions that increase termite risk — early detection matters.`] : []),
+    ...(homeValue ? [`With a median home value of $${homeValue.toLocaleString()} in ${cityName}, protecting your home from termite damage is one of the highest-ROI investments you can make.`] : []),
+    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName} sees steady demand for termite treatment as older inventory is updated and new construction expands.`] : []),
   ].filter(Boolean);
-  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you a repiping quote tailored to your home.`);
+  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} termite specialist can give you a treatment quote tailored to your home.`);
 
   return {
     meta: {
-      title: `Repiping Quote, ${cityName} | Free Estimates, Licensed Local Plumbers`,
-      description: `Free repiping quote in ${cityName}, ${stateName}. Whole-home repipe estimates from licensed plumbers. Upfront pricing, no obligation.`,
+      title: `Termite Treatment Quote, ${cityName} | Free Estimates, Licensed Local Exterminators`,
+      description: `Free termite treatment quote in ${cityName}, ${stateName}. Liquid barrier, bait systems & fumigation from licensed specialists. Upfront pricing, no obligation.`,
     },
     hero: {
-      h1: `Free Repiping Quote in ${cityName}, ${stateName}`,
-      sub: `Licensed ${cityName} plumbers for whole-home repiping. Honest estimates. No commitment until you're ready.`,
+      h1: `Free Termite Treatment Quote in ${cityName}, ${stateName}`,
+      sub: `Licensed ${cityName} termite specialists. Liquid barrier, bait systems, and fumigation. Honest estimates, no commitment.`,
       trustBullets: buildTrustBullets(stateAbbr, cityName, county),
-      cta: "Get Your Free Repiping Quote — Call Now",
+      cta: "Get Your Free Termite Quote — Call Now",
     },
     intro: {
-      h2: `Get a Real Repiping Estimate in ${cityName}, ${stateName}`,
+      h2: `Get a Real Termite Treatment Estimate in ${cityName}, ${stateName}`,
       paragraphs: introParagraphs,
-      cta: `Call for a Free ${cityName} Repiping Quote`,
+      cta: `Call for a Free ${cityName} Termite Treatment Quote`,
     },
     costEstimator: {
-      h2: `Repiping Cost Estimator — ${cityName}, ${stateName}`,
-      intro: `Use this tool for a ballpark before you call. Repiping ranges depend on home size, pipe material (PEX vs. copper), and ${stateAbbr} permit costs. Your exact ${cityName} quote may vary.`,
-      ctaBelow: `Get Your Exact ${cityName} Repiping Quote — Call Now`,
+      h2: `Termite Treatment Cost Estimator — ${cityName}, ${stateName}`,
+      intro: `Use this tool for a ballpark before you call. Termite treatment costs depend on home size, infestation severity, and treatment method. Your exact ${cityName} quote may vary.`,
+      ctaBelow: `Get Your Exact ${cityName} Termite Quote — Call Now`,
     },
     mainService: {
-      h2: `Repiping Quote in ${cityName}, ${stateAbbr}`,
-      description: `Whole-home repiping is one of the largest plumbing investments a ${cityName} homeowner will make. Costs depend on square footage, current pipe material (galvanized, polybutylene, copper), wall and crawl space accessibility, and ${stateName} permit requirements that vary by county. If you're seeing rust-colored water, frequent leaks in multiple spots, or persistent low pressure, a repiping quote is the first call to make — before a failure forces an emergency that costs two to three times more.`,
+      h2: `Termite Treatment Quote in ${cityName}, ${stateAbbr}`,
+      description: `Termite treatment is one of the most important investments a ${cityName} homeowner can make. Termites cause billions in structural damage annually across the US — damage not covered by most homeowner insurance policies. Treatment method depends on termite species, infestation severity, and home construction. Liquid barrier treatments, bait station systems, and fumigation each have different cost points and effectiveness profiles. A licensed ${cityName} termite specialist will assess your situation and recommend the right approach.`,
       localParagraphs,
-      cost: `Typical ${cityName} repiping cost: $4,000 – $15,000+`,
+      cost: `Typical ${cityName} termite treatment cost: $500 – $8,000+`,
       whatAffects: [
-        "Home size and number of fixtures",
-        "Current pipe material (galvanized steel, polybutylene, copper)",
-        "Accessibility — slab vs. crawl space vs. basement",
-        `${stateAbbr} permit and inspection requirements`,
+        "Termite species (subterranean vs. drywood)",
+        "Treatment method (liquid barrier, bait system, fumigation)",
+        "Home size and construction type",
+        "Infestation severity and extent of damage",
       ],
-      cta: `Get a Repiping Quote in ${cityName} — Call Now`,
+      cta: `Get a Termite Treatment Quote in ${cityName} — Call Now`,
     },
     whyCall: {
-      h2: `Why ${cityName} Homeowners Get a Repiping Quote First`,
+      h2: `Why ${cityName} Homeowners Get a Termite Quote First`,
       paragraphs: [
-        `A phone quote from a licensed ${cityName} plumber gives you three things that no search result can: a realistic budget for a full repipe, a clear scope (PEX vs. copper, timeline), and the chance to compare before committing. Repiping is one of the largest plumbing investments you'll make — labor rates, ${stateName} permit fees${county ? `, and ${county} permit timelines` : ""} all vary. A 5-minute call gets you a number that actually reflects your home and your area.`,
-        `It filters out the wrong plumbers fast. Any ${cityName} plumber who won't give you a range over the phone before charging a dispatch fee is a plumber worth avoiding. Serious contractors are used to giving ballpark repiping estimates; a free quote call tells you immediately who's worth your time.`,
-        `Getting a quote before a pipe fails avoids emergency pricing. Emergency repiping in ${cityName} typically costs two to three times more than scheduled work. If your home was built before 1975 with original galvanized pipes, or you're seeing rust-colored water and frequent leaks, getting a quote now — before a failure — is the smart move.`,
+        `A phone quote from a licensed ${cityName} termite specialist gives you three things no search result can: a realistic treatment budget, a clear method recommendation (liquid barrier vs. bait vs. fumigation), and the chance to compare before committing. Termite treatment costs${county ? ` in ${county}` : ""} vary significantly by method and home size — a 5-minute call gets you a number that reflects your actual situation.`,
+        `It filters out the wrong contractors fast. Any ${cityName} specialist who won't give you a range over the phone before charging a dispatch fee is worth avoiding. Serious termite contractors are used to giving ballpark estimates; a free quote call tells you immediately who's worth your time.`,
+        `Getting a quote before damage compounds is critical. Termite damage is not covered by most homeowner insurance policies — every month without treatment is additional structural damage entirely out of pocket. If you've seen mud tubes, hollow wood, or discarded wings, getting a quote now is the only smart move.`,
       ],
     },
     localSignals: {
-      h2: `Repiping Quote Service Areas Near ${cityName}, ${stateName}`,
-      intro: `Licensed plumbers available for repiping quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
+      h2: `Termite Treatment Quote Service Areas Near ${cityName}, ${stateName}`,
+      intro: `Licensed termite specialists available for quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
       bullets: buildLocalSignalsBullets(
         stateName,
         stateAbbr,
         cityName,
         [
-          `All plumbers are licensed under ${stateName} state requirements`,
-          `Familiar with ${cityName}-area permit processes for repiping`,
-          "Upfront pricing — no surprise fees after the job starts",
+          `All specialists are licensed under ${stateName} state requirements`,
+          `Familiar with ${cityName}-area termite species and seasonal activity`,
+          "Upfront pricing — no surprise fees after treatment begins",
           `Emergency availability in ${cityName} and surrounding ${stateAbbr} areas`,
         ],
         cityMetadata
@@ -190,34 +187,34 @@ export function getRepipingCityPageContent(
     },
     eeat: { title: "Why trust this guide", bullets: EEAT_BULLETS },
     faq: {
-      h2: `Repiping Quote FAQ — ${cityName}, ${stateName}`,
+      h2: `Termite Treatment Quote FAQ — ${cityName}, ${stateName}`,
       items: [
         {
-          q: `How much does repiping cost in ${cityName}, ${stateAbbr}?`,
-          a: `Repiping in ${cityName} typically ranges from $4,000 to $15,000+ depending on home size, pipe material (PEX vs. copper), and accessibility. A licensed ${cityName} plumber can give you a project-specific quote over the phone.`,
+          q: `How much does termite treatment cost in ${cityName}, ${stateAbbr}?`,
+          a: `Termite treatment in ${cityName} typically ranges from $500 for a liquid barrier on a small home to $8,000+ for whole-structure fumigation. A licensed ${cityName} specialist can give you a project-specific quote over the phone.`,
         },
         {
-          q: `Is the repiping quote in ${cityName} free?`,
-          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate from a licensed ${cityName} plumber before any work begins.`,
+          q: `Is the termite treatment quote in ${cityName} free?`,
+          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate from a licensed ${cityName} specialist before any work begins.`,
         },
         {
-          q: `Do I need a permit for repiping in ${cityName}?`,
-          a: `Yes. Whole-home repiping in ${cityName}, ${stateName} requires permits. ${county ? `In ${county}, permit timelines vary — ` : ""}A licensed plumber handles the permit and includes the cost in your quote.`,
+          q: `Does homeowner insurance cover termite damage in ${cityName}?`,
+          a: `Most standard homeowner insurance policies do not cover termite damage in ${cityName}, ${stateName}. It is considered a preventable maintenance issue. This makes early treatment critical.`,
         },
         {
-          q: `How do I know if I need repiping in my ${cityName} home?`,
-          a: `Common signs include rust-colored water, frequent leaks in multiple locations, consistently low pressure, and pipes 40+ years old. If your ${cityName} home was built before 1975 with original galvanized pipes, get a quote now — before a failure forces an emergency repair.`,
+          q: `How do I know if I have termites in my ${cityName} home?`,
+          a: `Common signs include mud tubes along your foundation, hollow-sounding wood, discarded wings near windows, and small fecal pellets. A licensed ${cityName} termite specialist can confirm activity and assess damage in a single inspection.`,
         },
         {
-          q: `PEX or copper for repiping in ${cityName}?`,
-          a: `Both are used in ${cityName}. PEX is typically lower cost and faster to install; copper lasts longer but costs more. A licensed ${cityName} plumber can recommend the best option for your home and budget when you call.`,
+          q: `What termite treatment is best for ${cityName}?`,
+          a: `It depends on the termite species active in your area and your home's construction. A licensed ${cityName} specialist will recommend the appropriate method — liquid barrier, bait system, or fumigation — based on your specific situation.`,
         },
       ],
     },
     closing: {
-      h2: `Get Your Free Repiping Quote in ${cityName} Today`,
-      text: `No forms. No waiting. No obligation. A licensed plumber serving ${cityName}, ${stateName} can give you an honest repiping estimate in under 5 minutes.`,
-      cta: `Call for Your Free ${cityName} Repiping Quote`,
+      h2: `Get Your Free Termite Treatment Quote in ${cityName} Today`,
+      text: `No forms. No waiting. No obligation. A licensed termite specialist serving ${cityName}, ${stateName} can give you an honest estimate in under 5 minutes.`,
+      cta: `Call for Your Free ${cityName} Termite Quote`,
       sub: `Available 7 days a week · Same-day quote in ${cityName}`,
     },
     internalLinks: {
@@ -228,8 +225,8 @@ export function getRepipingCityPageContent(
   };
 }
 
-// ——— Water Heater Replacement ———
-export function getWaterHeaterCityPageContent(
+// ——— Rodent Control ———
+export function getRodentControlCityPageContent(
   cityName: string,
   stateName: string,
   stateAbbr: string,
@@ -242,87 +239,221 @@ export function getWaterHeaterCityPageContent(
   const county = cityMetadata?.county;
   const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
-  const income = cityMetadata?.medianHouseholdIncome;
   const homeValue = cityMetadata?.medianHomeValue;
-  const homeownershipRate = cityMetadata?.homeownershipRate;
 
   const introParagraphs: string[] = [];
   introParagraphs.push(
-    `Get a free water heater replacement quote in ${cityName}, ${stateName}. This page connects you with licensed plumbers who install and replace water heaters — tank or tankless, no obligation.`
+    `Get a free rodent control quote in ${cityName}, ${stateName}. This page connects you with licensed rodent specialists — inspection, exclusion, trapping, and sanitization — no obligation.`
   );
   if (county || growthSnippet) {
     introParagraphs.push(
       county && growthSnippet
-        ? `${cityName} is ${growthSnippet}. In ${county}, permit requirements for water heater replacement are straightforward — a local plumber can give you a real estimate and same-day or next-day options.`
+        ? `${cityName} is ${growthSnippet}. Rodent pressure in ${county} is well known to local specialists who can give you a real exclusion estimate for your home.`
         : county
-          ? `In ${county}, water heater permits are handled by plumbers who work the area regularly. A phone quote takes under 5 minutes.`
-          : `${cityName} is ${growthSnippet}. Get a real water heater estimate from a plumber who serves your area.`
+          ? `In ${county}, licensed rodent specialists work the area regularly and know local entry point patterns. A phone quote takes under 5 minutes.`
+          : `${cityName} is ${growthSnippet}. Get a real rodent control estimate from a specialist who serves your area.`
     );
   } else {
-    introParagraphs.push(`${stateName} utility rebates may apply to tankless or high-efficiency units — a licensed ${cityName} plumber will tell you when you call.`);
+    introParagraphs.push(`A licensed rodent specialist who serves ${cityName} can give you a straight exclusion estimate over the phone in under 5 minutes.`);
   }
 
   const localParagraphs: string[] = [
-    ...(county ? [`${county} permit requirements for water heater replacement are straightforward; a local plumber can outline the process when you call.`] : []),
-    ...(medianYear ? [`Homes in ${cityName} built around ${medianYear} often have water heaters nearing end-of-life — getting a quote now avoids emergency pricing.`] : []),
-    ...(income ? [`With a median household income of $${income.toLocaleString()} in ${cityName}, getting a flat-rate quote before work starts ensures no surprises on the final invoice.`] : []),
-    ...(growthSnippet ? [`${cityName} is ${growthSnippet}, so same-day and next-day installs are in high demand; booking ahead often saves money.`] : []),
+    ...(county ? [`In ${county}, rodent entry patterns vary by neighborhood and housing type — a local specialist knows where to look.`] : []),
+    ...(medianYear ? [`With a median build year of ${medianYear}, many ${cityName} homes have foundation gaps, pipe penetrations, and aging soffits that are common rodent entry points.`] : []),
+    ...(homeValue ? [`With a median home value of $${homeValue.toLocaleString()} in ${cityName}, addressing rodent intrusions quickly protects your investment from wiring damage and structural contamination.`] : []),
+    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName} sees steady rodent pressure as construction and development disturbs established rodent populations.`] : []),
   ].filter(Boolean);
-  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you a water heater quote tailored to your home.`);
+  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} rodent specialist can give you an exclusion quote tailored to your home.`);
 
   return {
     meta: {
-      title: `Water Heater Replacement Quote, ${cityName} | Free Estimates, Licensed Local Plumbers`,
-      description: `Free water heater replacement quote in ${cityName}, ${stateName}. Tank & tankless from licensed plumbers. Upfront pricing, no obligation.`,
+      title: `Rodent Control Quote, ${cityName} | Free Estimates, Licensed Local Exterminators`,
+      description: `Free rodent control quote in ${cityName}, ${stateName}. Mouse & rat exclusion, trapping & sanitization from licensed specialists. Upfront pricing, no obligation.`,
     },
     hero: {
-      h1: `Free Water Heater Replacement Quote in ${cityName}, ${stateName}`,
-      sub: `Licensed ${cityName} plumbers for water heater replacement. Tank & tankless. Honest estimates, no commitment.`,
+      h1: `Free Rodent Control Quote in ${cityName}, ${stateName}`,
+      sub: `Licensed ${cityName} rodent specialists. Exclusion, trapping, and sanitization. Honest estimates, no commitment.`,
       trustBullets: buildTrustBullets(stateAbbr, cityName, county),
-      cta: "Get Your Free Quote — Call Now",
+      cta: "Get Your Free Rodent Control Quote — Call Now",
     },
     intro: {
-      h2: `Get a Real Water Heater Estimate in ${cityName}, ${stateName}`,
+      h2: `Get a Real Rodent Control Estimate in ${cityName}, ${stateName}`,
       paragraphs: introParagraphs,
-      cta: `Call for a Free ${cityName} Water Heater Quote`,
+      cta: `Call for a Free ${cityName} Rodent Control Quote`,
     },
     costEstimator: {
-      h2: `Water Heater Cost Estimator — ${cityName}, ${stateName}`,
-      intro: `Use this tool for a ballpark before you call. Water heater costs depend on tank vs. tankless, capacity, and ${stateAbbr} labor and permit costs. Your exact ${cityName} quote may vary.`,
-      ctaBelow: `Get Your Exact ${cityName} Water Heater Quote — Call Now`,
+      h2: `Rodent Control Cost Estimator — ${cityName}, ${stateName}`,
+      intro: `Use this tool for a ballpark before you call. Rodent control costs depend on home size, infestation severity, and whether exclusion and sanitization are included. Your exact ${cityName} quote may vary.`,
+      ctaBelow: `Get Your Exact ${cityName} Rodent Control Quote — Call Now`,
     },
     mainService: {
-      h2: `Water Heater Replacement Quote in ${cityName}, ${stateAbbr}`,
-      description: `Water heater replacements are among the most common plumbing jobs in ${cityName} — and among the most price-variable. Tank vs. tankless, gas vs. electric, capacity, and the condition of existing connections all affect what you'll pay. Getting a quote before yours fails entirely saves the emergency call-out premium that can add $150–$400 to any job. ${stateName} utility rebates may apply to qualifying tankless or high-efficiency installations.`,
+      h2: `Rodent Control Quote in ${cityName}, ${stateAbbr}`,
+      description: `Rodent infestations in ${cityName} require more than traps — effective control means sealing every entry point to prevent re-entry. Mice can fit through a gap the size of a dime; rats through a quarter-sized hole. A licensed ${cityName} rodent specialist conducts a full inspection, identifies all entry points, and provides a complete exclusion quote that addresses the root cause — not just the visible symptoms. Attic sanitization and contaminated insulation removal are often required to eliminate health hazards and odors that attract new rodents.`,
       localParagraphs,
-      cost: `Typical ${cityName} water heater replacement cost: $900 – $3,200`,
+      cost: `Typical ${cityName} rodent control cost: $300 – $2,500+`,
       whatAffects: [
-        "Tank vs. tankless unit",
-        "Gas vs. electric connection",
-        "Tank capacity (40, 50, 80 gallon)",
-        "Ease of access and existing connection compatibility",
+        "Infestation severity and species (mice vs. rats)",
+        "Number and complexity of entry points",
+        "Whether attic or crawl space sanitization is needed",
+        "Home size and construction type",
       ],
-      cta: `Get a Water Heater Quote in ${cityName} — Call Now`,
+      cta: `Get a Rodent Control Quote in ${cityName} — Call Now`,
     },
     whyCall: {
-      h2: `Why ${cityName} Homeowners Get a Water Heater Quote First`,
+      h2: `Why ${cityName} Homeowners Get a Rodent Control Quote First`,
       paragraphs: [
-        `A phone quote from a licensed ${cityName} plumber gives you a realistic price for a replacement — tank or tankless, capacity, and whether ${stateName} or utility rebates apply. Labor and permit costs${county ? ` in ${county}` : ""} vary; a 5-minute call gets you a number that reflects your setup and your area. Same-day emergency water heater work in ${cityName} typically adds $150–$400 to the job — getting a quote before your unit fails is the smart move.`,
-        `It filters out the wrong contractors fast. Any ${cityName} plumber who won't give you a range over the phone before charging a dispatch fee is worth avoiding. Serious installers are used to giving ballpark estimates; a free quote call tells you who's worth your time.`,
-        `Water heater replacement is one of the most common plumbing jobs in ${cityName} — and one of the most price-variable. Gas vs. electric, tank vs. tankless, and ease of access all affect the final number. A licensed plumber who serves ${cityName} can walk you through options and rebates so you're not overpaying or underbuying.`,
+        `A phone quote from a licensed ${cityName} rodent specialist gives you a realistic budget for exclusion — not just trapping. Rodent control costs${county ? ` in ${county}` : ""} depend on the number of entry points, home size, and whether attic sanitization is needed. A 5-minute call gets you a number that reflects your specific situation.`,
+        `Trapping without exclusion is a temporary fix. Rodents re-enter through the same gaps within days — and they breed fast. Any ${cityName} specialist who focuses only on trapping without sealing entry points is not solving your problem. A free quote call tells you immediately who offers complete exclusion.`,
+        `Rodent damage compounds quickly. Chewed wiring causes house fires. Contaminated insulation creates health hazards. The longer an infestation continues, the higher the total remediation cost. Getting a professional quote and starting exclusion now limits damage and limits cost.`,
       ],
     },
     localSignals: {
-      h2: `Water Heater Quote Service Areas Near ${cityName}, ${stateName}`,
-      intro: `Licensed plumbers available for water heater quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
+      h2: `Rodent Control Quote Service Areas Near ${cityName}, ${stateName}`,
+      intro: `Licensed rodent specialists available for quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
       bullets: buildLocalSignalsBullets(
         stateName,
         stateAbbr,
         cityName,
         [
-          `All plumbers are licensed under ${stateName} state requirements`,
-          `Familiar with ${cityName}-area permits for water heater installation`,
-          "Upfront pricing — no surprise fees after the job starts",
+          `All specialists are licensed under ${stateName} state requirements`,
+          `Familiar with ${cityName}-area rodent species and entry point patterns`,
+          "Upfront pricing — no surprise fees after work begins",
+          `Same-day availability in ${cityName} and surrounding ${stateAbbr} areas`,
+        ],
+        cityMetadata
+      ),
+    },
+    eeat: { title: "Why trust this guide", bullets: EEAT_BULLETS },
+    faq: {
+      h2: `Rodent Control Quote FAQ — ${cityName}, ${stateName}`,
+      items: [
+        {
+          q: `How much does rodent control cost in ${cityName}, ${stateAbbr}?`,
+          a: `Rodent control in ${cityName} typically ranges from $300 for basic trapping to $2,500+ for full exclusion with attic sanitization. A licensed ${cityName} specialist can give you a project-specific quote over the phone.`,
+        },
+        {
+          q: `Is the rodent control quote in ${cityName} free?`,
+          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate from a licensed ${cityName} specialist before any work begins.`,
+        },
+        {
+          q: `Can I handle rodent control myself in ${cityName}?`,
+          a: `DIY trapping can reduce an active population temporarily, but without exclusion — sealing entry points — rodents will return within days. Professional exclusion is the only permanent solution in ${cityName}.`,
+        },
+        {
+          q: `How do I know if I have rodents in my ${cityName} home?`,
+          a: `Common signs include droppings along walls and in cabinets, gnaw marks on wiring or packaging, scratching sounds in walls at night, and nesting material in attics. A licensed ${cityName} specialist can confirm and assess severity in one inspection.`,
+        },
+        {
+          q: `How quickly can rodent control begin in ${cityName}?`,
+          a: `Most licensed ${cityName} specialists can begin within 1–3 days of the quote. Severe infestations can often be addressed same-day or next-day.`,
+        },
+      ],
+    },
+    closing: {
+      h2: `Get Your Free Rodent Control Quote in ${cityName} Today`,
+      text: `No forms. No waiting. No obligation. A licensed rodent specialist serving ${cityName}, ${stateName} can give you an honest estimate in under 5 minutes.`,
+      cta: `Call for Your Free ${cityName} Rodent Control Quote`,
+      sub: `Available 7 days a week · Same-day quote in ${cityName}`,
+    },
+    internalLinks: {
+      otherServicesLabel: `Other services in ${cityName}:`,
+      nearbyLabel: "Nearby cities:",
+      backLabel: `← All cities in ${stateName}`,
+    },
+  };
+}
+
+// ——— Bed Bug Treatment ———
+export function getBedBugTreatmentCityPageContent(
+  cityName: string,
+  stateName: string,
+  stateAbbr: string,
+  nearby1: string,
+  nearby2: string,
+  nearby3: string,
+  phone: string = PHONE_DEFAULT,
+  cityMetadata?: CityMetadata | null
+): ServiceCityContent {
+  const county = cityMetadata?.county;
+  const medianYear = cityMetadata?.medianYearBuilt;
+  const growthSnippet = cityMetadata?.growthSnippet;
+
+  const introParagraphs: string[] = [];
+  introParagraphs.push(
+    `Get a free bed bug treatment quote in ${cityName}, ${stateName}. This page connects you with licensed bed bug specialists — heat treatment, chemical treatment, and hybrid approaches — no obligation.`
+  );
+  if (county || growthSnippet) {
+    introParagraphs.push(
+      county && growthSnippet
+        ? `${cityName} is ${growthSnippet}. Bed bug specialists serving ${county} can give you a real treatment estimate and method recommendation for your home.`
+        : county
+          ? `In ${county}, licensed bed bug specialists work the area regularly. A phone quote and method recommendation takes under 5 minutes.`
+          : `${cityName} is ${growthSnippet}. Get a real bed bug treatment estimate from a specialist who serves your area.`
+    );
+  } else {
+    introParagraphs.push(`A licensed bed bug specialist who serves ${cityName} can recommend the right treatment method and give you an honest estimate over the phone.`);
+  }
+
+  const localParagraphs: string[] = [
+    ...(county ? [`Bed bug specialists serving ${county} are familiar with local housing types and treatment requirements.`] : []),
+    ...(medianYear ? [`${cityName} homes built around ${medianYear} often have construction features — wall cavities, baseboard gaps — that make thorough bed bug treatment more complex; a professional assessment is essential.`] : []),
+    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName} has active rental and hospitality markets that increase bed bug transmission risk.`] : []),
+  ].filter(Boolean);
+  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} bed bug specialist can give you a treatment quote tailored to your home.`);
+
+  return {
+    meta: {
+      title: `Bed Bug Treatment Quote, ${cityName} | Free Estimates, Licensed Local Exterminators`,
+      description: `Free bed bug treatment quote in ${cityName}, ${stateName}. Heat treatment, chemical & hybrid from licensed specialists. Upfront pricing, no obligation.`,
+    },
+    hero: {
+      h1: `Free Bed Bug Treatment Quote in ${cityName}, ${stateName}`,
+      sub: `Licensed ${cityName} bed bug specialists. Heat treatment, chemical, and hybrid approaches. Honest estimates, no commitment.`,
+      trustBullets: buildTrustBullets(stateAbbr, cityName, county),
+      cta: "Get Your Free Bed Bug Quote — Call Now",
+    },
+    intro: {
+      h2: `Get a Real Bed Bug Treatment Estimate in ${cityName}, ${stateName}`,
+      paragraphs: introParagraphs,
+      cta: `Call for a Free ${cityName} Bed Bug Treatment Quote`,
+    },
+    costEstimator: {
+      h2: `Bed Bug Treatment Cost Estimator — ${cityName}, ${stateName}`,
+      intro: `Use this tool for a ballpark before you call. Bed bug treatment costs depend on treatment method, number of rooms, and infestation severity. Your exact ${cityName} quote may vary.`,
+      ctaBelow: `Get Your Exact ${cityName} Bed Bug Quote — Call Now`,
+    },
+    mainService: {
+      h2: `Bed Bug Treatment Quote in ${cityName}, ${stateAbbr}`,
+      description: `Bed bugs are among the hardest pests to eliminate without professional treatment in ${cityName}. DIY approaches almost always fail — over-the-counter sprays don't reach eggs, and improper treatment scatters the infestation to new areas of the home, making professional remediation harder and more expensive. Heat treatment eliminates all bed bugs and eggs in a single visit; chemical treatment requires multiple visits over several weeks. A licensed ${cityName} specialist will recommend the right method based on your infestation severity and home layout.`,
+      localParagraphs,
+      cost: `Typical ${cityName} bed bug treatment cost: $500 – $5,000+`,
+      whatAffects: [
+        "Treatment method (heat vs. chemical vs. hybrid)",
+        "Number of rooms and infestation severity",
+        "Home size and layout complexity",
+        "Whether follow-up visits are included",
+      ],
+      cta: `Get a Bed Bug Treatment Quote in ${cityName} — Call Now`,
+    },
+    whyCall: {
+      h2: `Why ${cityName} Homeowners Get a Bed Bug Quote First`,
+      paragraphs: [
+        `A phone quote from a licensed ${cityName} bed bug specialist gives you a realistic budget and a clear method recommendation. Heat treatment vs. chemical treatment can mean a $1,000+ difference for the same home${county ? ` in ${county}` : ""}. A 5-minute call gets you options and pricing before you commit.`,
+        `It filters out the wrong approach fast. Any ${cityName} specialist who recommends only chemical treatment for a severe infestation — without discussing heat treatment — may not be giving you the most effective option. A free quote call lets you compare methods and contractors.`,
+        `Bed bug infestations don't resolve on their own — they spread. Every day without professional treatment is another day of infestation growth. Getting a quote now limits the scope of treatment required and the total cost.`,
+      ],
+    },
+    localSignals: {
+      h2: `Bed Bug Treatment Quote Service Areas Near ${cityName}, ${stateName}`,
+      intro: `Licensed bed bug specialists available for quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
+      bullets: buildLocalSignalsBullets(
+        stateName,
+        stateAbbr,
+        cityName,
+        [
+          `All specialists are licensed under ${stateName} state requirements`,
+          `Familiar with ${cityName}-area housing types and treatment requirements`,
+          "Upfront pricing — no surprise fees after treatment begins",
           `Same-day and next-day availability in ${cityName} and surrounding ${stateAbbr} areas`,
         ],
         cityMetadata
@@ -330,34 +461,34 @@ export function getWaterHeaterCityPageContent(
     },
     eeat: { title: "Why trust this guide", bullets: EEAT_BULLETS },
     faq: {
-      h2: `Water Heater Quote FAQ — ${cityName}, ${stateName}`,
+      h2: `Bed Bug Treatment Quote FAQ — ${cityName}, ${stateName}`,
       items: [
         {
-          q: `How much does a water heater replacement cost in ${cityName}?`,
-          a: `Water heater replacement in ${cityName} typically ranges from $900 to $3,200 depending on tank vs. tankless, capacity, and fuel type. A licensed ${cityName} plumber can give you a project-specific quote over the phone.`,
+          q: `How much does bed bug treatment cost in ${cityName}, ${stateAbbr}?`,
+          a: `Bed bug treatment in ${cityName} ranges from $500 for a single-room chemical treatment to $5,000+ for whole-home heat treatment of a severe infestation. A licensed ${cityName} specialist can give you a method-specific quote over the phone.`,
         },
         {
-          q: `Is the water heater quote in ${cityName} free?`,
-          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate before any work begins.`,
+          q: `Is the bed bug treatment quote in ${cityName} free?`,
+          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate from a licensed ${cityName} specialist before any work begins.`,
         },
         {
-          q: `Do I need a permit for a water heater in ${cityName}?`,
-          a: `Yes. Water heater replacement in ${cityName}, ${stateName} typically requires a permit. ${county ? `In ${county}, ` : ""}A licensed plumber handles the permit and includes the cost in your quote.`,
+          q: `Is heat treatment worth the extra cost in ${cityName}?`,
+          a: `For moderate to severe infestations in ${cityName}, heat treatment is typically more cost-effective over time — it eliminates all bugs and eggs in one visit versus 3+ chemical visits. A local specialist can advise based on your specific infestation.`,
         },
         {
-          q: `Tank or tankless in ${cityName}?`,
-          a: `Both are common in ${cityName}. Tank units are lower upfront cost; tankless can save on energy and may qualify for ${stateName} rebates. A local plumber can recommend the best option for your home when you call.`,
+          q: `Should I throw away my furniture if I have bed bugs in ${cityName}?`,
+          a: `In most cases, no. Professional heat or chemical treatment can effectively treat mattresses and furniture in place. Discarding furniture is rarely necessary and may spread the infestation.`,
         },
         {
-          q: `Can I get same-day water heater replacement in ${cityName}?`,
-          a: `In most ${cityName} areas, same-day or next-day service is available. Emergency replacement — no hot water — is often addressable the same day. Call to confirm current availability.`,
+          q: `How quickly can bed bug treatment begin in ${cityName}?`,
+          a: `Most licensed ${cityName} bed bug specialists can begin chemical treatment within 1–3 days. Heat treatment typically requires 3–7 days for scheduling and preparation.`,
         },
       ],
     },
     closing: {
-      h2: `Get Your Free Water Heater Quote in ${cityName} Today`,
-      text: `No forms. No waiting. No obligation. A licensed plumber serving ${cityName}, ${stateName} can give you an honest water heater estimate in under 5 minutes.`,
-      cta: `Call for Your Free ${cityName} Water Heater Quote`,
+      h2: `Get Your Free Bed Bug Treatment Quote in ${cityName} Today`,
+      text: `No forms. No waiting. No obligation. A licensed bed bug specialist serving ${cityName}, ${stateName} can give you an honest estimate in under 5 minutes.`,
+      cta: `Call for Your Free ${cityName} Bed Bug Quote`,
       sub: `Available 7 days a week · Same-day quote in ${cityName}`,
     },
     internalLinks: {
@@ -368,8 +499,8 @@ export function getWaterHeaterCityPageContent(
   };
 }
 
-// ——— Sewer Line Replacement ———
-export function getSewerLineCityPageContent(
+// ——— Mosquito Control ———
+export function getMosquitoControlCityPageContent(
   cityName: string,
   stateName: string,
   stateAbbr: string,
@@ -380,362 +511,83 @@ export function getSewerLineCityPageContent(
   cityMetadata?: CityMetadata | null
 ): ServiceCityContent {
   const county = cityMetadata?.county;
-  const medianYear = cityMetadata?.medianYearBuilt;
   const growthSnippet = cityMetadata?.growthSnippet;
-  const income = cityMetadata?.medianHouseholdIncome;
-  const homeValue = cityMetadata?.medianHomeValue;
-  const homeownershipRate = cityMetadata?.homeownershipRate;
 
   const introParagraphs: string[] = [];
   introParagraphs.push(
-    `Get a free sewer line replacement quote in ${cityName}, ${stateName}. This page connects you with licensed plumbers who specialize in sewer line work — trenchless and traditional — no obligation.`
+    `Get a free mosquito control quote in ${cityName}, ${stateName}. This page connects you with licensed mosquito specialists — barrier spray, seasonal programs, and misting systems — no obligation.`
   );
   if (county || growthSnippet) {
     introParagraphs.push(
       county && growthSnippet
-        ? `${cityName} is ${growthSnippet}. Sewer work in ${county} often requires permits and inspections; local plumbers know the process and can give you a real estimate and whether trenchless is an option.`
+        ? `${cityName} is ${growthSnippet}. Mosquito pressure in ${county} is seasonal and species-specific — a local specialist can give you a real program estimate for your property.`
         : county
-          ? `In ${county}, sewer line permits and inspections are handled by plumbers who work the area regularly. A phone quote takes under 5 minutes.`
-          : `${cityName} is ${growthSnippet}. Get a real sewer line estimate from a plumber who serves your area.`
+          ? `In ${county}, mosquito specialists know local seasonal patterns and effective treatment windows. A phone quote takes under 5 minutes.`
+          : `${cityName} is ${growthSnippet}. Get a real mosquito control estimate from a specialist who knows your area's seasonal pressure.`
     );
   } else {
-    introParagraphs.push(`Trenchless sewer replacement is available in most ${cityName} areas and can avoid full yard excavation. A licensed plumber can tell you if your property qualifies when you call.`);
+    introParagraphs.push(`A licensed mosquito specialist who serves ${cityName} can recommend the right program and give you an honest seasonal estimate over the phone.`);
   }
 
   const localParagraphs: string[] = [
-    ...(county ? [`In ${county}, sewer work typically requires permits and inspections; a plumber who regularly works the area can streamline the process.`] : []),
-    ...(medianYear ? [`Older ${cityName} neighborhoods, including many homes built before ${medianYear}, frequently have clay or cast-iron sewer lines that are prime candidates for replacement or trenchless repair.`] : []),
-    ...(homeValue ? [`With a median home value of $${homeValue.toLocaleString()} in ${cityName}, addressing sewer line issues before they escalate protects one of your largest assets.`] : []),
-    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName} has a mix of older and newer infrastructure — a camera inspection will show whether you need a full replacement or a targeted repair.`] : []),
+    ...(county ? [`In ${county}, mosquito season timing and species pressure are well known to local specialists who can optimize your treatment schedule.`] : []),
+    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName} has active outdoor lifestyles and events — professional mosquito control makes your yard usable through the season.`] : []),
   ].filter(Boolean);
-  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you a sewer line quote tailored to your property.`);
+  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} mosquito specialist can give you a program quote tailored to your property.`);
 
   return {
     meta: {
-      title: `Sewer Line Replacement Quote, ${cityName} | Free Estimates, Licensed Local Plumbers`,
-      description: `Free sewer line replacement quote in ${cityName}, ${stateName}. Trenchless & traditional. Licensed plumbers, upfront pricing, no obligation.`,
+      title: `Mosquito Control Quote, ${cityName} | Free Estimates, Licensed Local Exterminators`,
+      description: `Free mosquito control quote in ${cityName}, ${stateName}. Barrier spray, seasonal programs & misting systems from licensed specialists. Upfront pricing, no obligation.`,
     },
     hero: {
-      h1: `Free Sewer Line Replacement Quote in ${cityName}, ${stateName}`,
-      sub: `Licensed ${cityName} plumbers for sewer line replacement. Trenchless options. Honest estimates, no commitment.`,
+      h1: `Free Mosquito Control Quote in ${cityName}, ${stateName}`,
+      sub: `Licensed ${cityName} mosquito specialists. Barrier spray, seasonal programs, and misting systems. Honest estimates, no commitment.`,
       trustBullets: buildTrustBullets(stateAbbr, cityName, county),
-      cta: "Get Your Free Quote — Call Now",
+      cta: "Get Your Free Mosquito Control Quote — Call Now",
     },
     intro: {
-      h2: `Get a Real Sewer Line Estimate in ${cityName}, ${stateName}`,
+      h2: `Get a Real Mosquito Control Estimate in ${cityName}, ${stateName}`,
       paragraphs: introParagraphs,
-      cta: `Call for a Free ${cityName} Sewer Line Quote`,
+      cta: `Call for a Free ${cityName} Mosquito Control Quote`,
     },
     costEstimator: {
-      h2: `Sewer Line Cost Estimator — ${cityName}, ${stateName}`,
-      intro: `Use this tool for a ballpark before you call. Sewer line costs depend on length, depth, trenchless vs. excavation, and ${stateAbbr} permit fees. Your exact ${cityName} quote may vary.`,
-      ctaBelow: `Get Your Exact ${cityName} Sewer Line Quote — Call Now`,
+      h2: `Mosquito Control Cost Estimator — ${cityName}, ${stateName}`,
+      intro: `Use this tool for a ballpark before you call. Mosquito control costs depend on property size, treatment type, and seasonal program length. Your exact ${cityName} quote may vary.`,
+      ctaBelow: `Get Your Exact ${cityName} Mosquito Control Quote — Call Now`,
     },
     mainService: {
-      h2: `Sewer Line Replacement Quote in ${cityName}, ${stateAbbr}`,
-      description: `Sewer line issues are the plumbing problem ${cityName} homeowners are most likely to delay — and the one where delay costs the most. Tree root intrusion, pipe collapse, and corrosion are common in older ${cityName} neighborhoods. Trenchless sewer line replacement is available in most ${cityName} areas and can eliminate the need for full yard excavation — it costs less, takes less time, and leaves your landscaping intact. A licensed ${cityName} plumber will tell you whether your property and pipe condition qualify when you call.`,
+      h2: `Mosquito Control Quote in ${cityName}, ${stateAbbr}`,
+      description: `Professional mosquito control in ${cityName} reduces biting pressure by 70–90% with a consistent seasonal program — making your outdoor space genuinely usable through peak season. Barrier spray treatments applied every 3–4 weeks provide residual protection; automated misting systems offer hands-free control for larger properties. A licensed ${cityName} mosquito specialist will assess your property size, standing water sources, and local mosquito pressure to recommend the most cost-effective program.`,
       localParagraphs,
-      cost: `Typical ${cityName} sewer line replacement cost: $3,500 – $22,000`,
+      cost: `Typical ${cityName} mosquito control cost: $300 – $900 per season`,
       whatAffects: [
-        "Length and depth of the affected run",
-        "Trenchless vs. traditional excavation",
-        "Current pipe material (clay, cast iron, ABS)",
-        `Distance to the city main and ${stateAbbr} permit fees`,
+        "Property size and layout",
+        "Treatment type (barrier spray vs. misting system)",
+        "Number of treatments per season",
+        "Standing water sources on or near the property",
       ],
-      cta: `Get a Sewer Line Quote in ${cityName} — Call Now`,
+      cta: `Get a Mosquito Control Quote in ${cityName} — Call Now`,
     },
     whyCall: {
-      h2: `Why ${cityName} Homeowners Get a Sewer Line Quote First`,
+      h2: `Why ${cityName} Homeowners Get a Mosquito Control Quote First`,
       paragraphs: [
-        `A phone quote from a licensed ${cityName} plumber gives you a realistic budget — and whether trenchless replacement is an option for your property. Sewer line cost depends on length, depth, pipe material, and ${stateName} permit requirements${county ? ` (${county} handles permits and inspections)` : ""}. A 5-minute call gets you a number that reflects your situation; many ${cityName} plumbers can also outline timeline and access needs.`,
-        `Sewer work is a major project. Any ${cityName} plumber who won't give you a range over the phone before a dispatch fee is worth avoiding. Serious contractors are used to giving ballpark sewer estimates; a free quote call tells you who's worth your time.`,
-        `Delaying sewer repair often increases cost. Tree root intrusion, pipe collapse, and corrosion get worse over time — the longer you wait, the more excavation may be required. Getting a quote now helps you plan and, when possible, lock in trenchless options before a full dig is the only choice.`,
+        `A phone quote from a licensed ${cityName} mosquito specialist gives you a seasonal program price — how many treatments, what method, and total cost for the season. Program structures and pricing vary significantly between companies${county ? ` in ${county}` : ""}. A 5-minute call gets you options you can actually compare.`,
+        `Starting before peak season is more cost-effective. In ${cityName}, starting a mosquito program before the season — rather than mid-summer — means fewer catch-up treatments and better overall protection. A licensed specialist can advise on optimal timing for your area.`,
+        `Mosquitoes aren't just a nuisance in ${cityName} — they're vectors for West Nile virus, dengue, and other diseases. Professional control reduces real health risk, not just discomfort.`,
       ],
     },
     localSignals: {
-      h2: `Sewer Line Quote Service Areas Near ${cityName}, ${stateName}`,
-      intro: `Licensed plumbers available for sewer line quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
+      h2: `Mosquito Control Quote Service Areas Near ${cityName}, ${stateName}`,
+      intro: `Licensed mosquito specialists available for quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
       bullets: buildLocalSignalsBullets(
         stateName,
         stateAbbr,
         cityName,
         [
-          `All plumbers are licensed under ${stateName} state requirements`,
-          `Familiar with ${cityName}-area permits and inspections for sewer work`,
-          "Upfront pricing — no surprise fees after the job starts",
-          `Emergency sewer availability in ${cityName} and surrounding ${stateAbbr} areas`,
-        ],
-        cityMetadata
-      ),
-    },
-    eeat: { title: "Why trust this guide", bullets: EEAT_BULLETS },
-    faq: {
-      h2: `Sewer Line Quote FAQ — ${cityName}, ${stateName}`,
-      items: [
-        {
-          q: `How much does sewer line replacement cost in ${cityName}?`,
-          a: `Sewer line replacement in ${cityName} typically ranges from $3,500 to $22,000 depending on length, depth, trenchless vs. excavation, and pipe material. A licensed ${cityName} plumber can give you a project-specific quote.`,
-        },
-        {
-          q: `Is the sewer line quote in ${cityName} free?`,
-          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate before any work begins.`,
-        },
-        {
-          q: `Do I need a permit for sewer work in ${cityName}?`,
-          a: `Yes. Sewer line replacement in ${cityName}, ${stateName} typically requires permits. ${county ? `In ${county}, ` : ""}A licensed plumber handles the permit and includes the cost in your quote.`,
-        },
-        {
-          q: `What is trenchless sewer replacement in ${cityName}?`,
-          a: `Trenchless methods allow sewer line replacement or repair with minimal excavation — often through a small access point. It's available in most ${cityName} areas and can save time and landscaping. A local plumber can confirm if your property qualifies.`,
-        },
-        {
-          q: `How do I know if I need sewer line replacement in ${cityName}?`,
-          a: `Signs include recurring backups, slow drains throughout the house, sewage odors, and soggy spots in the yard. A camera inspection is the fastest way to confirm — most ${cityName} plumbers include it in the quote process.`,
-        },
-      ],
-    },
-    closing: {
-      h2: `Get Your Free Sewer Line Quote in ${cityName} Today`,
-      text: `No forms. No waiting. No obligation. A licensed plumber serving ${cityName}, ${stateName} can give you an honest sewer line estimate in under 5 minutes.`,
-      cta: `Call for Your Free ${cityName} Sewer Line Quote`,
-      sub: `Available 7 days a week · Same-day quote in ${cityName}`,
-    },
-    internalLinks: {
-      otherServicesLabel: `Other services in ${cityName}:`,
-      nearbyLabel: "Nearby cities:",
-      backLabel: `← All cities in ${stateName}`,
-    },
-  };
-}
-
-// ——— Drain Line Replacement ———
-export function getDrainLineCityPageContent(
-  cityName: string,
-  stateName: string,
-  stateAbbr: string,
-  nearby1: string,
-  nearby2: string,
-  nearby3: string,
-  phone: string = PHONE_DEFAULT,
-  cityMetadata?: CityMetadata | null
-): ServiceCityContent {
-  const county = cityMetadata?.county;
-  const medianYear = cityMetadata?.medianYearBuilt;
-  const growthSnippet = cityMetadata?.growthSnippet;
-  const income = cityMetadata?.medianHouseholdIncome;
-  const homeValue = cityMetadata?.medianHomeValue;
-  const homeownershipRate = cityMetadata?.homeownershipRate;
-
-  const introParagraphs: string[] = [];
-  introParagraphs.push(
-    `Get a free drain line replacement quote in ${cityName}, ${stateName}. This page connects you with licensed plumbers who do drain line work — camera inspection and repair or replacement — no obligation.`
-  );
-  if (county || growthSnippet) {
-    introParagraphs.push(
-      county && growthSnippet
-        ? `${cityName} is ${growthSnippet}. In ${county}, drain line scope and permits vary; a local plumber can give you a real estimate and confirm whether you need a full replacement or a targeted repair.`
-        : county
-          ? `In ${county}, drain line work may require a permit depending on scope; a plumber who works the area can outline the process when you call.`
-          : `${cityName} is ${growthSnippet}. Get a real drain line estimate from a plumber who serves your area.`
-    );
-  } else {
-    introParagraphs.push(`A camera inspection is the fastest way to get an accurate quote — most ${cityName} plumbers include it in their quote process.`);
-  }
-
-  const localParagraphs: string[] = [
-    ...(county ? [`Drain line work in ${county} may require a permit depending on scope; a licensed ${cityName} plumber can confirm when you call.`] : []),
-    ...(medianYear ? [`With many ${cityName} homes built around ${medianYear}, drain line replacement quotes often involve older materials and access challenges that affect the final price.`] : []),
-    ...(income ? [`${cityName} homeowners with a median household income of $${income.toLocaleString()} find that getting a drain line quote early — before a failure — is the most cost-effective approach.`] : []),
-    ...(growthSnippet ? [`In ${cityName}, ${growthSnippet}, demand for drain and sewer services is steady — getting a quote early helps secure a slot without emergency fees.`] : []),
-  ].filter(Boolean);
-  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you a drain line quote tailored to your home.`);
-
-  return {
-    meta: {
-      title: `Drain Line Replacement Quote, ${cityName} | Free Estimates, Licensed Local Plumbers`,
-      description: `Free drain line replacement quote in ${cityName}, ${stateName}. Licensed plumbers, camera inspection, upfront pricing, no obligation.`,
-    },
-    hero: {
-      h1: `Free Drain Line Replacement Quote in ${cityName}, ${stateName}`,
-      sub: `Licensed ${cityName} plumbers for drain line replacement. Camera inspection. Honest estimates, no commitment.`,
-      trustBullets: buildTrustBullets(stateAbbr, cityName, county),
-      cta: "Get Your Free Quote — Call Now",
-    },
-    intro: {
-      h2: `Get a Real Drain Line Estimate in ${cityName}, ${stateName}`,
-      paragraphs: introParagraphs,
-      cta: `Call for a Free ${cityName} Drain Line Quote`,
-    },
-    costEstimator: {
-      h2: `Drain Line Cost Estimator — ${cityName}, ${stateName}`,
-      intro: `Use this tool for a ballpark before you call. Drain line costs depend on location of the run, pipe material, and ${stateAbbr} permit costs. Your exact ${cityName} quote may vary.`,
-      ctaBelow: `Get Your Exact ${cityName} Drain Line Quote — Call Now`,
-    },
-    mainService: {
-      h2: `Drain Line Replacement Quote in ${cityName}, ${stateAbbr}`,
-      description: `Recurring clogs, slow drains, and sewage odors in your ${cityName} home are often symptoms of a failing drain line — not a clog that a snake can fix permanently. If you've had the same drain cleaned more than twice in 12 months, a replacement quote is the smarter next step. A camera inspection is the fastest way to get an accurate drain line quote in ${cityName} — it shows exactly where the problem is, so you're not paying to replace pipe that doesn't need replacing. Most ${cityName} plumbers include the camera inspection in their quote process.`,
-      localParagraphs,
-      cost: `Typical ${cityName} drain line replacement cost: $500 – $4,500`,
-      whatAffects: [
-        "Location of the damaged section (under slab, in wall, exterior)",
-        "Pipe diameter and material",
-        "Whether a camera inspection is needed",
-        `${stateAbbr} permit requirements for your city`,
-      ],
-      cta: `Get a Drain Line Quote in ${cityName} — Call Now`,
-    },
-    whyCall: {
-      h2: `Why ${cityName} Homeowners Get a Drain Line Quote First`,
-      paragraphs: [
-        `A phone quote from a licensed ${cityName} plumber gives you a realistic budget — and whether you need a full drain line replacement or a targeted repair. Recurring clogs, slow drains, and sewage odors are often symptoms of a failing drain line; location (under slab, in wall, exterior), pipe material, and ${stateName} permit requirements${county ? ` (${county})` : ""} all affect the final number. A 5-minute call gets you a ballpark; many ${cityName} plumbers use camera inspections to confirm scope before giving a firm quote.`,
-        `It filters out the wrong contractors fast. Any ${cityName} plumber who won't give you a range over the phone before a dispatch fee is worth avoiding. A free quote call tells you who's serious — and a camera inspection often clarifies whether the issue is drain line or sewer line, which can change the cost significantly.`,
-        `What sounds like a sewer problem is sometimes a drain line issue that costs a fraction of the price. A licensed ${cityName} plumber can often narrow it down from a quick conversation and recommend next steps (e.g. camera inspection) so you're not overpaying for the wrong scope.`,
-      ],
-    },
-    localSignals: {
-      h2: `Drain Line Quote Service Areas Near ${cityName}, ${stateName}`,
-      intro: `Licensed plumbers available for drain line quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
-      bullets: buildLocalSignalsBullets(
-        stateName,
-        stateAbbr,
-        cityName,
-        [
-          `All plumbers are licensed under ${stateName} state requirements`,
-          `Familiar with ${cityName}-area permit requirements for drain work`,
-          "Upfront pricing — no surprise fees after the job starts",
-          `Same-day and emergency availability in ${cityName} and surrounding ${stateAbbr} areas`,
-        ],
-        cityMetadata
-      ),
-    },
-    eeat: { title: "Why trust this guide", bullets: EEAT_BULLETS },
-    faq: {
-      h2: `Drain Line Quote FAQ — ${cityName}, ${stateName}`,
-      items: [
-        {
-          q: `How much does drain line replacement cost in ${cityName}?`,
-          a: `Drain line replacement in ${cityName} typically ranges from $500 to $4,500 depending on location of the run, pipe material, and access. A licensed ${cityName} plumber can give you a project-specific quote, often after a camera inspection.`,
-        },
-        {
-          q: `Is the drain line quote in ${cityName} free?`,
-          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate before any work begins.`,
-        },
-        {
-          q: `Do I need a permit for drain line work in ${cityName}?`,
-          a: `It depends on scope. Drain line work in ${cityName}, ${stateName} may require a permit. ${county ? `In ${county}, ` : ""}A licensed plumber can confirm and include permit cost in your quote.`,
-        },
-        {
-          q: `How do I know if I need drain line replacement in ${cityName}?`,
-          a: `If you've had the same drain cleaned more than twice in 12 months, or you have recurring clogs and slow drains, a replacement quote is the next step. A camera inspection — which most ${cityName} plumbers offer — shows exactly where the problem is.`,
-        },
-        {
-          q: `What's the difference between drain line and sewer line in ${cityName}?`,
-          a: `Drain lines carry wastewater from your fixtures to the main sewer line (or septic). The sewer line runs from your property to the city main or septic tank. Both can fail; a licensed ${cityName} plumber can determine which is the issue and quote accordingly.`,
-        },
-      ],
-    },
-    closing: {
-      h2: `Get Your Free Drain Line Quote in ${cityName} Today`,
-      text: `No forms. No waiting. No obligation. A licensed plumber serving ${cityName}, ${stateName} can give you an honest drain line estimate in under 5 minutes.`,
-      cta: `Call for Your Free ${cityName} Drain Line Quote`,
-      sub: `Available 7 days a week · Same-day quote in ${cityName}`,
-    },
-    internalLinks: {
-      otherServicesLabel: `Other services in ${cityName}:`,
-      nearbyLabel: "Nearby cities:",
-      backLabel: `← All cities in ${stateName}`,
-    },
-  };
-}
-
-// ——— Emergency Plumbing ———
-export function getEmergencyPlumbingCityPageContent(
-  cityName: string,
-  stateName: string,
-  stateAbbr: string,
-  nearby1: string,
-  nearby2: string,
-  nearby3: string,
-  phone: string = PHONE_DEFAULT,
-  cityMetadata?: CityMetadata | null
-): ServiceCityContent {
-  const county = cityMetadata?.county;
-  const growthSnippet = cityMetadata?.growthSnippet;
-
-  const introParagraphs: string[] = [];
-  introParagraphs.push(
-    `Get a free emergency plumbing quote in ${cityName}, ${stateName}. This page connects you with licensed plumbers who offer same-day and after-hours service — leaks, sewer backups, no hot water. No obligation.`
-  );
-  if (county || growthSnippet) {
-    introParagraphs.push(
-      county && growthSnippet
-        ? `${cityName} is ${growthSnippet}. Emergency and after-hours rates in ${county} are familiar to local plumbers — a quick call gives you a real estimate.`
-        : county
-          ? `In ${county}, licensed plumbers who serve the area can quote emergency and same-day service. A phone quote takes under 5 minutes.`
-          : `${cityName} is ${growthSnippet}. Get a real emergency plumbing estimate from a plumber who serves your area.`
-    );
-  } else {
-    introParagraphs.push(`A licensed plumber who serves ${cityName} can give you an emergency quote over the phone in under 5 minutes — including any after-hours premium.`);
-  }
-
-  const localParagraphs: string[] = [];
-  if (county) localParagraphs.push(`In ${county}, same-day and after-hours availability varies; a local plumber will confirm when you call.`);
-  if (growthSnippet) localParagraphs.push(`As ${growthSnippet}, ${cityName} has strong demand for emergency plumbing — calling for a quote before a crisis often saves the after-hours premium.`);
-  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} plumber can give you an emergency quote tailored to your situation.`);
-
-  return {
-    meta: {
-      title: `Emergency Plumbing Quote, ${cityName} | Free Estimates, 24/7 Local Plumbers`,
-      description: `Free emergency plumbing quote in ${cityName}, ${stateName}. Same-day and after-hours from licensed plumbers. Upfront pricing, no obligation.`,
-    },
-    hero: {
-      h1: `Free Emergency Plumbing Quote in ${cityName}, ${stateName}`,
-      sub: `Licensed ${cityName} plumbers for same-day and after-hours service. Leaks, sewer backups, no hot water — honest estimates, no commitment.`,
-      trustBullets: buildTrustBullets(stateAbbr, cityName, county),
-      cta: "Get Your Free Emergency Quote — Call Now",
-    },
-    intro: {
-      h2: `Get a Real Emergency Plumbing Estimate in ${cityName}, ${stateName}`,
-      paragraphs: introParagraphs,
-      cta: `Call for a Free ${cityName} Emergency Plumbing Quote`,
-    },
-    costEstimator: {
-      h2: `Emergency Plumbing Cost Estimator — ${cityName}, ${stateName}`,
-      intro: `Use this tool for a ballpark before you call. Emergency and after-hours rates in ${cityName} typically add $150–$400 to the base job. Your exact quote may vary.`,
-      ctaBelow: `Get Your Exact ${cityName} Emergency Quote — Call Now`,
-    },
-    mainService: {
-      h2: `Emergency Plumbing Quote in ${cityName}, ${stateAbbr}`,
-      description: `When you need a plumber fast — burst pipe, sewer backup, no hot water — a quick phone quote from a licensed ${cityName} plumber tells you what to expect. Emergency and after-hours call-out in ${cityName} typically adds $150–$400 to the job; same-day and next-day service is available in most areas. Getting a number before work starts avoids surprise fees.`,
-      localParagraphs,
-      cost: `Typical ${cityName} emergency plumbing: base job + $150–$400 after-hours premium`,
-      whatAffects: [
-        "Type of emergency — leak, sewer backup, water heater, etc.",
-        "Time of day — night, weekend, holiday premiums",
-        "Scope of work and parts needed",
-        `${stateAbbr} labor rates in ${cityName}`,
-      ],
-      cta: `Get an Emergency Plumbing Quote in ${cityName} — Call Now`,
-    },
-    whyCall: {
-      h2: `Why ${cityName} Homeowners Get an Emergency Quote First`,
-      paragraphs: [
-        `A phone quote from a licensed ${cityName} plumber gives you a real number — including any after-hours premium — before a truck rolls. Emergency plumbing in ${cityName} often adds $150–$400 to the base job; a 5-minute call confirms the total so you're not surprised.`,
-        `It filters out the wrong plumbers fast. Any ${cityName} plumber who won't give you a range over the phone before charging a dispatch fee is worth avoiding. Serious contractors are used to quoting emergency work; a free call tells you who's worth your time.`,
-        `If the situation isn't life-threatening, calling two local plumbers can surface a real price difference. This platform makes it easy to connect with licensed emergency plumbers in ${cityName}.`,
-      ],
-    },
-    localSignals: {
-      h2: `Emergency Plumbing Quote Service Areas Near ${cityName}, ${stateName}`,
-      intro: `Licensed plumbers available for emergency quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
-      bullets: buildLocalSignalsBullets(
-        stateName,
-        stateAbbr,
-        cityName,
-        [
-          `All plumbers are licensed under ${stateName} state requirements`,
-          `Same-day and after-hours availability in ${cityName}`,
-          "Upfront pricing — after-hours premium quoted before work starts",
+          `All specialists are licensed under ${stateName} state requirements`,
+          `Familiar with ${cityName}-area mosquito species and seasonal pressure`,
+          "Upfront seasonal pricing — no surprise fees",
           `Serving ${cityName} and surrounding ${stateAbbr} areas`,
         ],
         cityMetadata
@@ -743,35 +595,35 @@ export function getEmergencyPlumbingCityPageContent(
     },
     eeat: { title: "Why trust this guide", bullets: EEAT_BULLETS },
     faq: {
-      h2: `Emergency Plumbing Quote FAQ — ${cityName}, ${stateName}`,
+      h2: `Mosquito Control Quote FAQ — ${cityName}, ${stateName}`,
       items: [
         {
-          q: `How much does emergency plumbing cost in ${cityName}?`,
-          a: `Emergency and after-hours plumbing in ${cityName} typically adds $150–$400 to the base job. The total depends on the work — leak repair, water heater, sewer backup — and local rates. A licensed ${cityName} plumber can give you a quote over the phone.`,
+          q: `How much does mosquito control cost in ${cityName}, ${stateAbbr}?`,
+          a: `A seasonal mosquito control program in ${cityName} typically runs $300–$900. Individual barrier spray treatments cost $50–$150. Misting system installation ranges from $1,500–$5,000. A licensed specialist can give you a property-specific quote.`,
         },
         {
-          q: `Is the emergency plumbing quote in ${cityName} free?`,
-          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate — including any after-hours premium — before any work begins.`,
+          q: `Is the mosquito control quote in ${cityName} free?`,
+          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate from a licensed ${cityName} specialist before any work begins.`,
         },
         {
-          q: `Can I get a plumber same day in ${cityName}?`,
-          a: `In most ${cityName} areas, same-day and after-hours service is available for emergencies. Call to confirm current availability.`,
+          q: `When should I start mosquito control in ${cityName}?`,
+          a: `Starting before peak mosquito season — typically April or May in ${stateName} — is more cost-effective and provides better season-long protection. A local specialist can advise on optimal timing for ${cityName}.`,
         },
         {
-          q: `What counts as a plumbing emergency in ${cityName}?`,
-          a: `Common emergencies include major leaks, burst pipes, sewer backups, no water, and no hot water. If you're unsure, call; a licensed ${cityName} plumber can tell you whether it's urgent and give you a quote.`,
+          q: `Are mosquito treatments safe for children and pets in ${cityName}?`,
+          a: `Most licensed mosquito treatments use pyrethrins or synthetic pyrethroids that are safe for humans and pets once dried — typically within 30 minutes to 2 hours. Ask your ${cityName} specialist about re-entry times.`,
         },
         {
-          q: `Do emergency plumbers in ${cityName} charge more?`,
-          a: `Yes. After-hours, night, weekend, and holiday call-outs typically add $150–$400 to the job. A quick phone quote from a ${cityName} plumber tells you exactly what to expect before you commit.`,
+          q: `Is an automated misting system worth the cost in ${cityName}?`,
+          a: `For high-pressure properties, waterfront homes, or homeowners who want hands-free convenience, automated misting systems can pay for themselves over 3–5 seasons compared to annual barrier spray programs. A local specialist can assess your property.`,
         },
       ],
     },
     closing: {
-      h2: `Get Your Free Emergency Plumbing Quote in ${cityName} Today`,
-      text: `No forms. No waiting. No obligation. A licensed plumber serving ${cityName}, ${stateName} can give you an honest emergency estimate in under 5 minutes.`,
-      cta: `Call for Your Free ${cityName} Emergency Plumbing Quote`,
-      sub: `Available 7 days a week · Same-day and after-hours quote in ${cityName}`,
+      h2: `Get Your Free Mosquito Control Quote in ${cityName} Today`,
+      text: `No forms. No waiting. No obligation. A licensed mosquito specialist serving ${cityName}, ${stateName} can give you an honest seasonal estimate in under 5 minutes.`,
+      cta: `Call for Your Free ${cityName} Mosquito Control Quote`,
+      sub: `Available 7 days a week · Same-day quote in ${cityName}`,
     },
     internalLinks: {
       otherServicesLabel: `Other services in ${cityName}:`,
@@ -781,24 +633,167 @@ export function getEmergencyPlumbingCityPageContent(
   };
 }
 
-/** Dispatcher: returns city page content for the given service (non-plumbing). */
+// ——— Wildlife Removal ———
+export function getWildlifeRemovalCityPageContent(
+  cityName: string,
+  stateName: string,
+  stateAbbr: string,
+  nearby1: string,
+  nearby2: string,
+  nearby3: string,
+  phone: string = PHONE_DEFAULT,
+  cityMetadata?: CityMetadata | null
+): ServiceCityContent {
+  const county = cityMetadata?.county;
+  const medianYear = cityMetadata?.medianYearBuilt;
+  const growthSnippet = cityMetadata?.growthSnippet;
+  const homeValue = cityMetadata?.medianHomeValue;
+
+  const introParagraphs: string[] = [];
+  introParagraphs.push(
+    `Get a free wildlife removal quote in ${cityName}, ${stateName}. This page connects you with licensed wildlife specialists — raccoons, squirrels, bats, opossums, snakes, and more — humane removal, no obligation.`
+  );
+  if (county || growthSnippet) {
+    introParagraphs.push(
+      county && growthSnippet
+        ? `${cityName} is ${growthSnippet}. Wildlife specialists serving ${county} know local species regulations and humane removal requirements — a quick call gives you a real estimate.`
+        : county
+          ? `In ${county}, wildlife removal regulations vary by species; a licensed specialist who works the area handles permits and legal relocation. A phone quote takes under 5 minutes.`
+          : `${cityName} is ${growthSnippet}. Get a real wildlife removal estimate from a licensed specialist who serves your area.`
+    );
+  } else {
+    introParagraphs.push(`A licensed wildlife specialist who serves ${cityName} can give you an honest removal and exclusion estimate over the phone in under 5 minutes.`);
+  }
+
+  const localParagraphs: string[] = [
+    ...(county ? [`In ${county}, wildlife removal requires permits for many species; a licensed ${cityName} specialist handles all legal requirements as part of the job.`] : []),
+    ...(medianYear ? [`${cityName} homes built around ${medianYear} often have aging soffits, fascia, and roof vents that are common wildlife entry points — exclusion is essential after removal.`] : []),
+    ...(homeValue ? [`With a median home value of $${homeValue.toLocaleString()} in ${cityName}, addressing wildlife intrusions quickly limits structural damage and protects your investment.`] : []),
+    ...(growthSnippet ? [`As ${growthSnippet}, ${cityName}'s expanding development displaces wildlife populations — intrusions into homes and attics are increasingly common.`] : []),
+  ].filter(Boolean);
+  if (!localParagraphs.length) localParagraphs.push(`A licensed ${cityName} wildlife specialist can give you a removal and exclusion quote tailored to your home.`);
+
+  return {
+    meta: {
+      title: `Wildlife Removal Quote, ${cityName} | Free Estimates, Licensed Local Specialists`,
+      description: `Free wildlife removal quote in ${cityName}, ${stateName}. Raccoon, squirrel, bat & snake removal from licensed specialists. Humane, upfront pricing, no obligation.`,
+    },
+    hero: {
+      h1: `Free Wildlife Removal Quote in ${cityName}, ${stateName}`,
+      sub: `Licensed ${cityName} wildlife specialists. Raccoons, squirrels, bats, opossums, snakes. Humane removal and exclusion. Honest estimates, no commitment.`,
+      trustBullets: buildTrustBullets(stateAbbr, cityName, county),
+      cta: "Get Your Free Wildlife Removal Quote — Call Now",
+    },
+    intro: {
+      h2: `Get a Real Wildlife Removal Estimate in ${cityName}, ${stateName}`,
+      paragraphs: introParagraphs,
+      cta: `Call for a Free ${cityName} Wildlife Removal Quote`,
+    },
+    costEstimator: {
+      h2: `Wildlife Removal Cost Estimator — ${cityName}, ${stateName}`,
+      intro: `Use this tool for a ballpark before you call. Wildlife removal costs depend on animal species, intrusion scope, and whether exclusion and attic remediation are required. Your exact ${cityName} quote may vary.`,
+      ctaBelow: `Get Your Exact ${cityName} Wildlife Removal Quote — Call Now`,
+    },
+    mainService: {
+      h2: `Wildlife Removal Quote in ${cityName}, ${stateAbbr}`,
+      description: `Wildlife removal in ${cityName} is regulated — most species require a licensed specialist for legal trapping, relocation, and exclusion. Removing an animal without sealing entry points guarantees the same problem within weeks. A licensed ${cityName} wildlife specialist identifies every entry point, handles all permits and legal relocation, and provides a complete exclusion quote. Attic remediation — removal of contaminated insulation and droppings — is often required after raccoon or bat intrusions to eliminate health hazards and odors that attract new animals.`,
+      localParagraphs,
+      cost: `Typical ${cityName} wildlife removal cost: $200 – $3,000+`,
+      whatAffects: [
+        "Animal species and number of animals",
+        "Entry points and exclusion complexity",
+        "Whether attic or crawl space remediation is needed",
+        `${stateAbbr} wildlife removal permit requirements`,
+      ],
+      cta: `Get a Wildlife Removal Quote in ${cityName} — Call Now`,
+    },
+    whyCall: {
+      h2: `Why ${cityName} Homeowners Get a Wildlife Removal Quote First`,
+      paragraphs: [
+        `A phone quote from a licensed ${cityName} wildlife specialist gives you a realistic budget for removal and exclusion. Wildlife removal costs${county ? ` in ${county}` : ""} depend on the species, number of animals, entry point complexity, and whether attic remediation is needed. A 5-minute call gets you a number that reflects your specific situation — not a national average.`,
+        `Removal without exclusion is a temporary fix. Wildlife re-enters through the same gaps within weeks. Any ${cityName} specialist who offers removal-only without sealing entry points is not solving your problem permanently. A free quote call lets you identify who offers complete exclusion.`,
+        `Wildlife removal is legally regulated in ${stateName}. Attempting to trap and relocate raccoons, bats, or squirrels without a license can result in fines — and mishandling bats creates serious rabies exposure risk. A licensed ${cityName} specialist handles all legal requirements as part of the job.`,
+      ],
+    },
+    localSignals: {
+      h2: `Wildlife Removal Quote Service Areas Near ${cityName}, ${stateName}`,
+      intro: `Licensed wildlife specialists available for quotes in ${cityName} and nearby communities including ${nearby1}, ${nearby2}, and ${nearby3}.`,
+      bullets: buildLocalSignalsBullets(
+        stateName,
+        stateAbbr,
+        cityName,
+        [
+          `All specialists are licensed under ${stateName} wildlife removal requirements`,
+          `Familiar with ${cityName}-area wildlife species and local regulations`,
+          "Humane removal methods — upfront pricing",
+          `Emergency availability in ${cityName} and surrounding ${stateAbbr} areas`,
+        ],
+        cityMetadata
+      ),
+    },
+    eeat: { title: "Why trust this guide", bullets: EEAT_BULLETS },
+    faq: {
+      h2: `Wildlife Removal Quote FAQ — ${cityName}, ${stateName}`,
+      items: [
+        {
+          q: `How much does wildlife removal cost in ${cityName}, ${stateAbbr}?`,
+          a: `Wildlife removal in ${cityName} typically ranges from $200 for a single opossum removal to $3,000+ for raccoon exclusion with attic remediation. A licensed ${cityName} specialist can give you a species-specific quote over the phone.`,
+        },
+        {
+          q: `Is the wildlife removal quote in ${cityName} free?`,
+          a: `Yes. A phone quote costs nothing. No obligation, no dispatch fee. You get a real estimate from a licensed ${cityName} specialist before any work begins.`,
+        },
+        {
+          q: `Can I remove wildlife myself in ${cityName}?`,
+          a: `Most wildlife removal in ${stateName} requires a state license. Trapping and relocating raccoons, bats, and squirrels without permits is illegal in most circumstances. Always use a licensed specialist in ${cityName}.`,
+        },
+        {
+          q: `When can bats be removed in ${cityName}, ${stateAbbr}?`,
+          a: `Bat exclusion in ${stateName} can only be performed outside the maternity season — when baby bats are present and cannot fly. A licensed ${cityName} specialist knows your state's specific exclusion windows.`,
+        },
+        {
+          q: `How quickly can wildlife removal begin in ${cityName}?`,
+          a: `Most licensed ${cityName} wildlife specialists can begin within 1–3 days of the quote. Urgent situations — active raccoon in the attic, snake in the living space — are often addressed same-day or next-day.`,
+        },
+      ],
+    },
+    closing: {
+      h2: `Get Your Free Wildlife Removal Quote in ${cityName} Today`,
+      text: `No forms. No waiting. No obligation. A licensed wildlife specialist serving ${cityName}, ${stateName} can give you an honest removal and exclusion estimate in under 5 minutes.`,
+      cta: `Call for Your Free ${cityName} Wildlife Removal Quote`,
+      sub: `Available 7 days a week · Same-day quote in ${cityName}`,
+    },
+    internalLinks: {
+      otherServicesLabel: `Other services in ${cityName}:`,
+      nearbyLabel: "Nearby cities:",
+      backLabel: `← All cities in ${stateName}`,
+    },
+  };
+}
+
+/** Dispatcher: returns city page content for the given pest control service. */
 export function getServiceCityPageContent(
-  service: "repiping-quote" | "water-heater-replacement-quote" | "sewer-line-replacement-quote" | "drain-line-replacement-quote" | "emergency-plumbing-quote",
+  service:
+    | "termite-treatment-quote"
+    | "rodent-control-quote"
+    | "bed-bug-treatment-quote"
+    | "mosquito-control-quote"
+    | "wildlife-removal-quote",
   params: ServiceContentParams
 ): ServiceCityContent {
   const { cityName, stateName, stateAbbr, nearby1, nearby2, nearby3, phone, cityMetadata } = params;
   const p = [cityName, stateName, stateAbbr, nearby1, nearby2, nearby3, phone ?? PHONE_DEFAULT, cityMetadata] as const;
   switch (service) {
-    case "repiping-quote":
-      return getRepipingCityPageContent(...p);
-    case "water-heater-replacement-quote":
-      return getWaterHeaterCityPageContent(...p);
-    case "sewer-line-replacement-quote":
-      return getSewerLineCityPageContent(...p);
-    case "drain-line-replacement-quote":
-      return getDrainLineCityPageContent(...p);
-    case "emergency-plumbing-quote":
-      return getEmergencyPlumbingCityPageContent(...p);
+    case "termite-treatment-quote":
+      return getTermiteTreatmentCityPageContent(...p);
+    case "rodent-control-quote":
+      return getRodentControlCityPageContent(...p);
+    case "bed-bug-treatment-quote":
+      return getBedBugTreatmentCityPageContent(...p);
+    case "mosquito-control-quote":
+      return getMosquitoControlCityPageContent(...p);
+    case "wildlife-removal-quote":
+      return getWildlifeRemovalCityPageContent(...p);
     default: {
       const _: never = service;
       throw new Error(`Unknown service: ${service}`);

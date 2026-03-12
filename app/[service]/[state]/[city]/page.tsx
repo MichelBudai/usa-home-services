@@ -21,7 +21,6 @@ import {
   buildCityCensusStats,
   generateCityContextByService,
 } from "@/lib/censusData";
-import { getPlumbingCityPageContent } from "@/lib/cityPlumbingContent";
 import { getServiceCityPageContent } from "@/lib/cityServiceContent";
 import { getCityMetadata } from "@/lib/cityMetadata";
 import { PHONE_TEL, CTA_CALL_LABEL, SITE_BASE_URL } from "@/lib/siteConfig";
@@ -31,11 +30,6 @@ import styles from "./page.module.css";
 
 const PlumbingCostEstimator = dynamic(
   () => import("@/components/PlumbingCostEstimator").then((m) => m.PlumbingCostEstimator),
-  { ssr: false }
-);
-
-const CostCalculator = dynamic(
-  () => import("@/components/CostCalculator").then((m) => m.CostCalculator),
   { ssr: false }
 );
 
@@ -71,20 +65,20 @@ function getCityPageContent(
 ) {
   const serviceLower = serviceLabel.toLowerCase();
   return {
-    heroTitle: `${serviceLabel} quote in ${cityName}, ${stateName}`,
-    heroSub: `Get free ${serviceLower} quotes from local plumbers in ${cityName}. Compare estimates with no obligation.`,
-    metaTitle: `${serviceLabel}, ${cityName} | Free Estimates, Licensed Local Plumbers`,
-    metaDescription: `Free ${serviceLower} in ${cityName}, ${stateName}. Licensed local plumbers, upfront pricing, no obligation. Compare estimates.`,
-    intro: `Looking for a ${serviceLower} quote in ${cityName}? Get free estimates from local plumbers. Compare quotes with no obligation.`,
+    heroTitle: `${serviceLabel} in ${cityName}, ${stateName}`,
+    heroSub: `Get free ${serviceLower} quotes from licensed pest control specialists in ${cityName}. Compare estimates with no obligation.`,
+    metaTitle: `${serviceLabel}, ${cityName} | Free Estimates, Licensed Local Exterminators`,
+    metaDescription: `Free ${serviceLower} in ${cityName}, ${stateName}. Licensed local pest control specialists, upfront pricing, no obligation. Compare estimates.`,
+    intro: `Looking for a ${serviceLower} quote in ${cityName}? Get free estimates from licensed specialists. Compare quotes with no obligation.`,
     whyTitle: `Why get a quote here in ${cityName}`,
     whyPoints: [
-      `Free quotes from plumbers who serve ${cityName} and the surrounding area.`,
+      `Free quotes from licensed specialists who serve ${cityName} and the surrounding area.`,
       "Compare multiple estimates to find the best price and fit.",
       "No obligation—you choose whether to hire after receiving quotes.",
     ],
     calculatorTitle: `Estimate your ${serviceLower} cost in ${cityName}`,
     ctaTitle: `Get your free ${serviceLower} quote in ${cityName}`,
-    ctaSub: "Contact local plumbers for accurate pricing.",
+    ctaSub: "Contact local specialists for accurate pricing.",
   };
 }
 
@@ -127,7 +121,7 @@ function PlumbingCitySchema({
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Plumbing Quote",
+    name: "Pest Control Quote",
     areaServed: {
       "@type": "City",
       name: cityName,
@@ -279,38 +273,17 @@ export async function generateMetadata({
   const cityCensus = getCityCensus(stateSlug, citySlug);
   const censusSnippet = getCityCensusMetaSnippet(cityName, stateName, cityCensus);
 
-  if (service === "plumbing-quote") {
+  const cityServiceSlugs = [
+    "termite-treatment-quote",
+    "rodent-control-quote",
+    "bed-bug-treatment-quote",
+    "mosquito-control-quote",
+    "wildlife-removal-quote",
+  ] as const;
+  if (cityServiceSlugs.includes(service as (typeof cityServiceSlugs)[number])) {
     const nearby = getNearbyCities(stateSlug, citySlug, 3);
     const cityMetadata = getCityMetadata(stateSlug, citySlug);
-    const content = getPlumbingCityPageContent(
-      cityName,
-      stateName,
-      stateAbbr,
-      nearby[0]?.name ?? "nearby",
-      nearby[1]?.name ?? "nearby",
-      nearby[2]?.name ?? "nearby",
-      undefined,
-      cityMetadata
-    );
-    const description = censusSnippet.trim() ? censusSnippet + content.meta.description : content.meta.description;
-    return {
-      title: content.meta.title,
-      description,
-      alternates: { canonical: `/${service}/${stateSlug}/${citySlug}` },
-    };
-  }
-
-  const otherServices: Array<"repiping-quote" | "water-heater-replacement-quote" | "sewer-line-replacement-quote" | "drain-line-replacement-quote" | "emergency-plumbing-quote"> = [
-    "repiping-quote",
-    "water-heater-replacement-quote",
-    "sewer-line-replacement-quote",
-    "drain-line-replacement-quote",
-    "emergency-plumbing-quote",
-  ];
-  if (otherServices.includes(service as (typeof otherServices)[number])) {
-    const nearby = getNearbyCities(stateSlug, citySlug, 3);
-    const cityMetadata = getCityMetadata(stateSlug, citySlug);
-    const content = getServiceCityPageContent(service as (typeof otherServices)[number], {
+    const content = getServiceCityPageContent(service as (typeof cityServiceSlugs)[number], {
       cityName,
       stateName,
       stateAbbr,
@@ -355,45 +328,30 @@ export default function CityPage({
   const stateAbbr = stateData?.abbr ?? "";
   const cityName = getCityName(stateSlug, citySlug) ?? citySlug;
   const label = SERVICE_LABELS[service as ServiceSlug];
-  const isPlumbing = service === "plumbing-quote";
-
   const nearby = getNearbyCities(stateSlug, citySlug, 3);
   const cityMetadata = getCityMetadata(stateSlug, citySlug);
-  const plumbingContent = isPlumbing
-    ? getPlumbingCityPageContent(
+
+  const cityServiceSlugs = [
+    "termite-treatment-quote",
+    "rodent-control-quote",
+    "bed-bug-treatment-quote",
+    "mosquito-control-quote",
+    "wildlife-removal-quote",
+  ] as const;
+  const hasCityContent = cityServiceSlugs.includes(service as (typeof cityServiceSlugs)[number]);
+  const serviceCityContent = hasCityContent
+    ? getServiceCityPageContent(service as (typeof cityServiceSlugs)[number], {
         cityName,
         stateName,
         stateAbbr,
-        nearby[0]?.name ?? "nearby",
-        nearby[1]?.name ?? "nearby",
-        nearby[2]?.name ?? "nearby",
-        undefined,
-        cityMetadata ?? undefined
-      )
+        nearby1: nearby[0]?.name ?? "nearby",
+        nearby2: nearby[1]?.name ?? "nearby",
+        nearby3: nearby[2]?.name ?? "nearby",
+        cityMetadata: cityMetadata ?? undefined,
+      })
     : null;
 
-  const otherServiceSlugs = [
-    "repiping-quote",
-    "water-heater-replacement-quote",
-    "sewer-line-replacement-quote",
-    "drain-line-replacement-quote",
-    "emergency-plumbing-quote",
-  ] as const;
-  const isOtherService = otherServiceSlugs.includes(service as (typeof otherServiceSlugs)[number]);
-  const serviceCityContent =
-    isOtherService && !isPlumbing
-      ? getServiceCityPageContent(service as (typeof otherServiceSlugs)[number], {
-          cityName,
-          stateName,
-          stateAbbr,
-          nearby1: nearby[0]?.name ?? "nearby",
-          nearby2: nearby[1]?.name ?? "nearby",
-          nearby3: nearby[2]?.name ?? "nearby",
-          cityMetadata: cityMetadata ?? undefined,
-        })
-      : null;
-
-  const genericContent = !isPlumbing && !serviceCityContent
+  const genericContent = !serviceCityContent
     ? getCityPageContent(label, stateName, cityName)
     : null;
 
@@ -411,256 +369,7 @@ export default function CityPage({
       ? { latitude: cityCensus.latitude, longitude: cityCensus.longitude }
       : null;
 
-  if (isPlumbing && plumbingContent) {
-    return (
-      <div className={styles.wrapper}>
-        <PlumbingCitySchema
-          cityName={cityName}
-          stateName={stateName}
-          stateSlug={stateSlug}
-          citySlug={citySlug}
-          breadcrumbItems={[
-            { name: "Home", item: `${SITE_BASE_URL}/` },
-            { name: "Plumbing Quote", item: `${SITE_BASE_URL}/plumbing-quote` },
-            { name: stateName, item: `${SITE_BASE_URL}/plumbing-quote/${stateSlug}` },
-            { name: cityName },
-          ]}
-          faqItems={plumbingContent.faq.items}
-          geo={placeGeo}
-        />
-        <div className={styles.breadcrumbWrap}>
-          <Breadcrumb
-            items={[
-              { label: "Home", href: "/" },
-              { label: "Plumbing Quote", href: "/plumbing-quote" },
-              { label: stateName, href: `/plumbing-quote/${stateSlug}` },
-              { label: cityName },
-            ]}
-          />
-        </div>
-
-        {/* Hero */}
-        <section className={styles.hero} aria-labelledby="city-hero-title">
-          <p className={styles.heroBadge}>Free quote • {cityName}</p>
-          <h1 id="city-hero-title" className={styles.heroTitle}>
-            {plumbingContent.hero.h1}
-          </h1>
-          <p className={styles.heroSub}>{plumbingContent.hero.sub}</p>
-          <ul className={styles.trustBar} aria-label="Trust points">
-            {plumbingContent.hero.trustBullets.map((bullet, i) => (
-              <li key={i}>{bullet}</li>
-            ))}
-          </ul>
-          <a href={PHONE_TEL} className={styles.heroCta}>
-            {CTA_CALL_LABEL}
-          </a>
-        </section>
-
-        {/* Section 1 — Intro */}
-        <section className={styles.section} aria-labelledby="intro-title">
-          <h2 id="intro-title" className={styles.sectionTitle}>
-            {plumbingContent.intro.h2}
-          </h2>
-          {plumbingContent.intro.paragraphs.map((para, i) => (
-            <p key={i} className={styles.sectionIntro}>
-              {para}
-            </p>
-          ))}
-          {contextSentence && (
-            <p className={styles.sectionIntro}>{contextSentence}</p>
-          )}
-          <a href={PHONE_TEL} className={styles.heroCta}>
-            {CTA_CALL_LABEL}
-          </a>
-        </section>
-
-        {cityCensus && (
-          <CensusCtaBanner
-            census={cityCensus}
-            cityName={cityName}
-            phone={{ href: PHONE_TEL, label: CTA_CALL_LABEL }}
-          />
-        )}
-
-        {/* Local Housing Facts (Census) */}
-        {cityCensusStats.length > 0 && (
-          <section className={styles.section} aria-labelledby="local-housing-title">
-            <h2 id="local-housing-title" className={styles.sectionTitle}>
-              Local Housing Facts
-            </h2>
-            <CensusStatsGrid stats={cityCensusStats} variant="city" />
-            <p className={styles.sectionIntro} style={{ marginTop: "0.5rem", fontSize: "0.875rem", color: "#6b7280" }}>
-              Source: US Census Bureau, American Community Survey 5-Year Estimates.
-            </p>
-          </section>
-        )}
-
-        {/* Section 2 — Cost Estimator */}
-        <section
-          id="calculator"
-          className={styles.calculatorSection}
-          aria-labelledby="calculator-title"
-        >
-          <h2 id="calculator-title" className={styles.sectionTitle}>
-            {plumbingContent.costEstimator.h2}
-          </h2>
-          <p className={styles.sectionIntro}>
-            {plumbingContent.costEstimator.intro}
-          </p>
-          <div className={styles.calculatorWrap}>
-            <PlumbingCostEstimator
-              cityName={cityName}
-              phoneHref={PHONE_TEL}
-            />
-          </div>
-        </section>
-
-        {/* Section 3 — Services */}
-        <section className={styles.section} aria-labelledby="services-title">
-          <h2 id="services-title" className={styles.sectionTitle}>
-            {plumbingContent.services.h2}
-          </h2>
-          {plumbingContent.services.items.map((item) => (
-            <div key={item.slug} className={styles.serviceBlock}>
-              <h3 className={styles.serviceBlockH3}>{item.h3}</h3>
-              <p className={styles.serviceBlockDesc}>{item.description}</p>
-              {item.localParagraphs?.length ? (
-                item.localParagraphs.map((para, i) => (
-                  <p key={i} className={styles.serviceBlockDesc}>
-                    {para}
-                  </p>
-                ))
-              ) : null}
-              <p className={styles.serviceBlockCost}>{item.cost}</p>
-              <div className={styles.serviceBlockWhat}>
-                What affects your {cityName} quote:
-                <ul>
-                  {item.whatAffects.map((affect, i) => (
-                    <li key={i}>{affect}</li>
-                  ))}
-                </ul>
-              </div>
-              <a href={PHONE_TEL} className={styles.serviceBlockCta}>
-                {CTA_CALL_LABEL}
-              </a>
-            </div>
-          ))}
-        </section>
-
-        {/* Section 4 — Why Call First */}
-        <section
-          className={`${styles.section} ${styles.sectionAlt}`}
-          aria-labelledby="why-title"
-        >
-          <h2 id="why-title" className={styles.sectionTitle}>
-            {plumbingContent.whyCall.h2}
-          </h2>
-          {plumbingContent.whyCall.paragraphs.map((para, i) => (
-            <p key={i} className={styles.sectionIntro}>
-              {para}
-            </p>
-          ))}
-        </section>
-
-        {/* Section 5 — Local Signals */}
-        <section className={styles.section} aria-labelledby="local-title">
-          <h2 id="local-title" className={styles.sectionTitle}>
-            {plumbingContent.localSignals.h2}
-          </h2>
-          <p className={styles.localSignalsIntro}>
-            {plumbingContent.localSignals.intro}
-          </p>
-          <ul className={styles.localSignalsList}>
-            {plumbingContent.localSignals.bullets.map((bullet, i) => (
-              <li key={i}>{bullet}</li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Section 6 — FAQ */}
-        <section
-          className={`${styles.section} ${styles.sectionAlt}`}
-          aria-labelledby="faq-title"
-        >
-          <h2 id="faq-title" className={styles.sectionTitle}>
-            {plumbingContent.faq.h2}
-          </h2>
-          <dl className={styles.faqList}>
-            {plumbingContent.faq.items.map((item, i) => (
-              <div key={i} className={styles.faqItem}>
-                <dt className={styles.faqQ}>{item.q}</dt>
-                <dd className={styles.faqA}>{item.a}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-
-        {/* Section 7 — Closing CTA */}
-        <section className={styles.section} aria-labelledby="closing-title">
-          <div className={styles.finalCta}>
-            <h2 id="closing-title" className={styles.finalCtaTitle}>
-              {plumbingContent.closing.h2}
-            </h2>
-            <p className={styles.finalCtaSub}>{plumbingContent.closing.text}</p>
-            <a href={PHONE_TEL} className={styles.finalCtaBtn}>
-              {CTA_CALL_LABEL}
-            </a>
-            <p className={styles.finalCtaSub} style={{ marginTop: "0.5rem", marginBottom: 0 }}>
-              {plumbingContent.closing.sub}
-            </p>
-          </div>
-        </section>
-
-        {/* Section 8 — Internal Links */}
-        <div className={styles.internalLinksSection}>
-          <OtherServicesLinks
-            currentService="plumbing-quote"
-            stateSlug={stateSlug}
-            citySlug={citySlug}
-            stateName={stateName}
-            cityName={cityName}
-          />
-          <p className={`${styles.internalLinksLabel} ${styles.nearbyLinks}`}>
-            {plumbingContent.internalLinks.nearbyLabel}
-          </p>
-          <p className={styles.sectionIntro} style={{ marginBottom: "0.5rem" }}>
-            {nearby.length > 0 ? (
-              <>
-                <Link href={`/plumbing-quote/${stateSlug}/${nearby[0].slug}`}>
-                  Plumbing Quote in {nearby[0].name}, {stateAbbr}
-                </Link>
-                {nearby[1] && (
-                  <>
-                    {" · "}
-                    <Link href={`/plumbing-quote/${stateSlug}/${nearby[1].slug}`}>
-                      Plumbing Quote in {nearby[1].name}, {stateAbbr}
-                    </Link>
-                  </>
-                )}
-                {nearby[2] && (
-                  <>
-                    {" · "}
-                    <Link href={`/plumbing-quote/${stateSlug}/${nearby[2].slug}`}>
-                      Plumbing Quote in {nearby[2].name}, {stateAbbr}
-                    </Link>
-                  </>
-                )}
-              </>
-            ) : (
-              <Link href={`/plumbing-quote/${stateSlug}`}>
-                All cities in {stateName}
-              </Link>
-            )}
-          </p>
-          <Link href={`/plumbing-quote/${stateSlug}`} className={styles.backLink}>
-            {plumbingContent.internalLinks.backLabel}
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  // Repiping, Water Heater, Sewer, Drain: full service-specific template
+  // Termite, Rodent, Bed Bug, Mosquito, Wildlife: full service-specific city template
   if (serviceCityContent) {
     const c = serviceCityContent;
     return (
@@ -757,15 +466,12 @@ export default function CityPage({
             {c.costEstimator.intro}
           </p>
           <div className={styles.calculatorWrap}>
-            <CostCalculator
-              service={service as ServiceSlug}
+            <PlumbingCostEstimator
               cityName={cityName}
-              stateName={stateName}
+              serviceSlug={service as ServiceSlug}
+              phoneHref={PHONE_TEL}
             />
           </div>
-          <a href={PHONE_TEL} className={styles.heroCta} style={{ display: "inline-block", marginTop: "1rem" }}>
-            {CTA_CALL_LABEL}
-          </a>
         </section>
 
         <section className={styles.section} aria-labelledby="main-service-title">
@@ -1044,10 +750,10 @@ export default function CityPage({
           {genericContent!.calculatorTitle}
         </h2>
         <div className={styles.calculatorWrap}>
-          <CostCalculator
-            service={service as ServiceSlug}
+          <PlumbingCostEstimator
             cityName={cityName}
-            stateName={stateName}
+            serviceSlug={service as ServiceSlug}
+            phoneHref={PHONE_TEL}
           />
         </div>
       </section>

@@ -17,7 +17,7 @@ export interface SingleSelectConfig extends CalculatorConfig {
   kind: "single";
 }
 
-/** Multi-select: combine two dimensions (e.g. size + material) */
+/** Multi-select: combine two dimensions */
 export interface MultiSelectConfig extends CalculatorConfig {
   kind: "multi";
   secondLabel?: string;
@@ -28,92 +28,96 @@ export interface MultiSelectConfig extends CalculatorConfig {
 
 export type CalculatorServiceConfig = SingleSelectConfig | MultiSelectConfig;
 
-const plumbingOptions: CalculatorOption[] = [
-  { label: "Minor repair (leak, fixture)", value: "minor", min: 150, max: 500 },
-  { label: "Medium job (multiple fixtures)", value: "medium", min: 400, max: 1200 },
-  { label: "Major repair or installation", value: "major", min: 1000, max: 3500 },
-  { label: "New installation (e.g. bathroom)", value: "installation", min: 500, max: 2500 },
-  { label: "Emergency / after-hours", value: "emergency", min: 200, max: 600 },
+const pestControlOptions: CalculatorOption[] = [
+  { label: "One-time treatment (general pests)", value: "onetime", min: 150, max: 400 },
+  { label: "Annual prevention program", value: "annual", min: 400, max: 900 },
+  { label: "Inspection only", value: "inspection", min: 75, max: 200 },
+  { label: "Severe infestation treatment", value: "severe", min: 400, max: 1200 },
 ];
 
-const repipingSizeOptions: CalculatorOption[] = [
-  { label: "1–2 bedrooms", value: "small", min: 2000, max: 5000 },
-  { label: "3–4 bedrooms", value: "medium", min: 4000, max: 8000 },
-  { label: "5+ bedrooms / large home", value: "large", min: 6000, max: 12000 },
+const termiteSizeOptions: CalculatorOption[] = [
+  { label: "Under 1,500 sq ft", value: "small", min: 0, max: 0 },
+  { label: "1,500 – 3,000 sq ft", value: "medium", min: 0, max: 0 },
+  { label: "3,000+ sq ft", value: "large", min: 0, max: 0 },
 ];
 
-const repipingMaterialOptions: CalculatorOption[] = [
-  { label: "PEX", value: "pex", min: 0, max: 0 },
-  { label: "Copper", value: "copper", min: 0, max: 0 },
+const termiteMethodOptions: CalculatorOption[] = [
+  { label: "Liquid barrier", value: "liquid", min: 0, max: 0 },
+  { label: "Bait system", value: "bait", min: 0, max: 0 },
+  { label: "Fumigation", value: "fumigation", min: 0, max: 0 },
 ];
 
-const repipingRanges: Record<string, [number, number]> = {
-  "small|pex": [2000, 5000],
-  "small|copper": [4000, 9000],
-  "medium|pex": [4000, 8000],
-  "medium|copper": [7000, 14000],
-  "large|pex": [6000, 12000],
-  "large|copper": [10000, 20000],
+const termiteRanges: Record<string, [number, number]> = {
+  "small|liquid": [500, 1500],
+  "small|bait": [800, 2000],
+  "small|fumigation": [1200, 2500],
+  "medium|liquid": [800, 2500],
+  "medium|bait": [1200, 3000],
+  "medium|fumigation": [2000, 4500],
+  "large|liquid": [1200, 4000],
+  "large|bait": [2000, 5000],
+  "large|fumigation": [3500, 8000],
 };
 
-const waterHeaterOptions: CalculatorOption[] = [
-  { label: "Tank 40 gal", value: "tank40", min: 800, max: 1500 },
-  { label: "Tank 50 gal", value: "tank50", min: 1000, max: 2000 },
-  { label: "Tank 75+ gal", value: "tank75", min: 1200, max: 2800 },
-  { label: "Tankless", value: "tankless", min: 1500, max: 3500 },
+const rodentOptions: CalculatorOption[] = [
+  { label: "Trapping only", value: "trapping", min: 150, max: 500 },
+  { label: "Exclusion (entry point sealing)", value: "exclusion", min: 500, max: 1500 },
+  { label: "Full exclusion + sanitization", value: "full", min: 1000, max: 2500 },
 ];
 
-const sewerOptions: CalculatorOption[] = [
-  { label: "Repair (lining or spot repair)", value: "repair", min: 2500, max: 7000 },
-  { label: "Full replacement", value: "replace", min: 5000, max: 15000 },
+const bedBugOptions: CalculatorOption[] = [
+  { label: "Chemical treatment (1–2 rooms)", value: "chemical_small", min: 300, max: 800 },
+  { label: "Chemical treatment (whole home)", value: "chemical_full", min: 800, max: 2000 },
+  { label: "Heat treatment (whole home)", value: "heat", min: 1500, max: 5000 },
+  { label: "Hybrid (heat + chemical)", value: "hybrid", min: 1200, max: 3500 },
 ];
 
-const drainOptions: CalculatorOption[] = [
-  { label: "Cleanout / clearing", value: "cleanout", min: 150, max: 450 },
-  { label: "Repair (section)", value: "repair", min: 500, max: 2500 },
-  { label: "Full replacement", value: "replace", min: 1000, max: 6000 },
+const mosquitoOptions: CalculatorOption[] = [
+  { label: "Single barrier spray treatment", value: "single", min: 50, max: 150 },
+  { label: "Seasonal program (6–8 treatments)", value: "seasonal", min: 300, max: 700 },
+  { label: "Full season program (10+ treatments)", value: "full_season", min: 600, max: 900 },
+  { label: "Automated misting system (install)", value: "misting", min: 1500, max: 5000 },
 ];
 
-const emergencyPlumbingOptions: CalculatorOption[] = [
-  { label: "Minor emergency (leak, clog)", value: "minor", min: 200, max: 600 },
-  { label: "Major (sewer backup, no water)", value: "major", min: 500, max: 2000 },
-  { label: "After-hours / night or weekend", value: "afterhours", min: 350, max: 800 },
-  { label: "Holiday or extended after-hours", value: "holiday", min: 400, max: 1000 },
+const wildlifeOptions: CalculatorOption[] = [
+  { label: "Single animal removal", value: "single", min: 150, max: 500 },
+  { label: "Removal + exclusion", value: "exclusion", min: 500, max: 1500 },
+  { label: "Full exclusion + attic remediation", value: "full", min: 1000, max: 3000 },
 ];
 
 export const CALCULATOR_CONFIG: Record<ServiceSlug, CalculatorServiceConfig> = {
-  "plumbing-quote": {
+  "pest-control-quote": {
     kind: "single",
-    label: "Type of job",
-    options: plumbingOptions,
+    label: "Type of service",
+    options: pestControlOptions,
   },
-  "repiping-quote": {
+  "termite-treatment-quote": {
     kind: "multi",
     label: "Home size",
-    options: repipingSizeOptions,
-    secondLabel: "Pipe material",
-    secondOptions: repipingMaterialOptions,
-    ranges: repipingRanges,
+    options: termiteSizeOptions,
+    secondLabel: "Treatment method",
+    secondOptions: termiteMethodOptions,
+    ranges: termiteRanges,
   },
-  "water-heater-replacement-quote": {
-    kind: "single",
-    label: "Water heater type",
-    options: waterHeaterOptions,
-  },
-  "sewer-line-replacement-quote": {
+  "rodent-control-quote": {
     kind: "single",
     label: "Scope of work",
-    options: sewerOptions,
+    options: rodentOptions,
   },
-  "drain-line-replacement-quote": {
+  "bed-bug-treatment-quote": {
+    kind: "single",
+    label: "Treatment type",
+    options: bedBugOptions,
+  },
+  "mosquito-control-quote": {
+    kind: "single",
+    label: "Program type",
+    options: mosquitoOptions,
+  },
+  "wildlife-removal-quote": {
     kind: "single",
     label: "Scope of work",
-    options: drainOptions,
-  },
-  "emergency-plumbing-quote": {
-    kind: "single",
-    label: "Type of emergency",
-    options: emergencyPlumbingOptions,
+    options: wildlifeOptions,
   },
 };
 

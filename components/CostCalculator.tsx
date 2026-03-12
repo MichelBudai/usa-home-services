@@ -116,7 +116,7 @@ export function CostCalculator({ service, cityName, stateName, className = "" }:
               {formatMoney(range[0])} – {formatMoney(range[1])}
             </p>
             <p className={calcStyles.disclaimer}>
-              This is an estimate. Get free quotes from local plumbers in {locationLabel} for accurate pricing.
+              This is an estimate. Get free quotes from local pest control specialists in {locationLabel} for accurate pricing.
             </p>
           </div>
         )}

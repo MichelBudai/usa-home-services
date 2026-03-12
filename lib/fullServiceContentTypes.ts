@@ -1,6 +1,6 @@
 /**
  * Shared type for full service page content (rich template).
- * Used by plumbing and all other service pages.
+ * Used by pest control and all other service pages.
  */
 
 export interface FullServiceContent {

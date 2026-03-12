@@ -199,13 +199,13 @@ export default function StatePage({
         </section>
       )}
 
-      {/* How [State] Climate Affects Your Plumbing */}
+      {/* How [State] Climate Affects Your Pest Activity */}
       {climateContent && (
         <section className={`${styles.section} ${styles.sectionAlt}`} aria-labelledby="climate-title">
           <h2 id="climate-title" className={styles.sectionTitle}>
-            How {stateName} Climate Affects Your Plumbing
+            How {stateName} Climate Affects Your Pest Activity
           </h2>
-          <p className={styles.sectionIntro}>{climateContent.plumbingNote}</p>
+          <p className={styles.sectionIntro}>{climateContent.pestNote}</p>
           {climateContent.primaryRisks.length > 0 && (
             <ul className={styles.sectionIntro} style={{ marginTop: "0.5rem", paddingLeft: "1.5rem" }}>
               {climateContent.primaryRisks.map((risk, i) => (
@@ -216,11 +216,11 @@ export default function StatePage({
         </section>
       )}
 
-      {/* Plumbing Permits in [State] */}
+      {/* Pest Control Permits & Regulations in [State] */}
       {permitContent && (
         <section className={styles.section} aria-labelledby="permits-title">
           <h2 id="permits-title" className={styles.sectionTitle}>
-            Plumbing Permits in {stateName}
+            Pest Control Permits & Regulations in {stateName}
           </h2>
           <p className={styles.sectionIntro}>{permitContent}</p>
         </section>
@@ -281,7 +281,7 @@ export default function StatePage({
         <p className={styles.sectionIntro}>{content.cityIntro.paragraph}</p>
         {topCities.length > 0 && (
           <p className={styles.topCities}>
-            Cities with highest plumbing demand in {stateName}:{" "}
+            Cities with highest pest control demand in {stateName}:{" "}
             {topCities.map((c) => c.name).join(" · ")}
           </p>
         )}

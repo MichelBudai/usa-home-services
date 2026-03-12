@@ -4,30 +4,25 @@
  */
 
 export const NICHE = {
-  // Identité
-  name: "Plumber",                          // "Electrician", "HVAC"...
-  namePlural: "Plumbers",                   // "Electricians"...
-  slug: "plumber",                          // "electrician", "hvac"...
+  name: "Pest Control Specialist",
+  namePlural: "Pest Control Specialists",
+  slug: "pest-control",
 
-  // Site
-  siteUrl: "https://usa-plumber-quote.com",
-  siteName: "USA Plumber Quote",
+  siteUrl: "https://usa-pest-control-quote.com",
+  siteName: "USA Pest Control Quote",
 
-  // Téléphone
-  phoneTel: "tel:+18552352002",
-  phoneDisplay: "(855) 235-2002",
+  phoneTel: "tel:+10000000000",
+  phoneDisplay: "(000) 000-0000",
 
-  // GA4
-  ga4Id: "G-VLTS29LH71",
+  ga4Id: "",
 
-  // Services (slug + label)
   services: [
-    { slug: "plumbing-quote",                    label: "Plumbing Quote" },
-    { slug: "repiping-quote",                    label: "Repiping Quote" },
-    { slug: "water-heater-replacement-quote",    label: "Water Heater Replacement Quote" },
-    { slug: "sewer-line-replacement-quote",      label: "Sewer Line Replacement Quote" },
-    { slug: "drain-line-replacement-quote",      label: "Drain Line Replacement Quote" },
-    { slug: "emergency-plumbing-quote",          label: "Emergency Plumbing Quote" },
+    { slug: "pest-control-quote",           label: "Pest Control Quote" },
+    { slug: "termite-treatment-quote",      label: "Termite Treatment Quote" },
+    { slug: "rodent-control-quote",         label: "Rodent Control Quote" },
+    { slug: "bed-bug-treatment-quote",      label: "Bed Bug Treatment Quote" },
+    { slug: "mosquito-control-quote",       label: "Mosquito Control Quote" },
+    { slug: "wildlife-removal-quote",       label: "Wildlife Removal Quote" },
   ],
 } as const;
 

@@ -8,9 +8,12 @@ import { SITE_BASE_URL } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_BASE_URL),
-  title: "Free Plumbing Quotes | Licensed Local Plumbers | USA Plumber Quote",
+  title: "Free Pest Control Quotes | Licensed Local Specialists | USA Pest Control Quote",
   description:
-    "Get free plumbing quotes from licensed local plumbers across the US. Compare estimates in 4,100+ cities. No obligation.",
+    "Get free pest control quotes from licensed local specialists across the US. Compare estimates for termite, rodent, bed bug, mosquito & wildlife. No obligation.",
+  verification: {
+    google: "ckod_5zAhfgl96Eq6KAkO4vakw8GluUJ2n0GnF-YxqQ",
+  },
 };
 
 export const viewport: Viewport = {
@@ -28,7 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-VLTS29LH71"
+          src="https://www.googletagmanager.com/gtag/js?id=G-ZCV2C6T5TW"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -36,7 +39,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-VLTS29LH71');
+            gtag('config', 'G-ZCV2C6T5TW');
           `}
         </Script>
         <Header />

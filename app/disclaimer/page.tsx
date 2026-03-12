@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const SITE_NAME = "USA Plumbing Quote";
+const SITE_NAME = "USA Pest Control Quote";
 
 export const metadata: Metadata = {
   title: "Disclaimer | USA Plumbing Quote",

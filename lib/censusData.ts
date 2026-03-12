@@ -233,20 +233,20 @@ function getGenericCityContextByService(
   service: ServiceSlug
 ): string {
   switch (service) {
-    case "plumbing-quote":
-      return `Get free plumbing quotes from licensed local plumbers in ${cityName}.`;
-    case "repiping-quote":
-      return `Homes in ${cityName} vary in age — a repiping assessment confirms whether your pipes need replacement.`;
-    case "water-heater-replacement-quote":
-      return `Most water heaters in ${cityName} last 10–12 years. Get a replacement quote before a failure forces an emergency call.`;
-    case "sewer-line-replacement-quote":
-      return `A camera inspection is the fastest way to assess sewer line condition in ${cityName}.`;
-    case "drain-line-replacement-quote":
-      return `Drain line issues in ${cityName} homes are often caught early with a professional assessment.`;
-    case "emergency-plumbing-quote":
-      return `Licensed emergency plumbers serve ${cityName} — get a quote before the next unexpected failure.`;
+    case "pest-control-quote":
+      return `Get free pest control quotes from licensed local specialists in ${cityName}.`;
+    case "termite-treatment-quote":
+      return `Homes in ${cityName} vary in age — older construction increases termite risk. Get a free inspection quote.`;
+    case "rodent-control-quote":
+      return `Licensed rodent control specialists serve ${cityName} — get an exclusion quote before the problem grows.`;
+    case "bed-bug-treatment-quote":
+      return `Licensed bed bug specialists serve ${cityName} — get a treatment quote before the infestation spreads.`;
+    case "mosquito-control-quote":
+      return `Mosquito pressure in ${cityName} varies by season — get a free program quote before peak season.`;
+    case "wildlife-removal-quote":
+      return `Licensed wildlife removal specialists serve ${cityName} — get a humane removal quote today.`;
     default:
-      return `Connect with licensed local plumbers in ${cityName} for free estimates.`;
+      return `Connect with licensed local pest control specialists in ${cityName} for free estimates.`;
   }
 }
 
@@ -263,23 +263,13 @@ export function generateCityContextByService(
   const highOwnership = typeof ownership === "number" && ownership !== SENTINEL && ownership > 65;
 
   switch (service) {
-    case "repiping-quote":
+    case "termite-treatment-quote":
       if (hasOldHousing)
-        return `Many homes in ${cityName} were built before 1986, when lead and galvanized pipes were common—consider a free repiping quote.`;
+        return `Many homes in ${cityName} were built before 1986 — older construction increases termite and pest entry risk. Get a free inspection quote.`;
       break;
-    case "water-heater-replacement-quote":
-      if (hasOldHousing)
-        return `With a median year built of ${year}, ${cityName} has many older homes where water heater replacement is common.`;
-      break;
-    case "sewer-line-replacement-quote":
-    case "drain-line-replacement-quote":
-      if (hasOldHousing)
-        return `Older housing stock in ${cityName} often means aging sewer and drain lines—get a free quote for replacement.`;
-      break;
-    case "plumbing-quote":
-    case "emergency-plumbing-quote":
+    case "pest-control-quote":
       if (highOwnership)
-        return `High homeownership in ${cityName} means many residents invest in plumbing upgrades—get a free quote.`;
+        return `High homeownership in ${cityName} means protecting your home from pest damage matters — get a free quote.`;
       break;
     default:
       break;
@@ -288,14 +278,14 @@ export function generateCityContextByService(
 }
 
 export function getClimateContent(stateSlug: string): {
-  plumbingNote: string;
+  pestNote: string;
   primaryRisks: string[];
 } | null {
   const census = getStateCensus(stateSlug);
   const climate = census?.climate;
   if (!climate?.plumbing_impact) return null;
   return {
-    plumbingNote: climate.plumbing_impact,
+    pestNote: climate.plumbing_impact,
     primaryRisks: Array.isArray(climate.primary_risks) ? climate.primary_risks : [],
   };
 }

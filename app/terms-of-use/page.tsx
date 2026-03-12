@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Use | USA Plumbing Quote",
-  description: "Terms of use for USA Plumbing Quote.",
+  title: "Terms of Use | USA Pest Control Quote",
+  description: "Terms of use for USA Pest Control Quote.",
 };
 
 const styles = {
@@ -20,12 +20,12 @@ export default function TermsOfUsePage() {
 
       <h2 style={styles.h2}>1. Acceptance of Terms</h2>
       <p style={styles.p}>
-        By using USA Plumbing Quote (“the Site”), you agree to these Terms of Use. If you do not agree, please do not use the Site.
+        By using USA Pest Control Quote (“the Site”), you agree to these Terms of Use. If you do not agree, please do not use the Site.
       </p>
 
       <h2 style={styles.h2}>2. Description of Service</h2>
       <p style={styles.p}>
-        The Site is a free referral and information service that helps homeowners connect with local plumbing and related service providers. We do not perform plumbing work, employ contractors, or guarantee the quality, pricing, or completion of any work performed by third parties.
+        The Site is a free referral and information service that helps homeowners connect with local pest control and related service providers. We do not perform pest control work, employ contractors, or guarantee the quality, pricing, or completion of any work performed by third parties.
       </p>
 
       <h2 style={styles.h2}>3. User Responsibilities</h2>
@@ -40,12 +40,12 @@ export default function TermsOfUsePage() {
 
       <h2 style={styles.h2}>5. Intellectual Property</h2>
       <p style={styles.p}>
-        The Site and its content (including text, design, and layout) are owned by USA Plumbing Quote or its licensors. You may not copy, modify, or distribute our content without permission.
+        The Site and its content (including text, design, and layout) are owned by USA Pest Control Quote or its licensors. You may not copy, modify, or distribute our content without permission.
       </p>
 
       <h2 style={styles.h2}>6. Limitation of Liability</h2>
       <p style={styles.p}>
-        To the fullest extent permitted by law, USA Plumbing Quote and its operators are not liable for any direct, indirect, incidental, or consequential damages arising from your use of the Site or from any dealings with third-party service providers.
+        To the fullest extent permitted by law, USA Pest Control Quote and its operators are not liable for any direct, indirect, incidental, or consequential damages arising from your use of the Site or from any dealings with third-party service providers.
       </p>
 
       <h2 style={styles.h2}>7. Changes</h2>

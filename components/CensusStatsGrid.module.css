@@ -23,6 +23,7 @@
   border-radius: 8px;
   background-color: var(--card-bg, #f8f9fa);
   border: 1px solid var(--card-border, #e9ecef);
+  min-height: 100px;
 }
 
 .value {

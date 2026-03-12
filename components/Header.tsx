@@ -6,12 +6,12 @@ import { SERVICE_SLUGS, type ServiceSlug } from "@/lib/constants";
 import { PHONE_TEL, CTA_CALL_LABEL } from "@/lib/siteConfig";
 
 const NAV_LABELS: Record<ServiceSlug, string> = {
-  "plumbing-quote": "Plumbing",
-  "repiping-quote": "Repiping",
-  "water-heater-replacement-quote": "Water Heater",
-  "sewer-line-replacement-quote": "Sewer Line",
-  "drain-line-replacement-quote": "Drain Line",
-  "emergency-plumbing-quote": "Emergency",
+  "pest-control-quote": "Pest Control",
+  "termite-treatment-quote": "Termite",
+  "rodent-control-quote": "Rodent Control",
+  "bed-bug-treatment-quote": "Bed Bugs",
+  "mosquito-control-quote": "Mosquito",
+  "wildlife-removal-quote": "Wildlife",
 };
 
 export function Header() {
@@ -34,14 +34,14 @@ export function Header() {
   return (
     <header className="navbar" role="banner">
       <div className="navbar-inner">
-        <Link href="/" className="navbar-logo" aria-label="USA Plumbing Quote home">
+        <Link href="/" className="navbar-logo" aria-label="USA Pest Control Quote home">
           <span className="navbar-logo-icon" aria-hidden>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10 14h4l2 6 2-6h4" strokeLinecap="round" strokeLinejoin="round" />
-              <circle cx="12" cy="8" r="1.5" fill="currentColor" />
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
-          <span className="navbar-logo-text">USA Plumbing Quote</span>
+          <span className="navbar-logo-text">USA Pest Control Quote</span>
         </Link>
 
         <nav className="navbar-center" aria-label="Services">

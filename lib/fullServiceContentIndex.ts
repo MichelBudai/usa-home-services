@@ -5,18 +5,18 @@
 
 import type { ServiceSlug } from "./data";
 import type { FullServiceContent } from "./fullServiceContentTypes";
-import { PLUMBING_SERVICE_CONTENT } from "./plumbingServiceContent";
-import { REPIPING_SERVICE_CONTENT } from "./repipingServiceContent";
-import { WATER_HEATER_SERVICE_CONTENT } from "./waterHeaterServiceContent";
-import { SEWER_LINE_SERVICE_CONTENT } from "./sewerLineServiceContent";
-import { DRAIN_LINE_SERVICE_CONTENT } from "./drainLineServiceContent";
-import { EMERGENCY_PLUMBING_SERVICE_CONTENT } from "./emergencyPlumbingServiceContent";
+import { PEST_CONTROL_SERVICE_CONTENT } from "./pestControlServiceContent";
+import { TERMITE_TREATMENT_SERVICE_CONTENT } from "./termiteTreatmentServiceContent";
+import { RODENT_CONTROL_SERVICE_CONTENT } from "./rodentControlServiceContent";
+import { BED_BUG_TREATMENT_SERVICE_CONTENT } from "./bedBugTreatmentServiceContent";
+import { MOSQUITO_CONTROL_SERVICE_CONTENT } from "./mosquitoControlServiceContent";
+import { WILDLIFE_REMOVAL_SERVICE_CONTENT } from "./wildlifeRemovalServiceContent";
 
 export const FULL_SERVICE_CONTENT: Record<ServiceSlug, FullServiceContent> = {
-  "plumbing-quote": PLUMBING_SERVICE_CONTENT as unknown as FullServiceContent,
-  "repiping-quote": REPIPING_SERVICE_CONTENT,
-  "water-heater-replacement-quote": WATER_HEATER_SERVICE_CONTENT,
-  "sewer-line-replacement-quote": SEWER_LINE_SERVICE_CONTENT,
-  "drain-line-replacement-quote": DRAIN_LINE_SERVICE_CONTENT,
-  "emergency-plumbing-quote": EMERGENCY_PLUMBING_SERVICE_CONTENT,
+  "pest-control-quote": PEST_CONTROL_SERVICE_CONTENT as unknown as FullServiceContent,
+  "termite-treatment-quote": TERMITE_TREATMENT_SERVICE_CONTENT,
+  "rodent-control-quote": RODENT_CONTROL_SERVICE_CONTENT,
+  "bed-bug-treatment-quote": BED_BUG_TREATMENT_SERVICE_CONTENT,
+  "mosquito-control-quote": MOSQUITO_CONTROL_SERVICE_CONTENT,
+  "wildlife-removal-quote": WILDLIFE_REMOVAL_SERVICE_CONTENT,
 };

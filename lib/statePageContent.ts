@@ -56,35 +56,35 @@ const SERVICE_STATE_DESCRIPTIONS: Record<
   ServiceSlug,
   { description: string; costRange: string }
 > = {
-  "plumbing-quote": {
+  "pest-control-quote": {
     description:
-      "From minor repairs to new installations, plumbing costs vary by job type and scope. Connect with a licensed plumber in your city for an accurate estimate.",
+      "From one-time treatments to annual prevention programs, pest control costs vary by pest type, home size, and infestation severity. Connect with a licensed specialist in your city for an accurate estimate.",
     costRange: "Varies by job — get a free quote",
   },
-  "repiping-quote": {
+  "termite-treatment-quote": {
     description:
-      "Whole-home repiping is one of the largest plumbing investments. Costs depend on your home's square footage, pipe material, and local permit requirements. Older homes with galvanized steel or polybutylene pipes are the most likely candidates.",
-    costRange: "$4,000 – $15,000+",
+      "Termite damage is not covered by most homeowner insurance policies. Treatment method — liquid barrier, bait system, or fumigation — depends on species and infestation severity. Early treatment protects your home's structural integrity.",
+    costRange: "$500 – $8,000+",
   },
-  "water-heater-replacement-quote": {
+  "rodent-control-quote": {
     description:
-      "Water heater replacements are among the most common plumbing jobs. Tank size, fuel type (gas vs. electric), and labor affect the final price. Switching to tankless may qualify for energy efficiency rebates in some areas.",
-    costRange: "$900 – $3,200",
+      "Effective rodent control requires complete exclusion — sealing every entry point — not just trapping. Attic sanitization is often needed after an infestation. A licensed specialist provides a full exclusion quote.",
+    costRange: "$300 – $2,500+",
   },
-  "sewer-line-replacement-quote": {
+  "bed-bug-treatment-quote": {
     description:
-      "Aging clay and cast iron sewer lines are vulnerable to root intrusion and collapse. Trenchless replacement is available in most metro areas and often avoids full yard excavation.",
-    costRange: "$3,500 – $22,000",
+      "Bed bug infestations require professional treatment — DIY approaches almost always fail and scatter the infestation. Heat treatment eliminates all bugs and eggs in one visit; chemical treatment requires multiple visits.",
+    costRange: "$500 – $5,000+",
   },
-  "drain-line-replacement-quote": {
+  "mosquito-control-quote": {
     description:
-      "Persistent slow drains and recurring clogs often point to a damaged or deteriorated drain line. A camera inspection is the fastest way to confirm, and most plumbers include it in their quote process.",
-    costRange: "$500 – $4,500",
+      "Professional mosquito control reduces biting pressure by 70–90% with a consistent seasonal program. Barrier spray, seasonal programs, and automated misting systems are available based on property size and budget.",
+    costRange: "$300 – $900 per season",
   },
-  "emergency-plumbing-quote": {
+  "wildlife-removal-quote": {
     description:
-      "Emergency and after-hours plumbing — leaks, sewer backups, no hot water — available from licensed plumbers in your city. Same-day and after-hours call-out typically adds $150–$400; get a quote before work starts.",
-    costRange: "Varies — emergency call-out often adds $150–$400",
+      "Wildlife removal is legally regulated in most states — always use a licensed specialist. Removal without exclusion guarantees re-entry. A licensed specialist handles permits, humane removal, and complete exclusion.",
+    costRange: "$200 – $3,000+",
   },
 };
 
@@ -101,107 +101,114 @@ export function getStatePageContent(
 
   return {
     metaTitle: `${serviceLabel} in ${stateName} | Free Quotes by City`,
-    metaDescription: `Get free ${serviceLower} quotes from licensed plumbers in ${stateName}. Compare estimates by city. No obligation. Licensed & insured.`,
+    metaDescription: `Get free ${serviceLower} quotes from licensed pest control specialists in ${stateName}. Compare estimates by city. No obligation. Licensed & insured.`,
 
     heroTitle: `Free ${serviceLabel} in ${stateName}`,
-    heroSub: `Connect with licensed ${stateName} plumbers in your city — get a free, no-obligation estimate for any plumbing job, big or small.`,
+    heroSub: `Connect with licensed ${stateName} pest control specialists in your city — get a free, no-obligation estimate for any pest, termite, rodent, or wildlife issue.`,
 
     trustBullets: [
-      `Licensed & insured ${stateAbbr} plumbers`,
+      `Licensed & insured ${stateAbbr} pest control specialists`,
       "Free quotes, zero commitment",
       `Same-day service in most ${stateName} cities`,
       "Upfront pricing before any work starts",
     ],
 
     intro: {
-      h2: `Get an Honest ${serviceLabel} from a${/^[AEIOU]/i.test(stateName) ? "n" : ""} ${stateName}-Licensed Plumber`,
+      h2: `Get an Honest ${serviceLabel} from a${/^[AEIOU]/i.test(stateName) ? "n" : ""} ${stateName}-Licensed Specialist`,
       paragraphs: [
-        `Plumbing costs in ${stateName} vary more than most homeowners expect. Labor rates, permit fees, and material costs all shift by city and county. The only quote that actually matters is one from a plumber who knows your area.`,
+        `Pest control costs in ${stateName} vary more than most homeowners expect. Treatment methods, infestation severity, and local regulations all shift by city and county. The only quote that actually matters is one from a specialist who knows your area.`,
         ...(stateMeta?.pctPre1980
-          ? [`${stateMeta.pctPre1980}% of ${stateName} cities have a median home build year before 1980 — meaning a large share of the housing stock has aging pipes, outdated water heaters, and sewer lines that are past their expected service life. Getting a quote before a failure happens is significantly cheaper than an emergency call.`]
+          ? [`${stateMeta.pctPre1980}% of ${stateName} cities have a median home build year before 1980 — meaning a large share of the housing stock has aging foundations, gaps, and wood framing that increase pest risk. Getting a quote before an infestation compounds is significantly cheaper than emergency treatment.`]
           : []),
         ...(stateMeta?.avgHomeownership
-          ? [`With an average homeownership rate of ${stateMeta.avgHomeownership}% across ${stateName}, most residents have a direct financial stake in keeping their plumbing in good shape. A free quote takes less than 5 minutes and gives you a real number before spending anything.`]
+          ? [`With an average homeownership rate of ${stateMeta.avgHomeownership}% across ${stateName}, most residents have a direct financial stake in protecting their home from pest damage. A free quote takes less than 5 minutes and gives you a real number before spending anything.`]
           : []),
-        `Select your ${stateName} city below and connect with a licensed local plumber who can give you an accurate, no-obligation estimate — whether it's a drain line replacement, a full repipe, or a water heater swap.`,
+        `Select your ${stateName} city below and connect with a licensed local specialist who can give you an accurate, no-obligation estimate — whether it's a termite treatment, rodent exclusion, bed bug heat treatment, or wildlife removal.`,
       ],
       ctaText: "Select Your City Below",
     },
 
     why: {
-      h2: `Why ${stateName} Homeowners Get a Plumbing Quote First`,
+      h2: `Why ${stateName} Homeowners Get a Pest Control Quote First`,
       points: [
         {
-          h3: `${stateName} Plumbing Permits Vary by County`,
-          text: `Most significant plumbing work in ${stateName} — sewer line replacement, repiping, water heater installation — requires a permit. Permit costs and processing times differ by county. A licensed ${stateName} plumber familiar with your city handles this for you and factors it into your quote upfront, so there are no surprises when the invoice arrives.`,
+          h3: `${stateName} Pest Control Regulations Vary by County`,
+          text: `Pest control licensing, treatment regulations, and wildlife removal permits differ by county in ${stateName}. A licensed ${stateName} specialist familiar with your city handles all regulatory requirements and factors permit costs into your quote upfront — no surprises on the invoice.`,
         },
         {
-          h3: "Older Homes Come With Older Pipes",
-          text: `${stateMeta?.pctPre1980 ? `${stateMeta.pctPre1980}% of cities in ${stateName} have a median build year before 1980.` : `A significant share of homes in ${stateName} were built before 1980.`} Older homes often contain galvanized steel or polybutylene pipes that are past their service life. Getting a quote before a failure happens is the difference between a planned repair and an emergency one — emergency plumbing typically costs two to three times more than scheduled work.`,
+          h3: "Older Homes Have More Entry Points",
+          text: `${stateMeta?.pctPre1980 ? `${stateMeta.pctPre1980}% of cities in ${stateName} have a median build year before 1980.` : `A significant share of homes in ${stateName} were built before 1980.`} Older homes have aging foundations, deteriorated soffits, and pipe penetrations that are common pest entry points. Getting a quote before an infestation grows is the difference between a targeted treatment and a full remediation — which costs two to three times more.`,
         },
         {
-          h3: `${stateName} Labor Rates Vary by City`,
-          text: `Plumbing labor costs in ${stateName} are not consistent across the state. Metro areas often trend higher than rural counties due to demand and cost of living. A quote from a plumber in your specific ${stateName} city gives you the real number — not a state or national average that may be off by $1,000 or more.`,
+          h3: `${stateName} Pest Pressure Varies by Region`,
+          text: `Pest species, termite pressure, mosquito season length, and wildlife activity are not consistent across ${stateName}. A quote from a specialist in your specific ${stateName} city reflects local pest pressure and seasonal timing — not a state or national average that may not apply to your situation.`,
         },
       ],
     },
 
     services: {
-      h2: "Plumbing Services Available for Quotes Across " + stateName,
+      h2: "Pest Control Services Available for Quotes Across " + stateName,
       intro: "Select your city to get a local quote on any of the services below.",
-      items: (["plumbing-quote", "repiping-quote", "water-heater-replacement-quote", "sewer-line-replacement-quote", "drain-line-replacement-quote", "emergency-plumbing-quote"] as ServiceSlug[]).map(
-        (slug) => {
-          const { description, costRange } = SERVICE_STATE_DESCRIPTIONS[slug];
-          const title = `${SERVICE_LABELS[slug]} — ${stateName}`;
-          return { slug, title, description, costRange };
-        }
-      ),
+      items: (
+        [
+          "pest-control-quote",
+          "termite-treatment-quote",
+          "rodent-control-quote",
+          "bed-bug-treatment-quote",
+          "mosquito-control-quote",
+          "wildlife-removal-quote",
+        ] as ServiceSlug[]
+      ).map((slug) => {
+        const { description, costRange } = SERVICE_STATE_DESCRIPTIONS[slug];
+        const title = `${SERVICE_LABELS[slug]} — ${stateName}`;
+        return { slug, title, description, costRange };
+      }),
     },
 
     cityIntro: {
       h2: `Find a ${serviceLabel} in Your ${stateName} City`,
-      paragraph: `${stateName} plumbers are available for free quotes in ${stateMeta?.cityCount ?? "hundreds of"} cities statewide${topCityNames ? `, including ${topCityNames}` : ""}. Select your city below to get an estimate specific to your area.`,
+      paragraph: `${stateName} pest control specialists are available for free quotes in ${stateMeta?.cityCount ?? "hundreds of"} cities statewide${topCityNames ? `, including ${topCityNames}` : ""}. Select your city below to get an estimate specific to your area.`,
       ctaText: "Select Your City",
     },
 
     faq: {
-      h2: `${stateName} Plumbing Quote FAQ`,
+      h2: `${stateName} Pest Control Quote FAQ`,
       items: [
         {
-          q: `How much does a plumber cost in ${stateName}?`,
-          a: `Plumber hourly rates in ${stateName} typically range from $65 to $175 per hour, depending on the city and job type. For larger projects — repiping, sewer line replacement, water heater installation — most ${stateName} plumbers quote a flat project rate rather than hourly. Select your city for a local estimate.`,
+          q: `How much does pest control cost in ${stateName}?`,
+          a: `Pest control costs in ${stateName} vary widely by service. A one-time general treatment runs $150–$400; annual prevention programs run $400–$900 per year. Termite treatment ranges from $500 to $8,000+ depending on method; rodent exclusion runs $300–$2,500+. Select your city for a local estimate.`,
         },
         {
-          q: `Do I need a permit for plumbing work in ${stateName}?`,
-          a: `Yes, for most major plumbing work. ${stateName} requires permits for water heater replacements, sewer line work, and whole-home repiping. Permit requirements and fees vary by city and county — a licensed ${stateName} plumber will pull the necessary permits and include that cost in your quote.`,
+          q: `Do pest control specialists need a license in ${stateName}?`,
+          a: `Yes. ${stateName} requires pest control applicators to be licensed by the state. Wildlife removal specialists require separate wildlife control permits for most species. Always verify licensing before hiring — all specialists connected through this page are licensed and insured.`,
         },
         {
-          q: `How do I find a licensed plumber in ${stateName}?`,
-          a: `Select your city on this page to connect with licensed, insured plumbers who operate in your area and are familiar with local permit requirements.`,
+          q: `How do I find a licensed pest control specialist in ${stateName}?`,
+          a: `Select your city on this page to connect with licensed, insured specialists who operate in your area and are familiar with local pest species and regulations.`,
         },
         {
-          q: `What plumbing problems are most common in ${stateName} homes?`,
-          a: `Common issues include corroded galvanized pipes in pre-1980 homes, tree root intrusion in sewer lines, water heater failures, and drain line deterioration in homes on older municipal systems. Getting a quote first helps you plan and avoid overpaying.`,
+          q: `What pest problems are most common in ${stateName} homes?`,
+          a: `Common issues vary by region but typically include termites, rodents (mice and rats), bed bugs, mosquitoes, and wildlife intrusions (raccoons, squirrels, bats). Older homes are particularly vulnerable to termite damage and rodent entry. Getting a quote first helps you plan and avoid overpaying.`,
         },
         {
-          q: `Can I get a same-day plumbing quote in ${stateName}?`,
-          a: `In most ${stateName} cities, same-day phone quotes and same-day or next-day service are available. Select your city to check availability in your area.`,
+          q: `Can I get a same-day pest control quote in ${stateName}?`,
+          a: `In most ${stateName} cities, same-day phone quotes and same-day or next-day service are available for most pest control services. Select your city to check availability in your area.`,
         },
         {
-          q: `What's the cheapest plumbing service to get quoted in ${stateName}?`,
-          a: `Drain line repairs and minor pipe fixes are typically the lowest-cost plumbing quotes, often starting under $500. Water heater replacements and sewer line work represent the mid-to-high end. Getting a quote first — before any work begins — ensures you're not overpaying regardless of the service.`,
+          q: `Does homeowner insurance cover pest damage in ${stateName}?`,
+          a: `Most standard homeowner insurance policies in ${stateName} do not cover termite damage, rodent damage, or wildlife intrusion damage — these are considered preventable maintenance issues. Early treatment is the most cost-effective protection.`,
         },
       ],
     },
 
     closing: {
-      h2: `Ready to Find a Plumber in Your ${stateName} City?`,
-      text: `Hundreds of ${stateName} homeowners get plumbing quotes through this page every month. It takes less than a minute — select your city, connect with a licensed local plumber, and get an honest estimate before spending a dollar. No forms. No wait. No obligation.`,
+      h2: `Ready to Find a Pest Control Specialist in Your ${stateName} City?`,
+      text: `Homeowners across ${stateName} get pest control quotes through this page every day. It takes less than a minute — select your city, connect with a licensed local specialist, and get an honest estimate before spending a dollar. No forms. No wait. No obligation.`,
       ctaText: `Select Your ${stateName} City`,
     },
 
     internalLinks: {
-      otherStatesLabel: "Other plumbing quote states",
+      otherStatesLabel: "Other pest control quote states",
       viewAllStatesLabel: "View All States",
       otherServicesLabel: `Other services in ${stateName}`,
     },
