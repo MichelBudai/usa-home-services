@@ -783,12 +783,14 @@ export function getEmergencyPlumbingCityPageContent(
 
 /** Dispatcher: returns city page content for the given service (non-plumbing). */
 export function getServiceCityPageContent(
-  service: "repiping-quote" | "water-heater-replacement-quote" | "sewer-line-replacement-quote" | "drain-line-replacement-quote" | "emergency-plumbing-quote",
+  service: "plumbing-quote" | "repiping-quote" | "water-heater-replacement-quote" | "sewer-line-replacement-quote" | "drain-line-replacement-quote" | "emergency-plumbing-quote",
   params: ServiceContentParams
 ): ServiceCityContent {
   const { cityName, stateName, stateAbbr, nearby1, nearby2, nearby3, phone, cityMetadata } = params;
   const p = [cityName, stateName, stateAbbr, nearby1, nearby2, nearby3, phone ?? PHONE_DEFAULT, cityMetadata] as const;
   switch (service) {
+    case "plumbing-quote":
+      return getDrainLineCityPageContent(...p); // contenu le plus proche
     case "repiping-quote":
       return getRepipingCityPageContent(...p);
     case "water-heater-replacement-quote":
@@ -799,9 +801,7 @@ export function getServiceCityPageContent(
       return getDrainLineCityPageContent(...p);
     case "emergency-plumbing-quote":
       return getEmergencyPlumbingCityPageContent(...p);
-    default: {
-      const _: never = service;
-      throw new Error(`Unknown service: ${service}`);
-    }
+    default:
+      return getDrainLineCityPageContent(...p); // fallback
   }
 }

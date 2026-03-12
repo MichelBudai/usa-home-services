@@ -12,9 +12,10 @@ interface CensusCtaBannerProps {
   census: CityCensus | null;
   cityName: string;
   phone: { href: string; label: string };
+  namePlural?: string;
 }
 
-export function CensusCtaBanner({ census, cityName, phone }: CensusCtaBannerProps) {
+export function CensusCtaBanner({ census, cityName, phone, namePlural = "specialists" }: CensusCtaBannerProps) {
   if (!census) return null;
 
   const year = census.median_year_built;
@@ -31,11 +32,11 @@ export function CensusCtaBanner({ census, cityName, phone }: CensusCtaBannerProp
 
   let message = "";
   if (isValidNum(year) && year < 1985) {
-    message = `Homes in ${cityName} were built ${yearDisplay ?? year} on average — older homes have more pest entry points. Get a free inspection quote.`;
+    message = `Homes in ${cityName} were built ${yearDisplay ?? year} on average — older homes need attention. Get a free inspection quote from local ${namePlural.toLowerCase()}.`;
   } else if (isValidNum(ownership) && ownership > 65) {
-    message = `High homeownership in ${cityName} means protecting your home from pest damage matters — get a free quote.`;
+    message = `High homeownership in ${cityName} means protecting your home matters — get a free quote from local ${namePlural.toLowerCase()}.`;
   } else if (valueDisplay) {
-    message = `Median home value in ${cityName} is ${valueDisplay} — protect your investment with a free pest control quote.`;
+    message = `Median home value in ${cityName} is ${valueDisplay} — protect your investment with a free quote from local ${namePlural.toLowerCase()}.`;
   }
 
   if (!message) return null;

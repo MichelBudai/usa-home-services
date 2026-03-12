@@ -774,6 +774,7 @@ export function getWildlifeRemovalCityPageContent(
 /** Dispatcher: returns city page content for the given pest control service. */
 export function getServiceCityPageContent(
   service:
+    | "pest-control-quote"
     | "termite-treatment-quote"
     | "rodent-control-quote"
     | "bed-bug-treatment-quote"
@@ -784,6 +785,8 @@ export function getServiceCityPageContent(
   const { cityName, stateName, stateAbbr, nearby1, nearby2, nearby3, phone, cityMetadata } = params;
   const p = [cityName, stateName, stateAbbr, nearby1, nearby2, nearby3, phone ?? PHONE_DEFAULT, cityMetadata] as const;
   switch (service) {
+    case "pest-control-quote":
+      return getTermiteTreatmentCityPageContent(...p); // contenu le plus proche
     case "termite-treatment-quote":
       return getTermiteTreatmentCityPageContent(...p);
     case "rodent-control-quote":
@@ -794,9 +797,7 @@ export function getServiceCityPageContent(
       return getMosquitoControlCityPageContent(...p);
     case "wildlife-removal-quote":
       return getWildlifeRemovalCityPageContent(...p);
-    default: {
-      const _: never = service;
-      throw new Error(`Unknown service: ${service}`);
-    }
+    default:
+      return getTermiteTreatmentCityPageContent(...p); // fallback
   }
 }

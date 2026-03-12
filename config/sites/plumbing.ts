@@ -6,8 +6,8 @@ export const plumbingConfig = {
   siteUrl: "https://usa-plumber-quote.com",
   siteName: "USA Plumber Quote",
 
-  phoneTel: "tel:+10000000000",
-  phoneDisplay: "(000) 000-0000",
+  phoneTel: "tel:+18552352002",
+  phoneDisplay: "(855) 235-2002",
 
   ga4Id: "G-VLTS29LH71",
 

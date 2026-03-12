@@ -6,8 +6,8 @@ export const pestControlConfig = {
   siteUrl: "https://usa-pest-control-quote.com",
   siteName: "USA Pest Control Quote",
 
-  phoneTel: "tel:+10000000000",
-  phoneDisplay: "(000) 000-0000",
+  phoneTel: "tel:+18442130383",
+  phoneDisplay: "(844) 213-0383",
 
   ga4Id: "G-ZCV2C6T5TW",
 

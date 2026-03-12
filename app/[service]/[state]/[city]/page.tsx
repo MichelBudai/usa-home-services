@@ -62,23 +62,26 @@ export function generateStaticParams() {
 function getCityPageContent(
   serviceLabel: string,
   stateName: string,
-  cityName: string
+  cityName: string,
+  namePlural: string
 ) {
   const serviceLower = serviceLabel.toLowerCase();
+  // Supprime "quote" en fin de label pour éviter les doublons
+  const serviceClean = serviceLower.replace(/\s*quote\s*$/i, "").trim();
   return {
     heroTitle: `${serviceLabel} in ${cityName}, ${stateName}`,
-    heroSub: `Get free ${serviceLower} quotes from licensed pest control specialists in ${cityName}. Compare estimates with no obligation.`,
-    metaTitle: `${serviceLabel}, ${cityName} | Free Estimates, Licensed Local Exterminators`,
-    metaDescription: `Free ${serviceLower} in ${cityName}, ${stateName}. Licensed local pest control specialists, upfront pricing, no obligation. Compare estimates.`,
-    intro: `Looking for a ${serviceLower} quote in ${cityName}? Get free estimates from licensed specialists. Compare quotes with no obligation.`,
+    heroSub: `Get free ${serviceClean} quotes from licensed ${namePlural.toLowerCase()} in ${cityName}. Compare estimates with no obligation.`,
+    metaTitle: `${serviceLabel} in ${cityName} | Free Estimates, Licensed Local ${namePlural}`,
+    metaDescription: `Free ${serviceClean} quotes in ${cityName}, ${stateName}. Licensed local ${namePlural.toLowerCase()}, upfront pricing, no obligation. Compare estimates.`,
+    intro: `Looking for a ${serviceClean} quote in ${cityName}? Get free estimates from licensed ${namePlural.toLowerCase()}. Compare quotes with no obligation.`,
     whyTitle: `Why get a quote here in ${cityName}`,
     whyPoints: [
-      `Free quotes from licensed specialists who serve ${cityName} and the surrounding area.`,
+      `Free quotes from licensed ${namePlural.toLowerCase()} who serve ${cityName} and the surrounding area.`,
       "Compare multiple estimates to find the best price and fit.",
       "No obligation—you choose whether to hire after receiving quotes.",
     ],
-    calculatorTitle: `Estimate your ${serviceLower} cost in ${cityName}`,
-    ctaTitle: `Get your free ${serviceLower} quote in ${cityName}`,
+    calculatorTitle: `Estimate your ${serviceClean} cost in ${cityName}`,
+    ctaTitle: `Get your free ${serviceClean} quote in ${cityName}`,
     ctaSub: "Contact local specialists for accurate pricing.",
   };
 }
@@ -274,17 +277,11 @@ export async function generateMetadata({
   const cityCensus = getCityCensus(stateSlug, citySlug);
   const censusSnippet = getCityCensusMetaSnippet(cityName, stateName, cityCensus);
 
-  const cityServiceSlugs = [
-    "termite-treatment-quote",
-    "rodent-control-quote",
-    "bed-bug-treatment-quote",
-    "mosquito-control-quote",
-    "wildlife-removal-quote",
-  ] as const;
-  if (cityServiceSlugs.includes(service as (typeof cityServiceSlugs)[number])) {
+  const cityServiceSlugs = getCurrentSiteConfig().services.map(s => s.slug);
+  if (cityServiceSlugs.includes(service)) {
     const nearby = getNearbyCities(stateSlug, citySlug, 3);
     const cityMetadata = getCityMetadata(stateSlug, citySlug);
-    const content = getServiceCityPageContent(service as (typeof cityServiceSlugs)[number], {
+    const content = getServiceCityPageContent(service, {
       cityName,
       stateName,
       stateAbbr,
@@ -301,7 +298,7 @@ export async function generateMetadata({
     };
   }
 
-  const content = getCityPageContent(label, stateName, cityName);
+  const content = getCityPageContent(label, stateName, cityName, getCurrentSiteConfig().namePlural);
   const description = censusSnippet.trim() ? censusSnippet + content.metaDescription : content.metaDescription;
   return {
     title: content.metaTitle,
@@ -335,16 +332,10 @@ export default function CityPage({
   const { slug: nicheSlug } = getCurrentSiteConfig();
   const calculatorConfig = getCalculatorConfig(nicheSlug)[service];
 
-  const cityServiceSlugs = [
-    "termite-treatment-quote",
-    "rodent-control-quote",
-    "bed-bug-treatment-quote",
-    "mosquito-control-quote",
-    "wildlife-removal-quote",
-  ] as const;
-  const hasCityContent = cityServiceSlugs.includes(service as (typeof cityServiceSlugs)[number]);
+  const cityServiceSlugs = getCurrentSiteConfig().services.map(s => s.slug);
+  const hasCityContent = cityServiceSlugs.includes(service);
   const serviceCityContent = hasCityContent
-    ? getServiceCityPageContent(service as (typeof cityServiceSlugs)[number], {
+    ? getServiceCityPageContent(service, {
         cityName,
         stateName,
         stateAbbr,
@@ -356,7 +347,7 @@ export default function CityPage({
     : null;
 
   const genericContent = !serviceCityContent
-    ? getCityPageContent(label, stateName, cityName)
+    ? getCityPageContent(label, stateName, cityName, getCurrentSiteConfig().namePlural)
     : null;
 
   const cityCensus = getCityCensus(stateSlug, citySlug);
@@ -364,7 +355,8 @@ export default function CityPage({
   const contextSentence = generateCityContextByService(
     cityCensus,
     cityName,
-    service as ServiceSlug
+    service,
+    getCurrentSiteConfig().namePlural
   );
   const placeGeo =
     cityCensus &&
@@ -443,6 +435,7 @@ export default function CityPage({
             census={cityCensus}
             cityName={cityName}
             phone={{ href: PHONE_TEL, label: CTA_CALL_LABEL }}
+            namePlural={getCurrentSiteConfig().namePlural}
           />
         )}
 
@@ -717,6 +710,7 @@ export default function CityPage({
           census={cityCensus}
           cityName={cityName}
           phone={{ href: PHONE_TEL, label: CTA_CALL_LABEL }}
+          namePlural={getCurrentSiteConfig().namePlural}
         />
       )}
 

@@ -230,33 +230,35 @@ export function getCityCensusMetaSnippet(
 
 function getGenericCityContextByService(
   cityName: string,
-  service: ServiceSlug
+  service: string,
+  namePlural?: string
 ): string {
+  const specialists = namePlural ? namePlural.toLowerCase() : "specialists";
   switch (service) {
     case "pest-control-quote":
-      return `Get free pest control quotes from licensed local specialists in ${cityName}.`;
+      return `Get free pest control quotes from licensed local ${specialists} in ${cityName}.`;
     case "termite-treatment-quote":
       return `Homes in ${cityName} vary in age — older construction increases termite risk. Get a free inspection quote.`;
     case "rodent-control-quote":
-      return `Licensed rodent control specialists serve ${cityName} — get an exclusion quote before the problem grows.`;
+      return `Licensed rodent control ${specialists} serve ${cityName} — get an exclusion quote before the problem grows.`;
     case "bed-bug-treatment-quote":
-      return `Licensed bed bug specialists serve ${cityName} — get a treatment quote before the infestation spreads.`;
+      return `Licensed bed bug ${specialists} serve ${cityName} — get a treatment quote before the infestation spreads.`;
     case "mosquito-control-quote":
       return `Mosquito pressure in ${cityName} varies by season — get a free program quote before peak season.`;
     case "wildlife-removal-quote":
-      return `Licensed wildlife removal specialists serve ${cityName} — get a humane removal quote today.`;
+      return `Licensed wildlife removal ${specialists} serve ${cityName} — get a humane removal quote today.`;
     default:
-      return `Connect with licensed local pest control specialists in ${cityName} for free estimates.`;
+      return `Connect with licensed local ${specialists} in ${cityName} for free estimates.`;
   }
 }
 
 export function generateCityContextByService(
   census: CityCensus | null,
   cityName: string,
-  service: ServiceSlug
+  service: string,
+  namePlural?: string
 ): string {
-  // When census is absent, always return a generic phrase so city pages without Census data still get intro content.
-  if (census == null) return getGenericCityContextByService(cityName, service);
+  if (census == null) return getGenericCityContextByService(cityName, service, namePlural);
   const year = census.median_year_built;
   const ownership = census.homeownership_rate_pct;
   const hasOldHousing = typeof year === "number" && year !== SENTINEL && year < 1986;
@@ -274,7 +276,7 @@ export function generateCityContextByService(
     default:
       break;
   }
-  return getGenericCityContextByService(cityName, service);
+  return getGenericCityContextByService(cityName, service, namePlural);
 }
 
 export function getClimateContent(stateSlug: string): {
