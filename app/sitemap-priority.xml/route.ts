@@ -1,13 +1,12 @@
-import { NextResponse, NextRequest } from "next/server";
-import { getSiteConfig } from "@/config";
+import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
 import { stateSlugs } from "@/lib/data";
 import { getTopCitiesForState } from "@/lib/censusData";
 
+export const dynamic = "force-static";
 export const revalidate = 2592000;
 
-export function GET(request: NextRequest) {
-  const hostname = request.headers.get("host") ?? "localhost:3000";
-  const config = getSiteConfig(hostname);
+export function GET() {
+  const config = getCurrentSiteConfig();
   const base = config.siteUrl;
   const SERVICE_SLUGS = config.services.map((s) => s.slug);
   const urls: string[] = [];
@@ -15,13 +14,11 @@ export function GET(request: NextRequest) {
   for (const service of SERVICE_SLUGS) {
     urls.push(`<url><loc>${base}/${service}</loc><priority>1.0</priority></url>`);
   }
-
   for (const service of SERVICE_SLUGS) {
     for (const stateSlug of stateSlugs) {
       urls.push(`<url><loc>${base}/${service}/${stateSlug}</loc><priority>1.0</priority></url>`);
     }
   }
-
   for (const service of SERVICE_SLUGS) {
     for (const stateSlug of stateSlugs) {
       const topCities = getTopCitiesForState(stateSlug, 5);
@@ -32,8 +29,8 @@ export function GET(request: NextRequest) {
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  ${urls.join("\n  ")}\n</urlset>`;
-
-  return new NextResponse(xml, {
+  return new Response(xml, {
     headers: { "Content-Type": "application/xml; charset=utf-8" },
   });
 }
+

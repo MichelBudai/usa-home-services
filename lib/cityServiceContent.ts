@@ -6,21 +6,15 @@ import { getServiceCityPageContent as getPestControlCityContent } from "./citySe
 import { getServiceCityPageContent as getPlumbingCityContent } from "./cityServiceContentPlumbing";
 
 export type { ServiceCityContent } from "./cityServiceContentPestControl";
+export type { ServiceContentParams } from "./cityServiceContentPestControl";
 
-const CONTENT_BY_NICHE: Record<string, typeof getPestControlCityContent> = {
+const CONTENT_BY_NICHE: Record<string, Function> = {
   "pest-control": getPestControlCityContent,
   "plumbing": getPlumbingCityContent,
 };
 
-export function getServiceCityPageContent(
-  serviceSlug: string,
-  cityName: string,
-  stateName: string,
-  stateAbbr: string,
-  citySlug?: string,
-  stateSlug?: string
-) {
+export function getServiceCityPageContent(service: string, params: Record<string, unknown>) {
   const config = getCurrentSiteConfig();
   const fn = CONTENT_BY_NICHE[config.slug] ?? getPestControlCityContent;
-  return fn(serviceSlug as never, cityName, stateName, stateAbbr, citySlug, stateSlug);
+  return fn(service, params);
 }

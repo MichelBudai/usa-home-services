@@ -32,7 +32,7 @@ export interface ServiceCityContent {
 
 const PHONE_DEFAULT = "(555) 123-4567";
 
-type ServiceContentParams = {
+export type ServiceContentParams = {
   cityName: string;
   stateName: string;
   stateAbbr: string;

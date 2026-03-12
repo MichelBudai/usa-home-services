@@ -20,7 +20,7 @@ import {
   buildCityCensusStats,
   generateCityContextByService,
 } from "@/lib/censusData";
-import { getServiceCityPageContent } from "@/lib/cityServiceContent";
+import { getServiceCityPageContent, type ServiceCityContent } from "@/lib/cityServiceContent";
 import { getCityMetadata } from "@/lib/cityMetadata";
 import { getCalculatorConfig } from "@/lib/calculatorRanges";
 import { getCurrentSiteConfig } from "@/lib/getSiteConfig";
@@ -292,7 +292,7 @@ export async function generateMetadata({
       nearby2: nearby[1]?.name ?? "nearby",
       nearby3: nearby[2]?.name ?? "nearby",
       cityMetadata: cityMetadata ?? undefined,
-    });
+    }) as ServiceCityContent;
     const description = censusSnippet.trim() ? censusSnippet + content.meta.description : content.meta.description;
     return {
       title: content.meta.title,
@@ -352,7 +352,7 @@ export default function CityPage({
         nearby2: nearby[1]?.name ?? "nearby",
         nearby3: nearby[2]?.name ?? "nearby",
         cityMetadata: cityMetadata ?? undefined,
-      })
+      }) as ServiceCityContent
     : null;
 
   const genericContent = !serviceCityContent
