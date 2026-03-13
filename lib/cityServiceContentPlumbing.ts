@@ -3,6 +3,7 @@
  * Each service has its own template and copy (no shared "plumbing" wording).
  */
 import type { CityMetadata } from "./cityMetadata";
+import { getPlumbingCityPageContent } from "./getPlumbingCityPageContent";
 
 export interface ServiceCityContent {
   meta: { title: string; description: string };
@@ -790,7 +791,7 @@ export function getServiceCityPageContent(
   const p = [cityName, stateName, stateAbbr, nearby1, nearby2, nearby3, phone ?? PHONE_DEFAULT, cityMetadata] as const;
   switch (service) {
     case "plumbing-quote":
-      return getDrainLineCityPageContent(...p); // contenu le plus proche
+      return getPlumbingCityPageContent(...p);
     case "repiping-quote":
       return getRepipingCityPageContent(...p);
     case "water-heater-replacement-quote":

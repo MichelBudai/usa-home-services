@@ -4,6 +4,7 @@
  * Each service has its own template and copy.
  */
 import type { CityMetadata } from "./cityMetadata";
+import { getPestControlCityPageContent } from "./getPestControlCityPageContent";
 
 export interface ServiceCityContent {
   meta: { title: string; description: string };
@@ -786,7 +787,7 @@ export function getServiceCityPageContent(
   const p = [cityName, stateName, stateAbbr, nearby1, nearby2, nearby3, phone ?? PHONE_DEFAULT, cityMetadata] as const;
   switch (service) {
     case "pest-control-quote":
-      return getTermiteTreatmentCityPageContent(...p); // contenu le plus proche
+      return getPestControlCityPageContent(...p);
     case "termite-treatment-quote":
       return getTermiteTreatmentCityPageContent(...p);
     case "rodent-control-quote":
